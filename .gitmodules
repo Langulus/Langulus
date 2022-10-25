@@ -1,0 +1,27 @@
+[submodule "Core"]
+	path = Core
+	url = https://github.com/Langulus/Core.git
+[submodule "RTTI"]
+	path = RTTI
+	url = https://github.com/Langulus/RTTI.git
+[submodule "Logger"]
+	path = Logger
+	url = https://github.com/Langulus/Logger.git
+[submodule "SIMD"]
+	path = SIMD
+	url = https://github.com/Langulus/SIMD.git
+[submodule "Anyness"]
+	path = Anyness
+	url = https://github.com/Langulus/Anyness.git
+[submodule "Flow"]
+	path = Flow
+	url = https://github.com/Langulus/Flow.git
+[submodule "Entity"]
+	path = Entity
+	url = https://github.com/Langulus/Entity.git
+[submodule "Math"]
+	path = Math
+	url = https://github.com/Langulus/Math.git
+[submodule "cmake"]
+	path = cmake
+	url = https://github.com/Langulus/CMake.git

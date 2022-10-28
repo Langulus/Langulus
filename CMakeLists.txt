@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.22)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # MSVC adds additional dependencies that interfere when libraries are       
 # combined into a single shared library. This avoid it...                   
 # https://stackoverflow.com/questions/41400536                              
-message("Additional dependencies: ${CMAKE_CXX_STANDARD_LIBRARIES}")
+message("Additional dependencies removed: ${CMAKE_CXX_STANDARD_LIBRARIES}")
 set(CMAKE_CXX_STANDARD_LIBRARIES "")
 
 project(Langulus.Framework)
@@ -19,6 +22,14 @@ include(FetchLangulusModule)
 include(HandleLangulusFeatures)
 handle_langulus_features()
 
+# Check if this project is built as standalone, or a part of something else 
+if(PROJECT_IS_TOP_LEVEL)
+    add_compile_definitions(LANGULUS_ENABLE_TESTING)
+    enable_testing()
+endif()
+
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+add_compile_definitions(LANGULUS_EXPORT_ALL)
 add_subdirectory(Core)
 add_subdirectory(Logger)
 add_subdirectory(RTTI)
@@ -30,6 +41,11 @@ add_subdirectory(Math)
 
 # Combine all submodules as one shared library                              
 add_library(Langulus.Framework SHARED Empty.cpp)
+
+target_include_directories(Langulus.Framework
+    PUBLIC	    include
+)
+
 target_link_libraries(Langulus.Framework
     INTERFACE   Langulus.Core
                 Langulus.SIMD
@@ -56,4 +72,11 @@ else()
     set_target_properties(Langulus.Framework
         PROPERTIES LINK_FLAGS "-Wl,--whole-archive"
     )
+endif()
+
+if(PROJECT_IS_TOP_LEVEL)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS OFF)
+    remove_definitions(-DLANGULUS_EXPORT_ALL)
+    add_subdirectory(testmodule)
+    add_subdirectory(test)
 endif()

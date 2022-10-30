@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.22)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+option(LANGULUS_BUILD_SHARED_LIBRARIES "Build shared (so/dll) libraries" ON)
+
 # MSVC adds additional dependencies that interfere when libraries are       
 # combined into a single shared library. This avoid it...                   
 # https://stackoverflow.com/questions/41400536                              
@@ -28,8 +30,15 @@ if(PROJECT_IS_TOP_LEVEL)
     enable_testing()
 endif()
 
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-add_compile_definitions(LANGULUS_EXPORT_ALL)
+if(LANGULUS_BUILD_SHARED_LIBRARIES)
+    set(LANGULUS_LIBRARY_TYPE SHARED)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    add_compile_definitions(LANGULUS_EXPORT_ALL)
+else()
+    set(LANGULUS_LIBRARY_TYPE STATIC)
+    set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
+endif()
+
 add_subdirectory(Core)
 add_subdirectory(Logger)
 add_subdirectory(RTTI)
@@ -39,43 +48,35 @@ add_subdirectory(Flow)
 add_subdirectory(Entity)
 add_subdirectory(Math)
 
-# Combine all submodules as one shared library                              
-add_library(Langulus.Framework SHARED Empty.cpp)
+# Combine all submodules as one library                                     
+add_library(Langulus.Framework ${LANGULUS_LIBRARY_TYPE}
+    $<TARGET_OBJECTS:Langulus.Logger>
+    $<TARGET_OBJECTS:Langulus.RTTI>
+    $<TARGET_OBJECTS:Langulus.Anyness>
+    $<TARGET_OBJECTS:Langulus.Flow>
+    $<TARGET_OBJECTS:Langulus.Entity>
+)
 
 target_include_directories(Langulus.Framework
     PUBLIC	    include
+                Logger/include
+                RTTI/include
+                Anyness/include
+                Flow/include
+                Entity/include
 )
 
 target_link_libraries(Langulus.Framework
     INTERFACE   Langulus.Core
                 Langulus.SIMD
                 Langulus.Math
-    PUBLIC      Langulus.Logger
-                Langulus.RTTI
-                Langulus.Anyness
-                Langulus.Flow
-                Langulus.Entity
 )
 
-# By default, symbols provided by the submodules that are not used by       
-# Langulus.Framework (which is all of them in this case) are discarded.     
-# This makes sure that everything is exported.                              
-if(WIN32)
-    set_target_properties(Langulus.Framework
-        PROPERTIES LINK_FLAGS "/WHOLEARCHIVE"
-    )
-elseif(APPLE)
-    set_target_properties(Langulus.Framework
-        PROPERTIES LINK_FLAGS "-Wl,-all_load"
-    )
-else()
-    set_target_properties(Langulus.Framework
-        PROPERTIES LINK_FLAGS "-Wl,--whole-archive"
-    )
+if(NOT MSVC)
+    target_link_libraries(Langulus.Framework PRIVATE dl)
 endif()
 
 if(PROJECT_IS_TOP_LEVEL)
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS OFF)
     remove_definitions(-DLANGULUS_EXPORT_ALL)
     add_subdirectory(testmodule)
     add_subdirectory(test)

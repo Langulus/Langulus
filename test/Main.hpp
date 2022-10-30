@@ -10,3 +10,5 @@
 #include <Langulus.hpp>
 
 using namespace Langulus;
+using namespace Langulus::Anyness;
+using namespace Langulus::Entity;

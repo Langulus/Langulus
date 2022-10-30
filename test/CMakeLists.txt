@@ -1,7 +1,11 @@
 project(Langulus.Test.Framework)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCE_FILES)
 
-# Configure Catch2 library
+if(NOT WIN32)
+    add_compile_options(-fvisibility=hidden)
+endif()
+
+# Configure Catch2 library													
 message(STATUS "Configuring external project: Catch2...")
 download_project(
 	PROJ                Catch2
@@ -12,6 +16,8 @@ download_project(
 
 add_subdirectory(${Catch2_SOURCE_DIR} ${Catch2_BINARY_DIR})
 add_executable(Test.Framework ${SOURCE_FILES})
+
 target_link_libraries(Test.Framework PRIVATE Langulus.Framework Catch2)
+add_dependencies(Test.Framework Test.Module)
 
 add_test(NAME Test.Framework COMMAND Test.Framework)

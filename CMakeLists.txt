@@ -31,10 +31,12 @@ if(PROJECT_IS_TOP_LEVEL)
 endif()
 
 if(LANGULUS_BUILD_SHARED_LIBRARIES)
-    set(LANGULUS_LIBRARY_TYPE SHARED)
+    # These settings are for the subdirectories                             
+    set(LANGULUS_LIBRARY_TYPE OBJECT)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     add_compile_definitions(LANGULUS_EXPORT_ALL)
 else()
+    # These settings are for the subdirectories                             
     set(LANGULUS_LIBRARY_TYPE STATIC)
     set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
 endif()
@@ -47,6 +49,14 @@ add_subdirectory(Anyness)
 add_subdirectory(Flow)
 add_subdirectory(Entity)
 add_subdirectory(Math)
+
+if(LANGULUS_BUILD_SHARED_LIBRARIES)
+    # These settings are for the framework                                  
+    set(LANGULUS_LIBRARY_TYPE SHARED)
+else()
+    # These settings are for the framework                                  
+    set(LANGULUS_LIBRARY_TYPE STATIC)
+endif()
 
 # Combine all submodules as one library                                     
 add_library(Langulus.Framework ${LANGULUS_LIBRARY_TYPE}

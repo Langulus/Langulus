@@ -80,6 +80,7 @@ target_link_libraries(Langulus.Framework
     INTERFACE   Langulus.Core
                 Langulus.SIMD
                 Langulus.Math
+    PUBLIC      fmt
 )
 
 if(NOT MSVC)
@@ -87,7 +88,6 @@ if(NOT MSVC)
 endif()
 
 if(PROJECT_IS_TOP_LEVEL)
-    remove_definitions(-DLANGULUS_EXPORT_ALL)
     add_subdirectory(testmodule)
     add_subdirectory(test)
 endif()

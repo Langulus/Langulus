@@ -5,6 +5,8 @@
 project(Langulus.Test.Module)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCE_FILES)
 
+# We're importing symbols from Langulus.Framework                           
+remove_definitions(-DLANGULUS_EXPORT_ALL)
 if(NOT WIN32)
     add_compile_options(-fvisibility=hidden)
 endif()

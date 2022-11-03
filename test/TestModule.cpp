@@ -28,7 +28,7 @@ SCENARIO("Framework initialization and shutdown", "[framework]") {
       root.CreateRuntime();
 
       // Load test module                                               
-      root.LoadMod("Test.Module");
+      root.LoadMod("Test");
 
       WHEN("The hierarchy is updated") {
          // Update once                                                 

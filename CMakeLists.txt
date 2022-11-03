@@ -22,6 +22,7 @@ execute_process(
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(FetchLangulusModule)
 include(HandleLangulusFeatures)
+
 handle_langulus_features()
 
 # Check if this project is built as standalone, or a part of something else 
@@ -52,6 +53,7 @@ add_subdirectory(Math)
 
 if(LANGULUS_BUILD_SHARED_LIBRARIES)
     # These settings are for the framework                                  
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     set(LANGULUS_LIBRARY_TYPE SHARED)
 else()
     # These settings are for the framework                                  
@@ -59,28 +61,21 @@ else()
 endif()
 
 # Combine all submodules as one library                                     
-add_library(Langulus.Framework ${LANGULUS_LIBRARY_TYPE}
-    $<TARGET_OBJECTS:Langulus.Logger>
-    $<TARGET_OBJECTS:Langulus.RTTI>
-    $<TARGET_OBJECTS:Langulus.Anyness>
-    $<TARGET_OBJECTS:Langulus.Flow>
-    $<TARGET_OBJECTS:Langulus.Entity>
-)
+message("Building Langulus as: ${LANGULUS_LIBRARY_TYPE} library")
+add_library(Langulus.Framework ${LANGULUS_LIBRARY_TYPE} Empty.cpp)
 
-target_include_directories(Langulus.Framework
-    PUBLIC	    include
-                Logger/include
-                RTTI/include
-                Anyness/include
-                Flow/include
-                Entity/include
-)
+target_include_directories(Langulus.Framework PUBLIC include)
 
 target_link_libraries(Langulus.Framework
-    INTERFACE   Langulus.Core
-                Langulus.SIMD
-                Langulus.Math
-    PUBLIC      fmt
+    PUBLIC  Langulus.Core
+            Langulus.Logger
+            Langulus.RTTI
+            Langulus.SIMD
+            Langulus.Anyness
+            Langulus.Flow
+            Langulus.Entity
+            Langulus.Math
+            fmt
 )
 
 if(NOT MSVC)
@@ -90,4 +85,10 @@ endif()
 if(PROJECT_IS_TOP_LEVEL)
     add_subdirectory(testmodule)
     add_subdirectory(test)
+
+    add_custom_command(
+        TARGET Langulus.Framework POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:Langulus.Framework>" "$<TARGET_FILE_DIR:Test.Framework>"
+        COMMENT "Copying `$<TARGET_FILE:Langulus.Framework>` to `$<TARGET_FILE_DIR:Test.Framework>`"
+    )
 endif()

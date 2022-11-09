@@ -37,6 +37,5 @@ struct SomeCategory {
 };
 
 LANGULUS_DEFINE_MODULE(TestModule, 1, "TestModule", "Just some module for testing", ""
-   , MetaOf<SomeCategory>()
-   , SomeReflectedType1, SomeReflectedType2
+   , SomeCategory, SomeReflectedType1, SomeReflectedType2
 )

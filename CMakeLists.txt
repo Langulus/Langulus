@@ -21,6 +21,8 @@ handle_langulus_features()
 
 add_compile_definitions(LANGULUS_ENABLE_TESTING)
 enable_testing()
-set(BUILD_TESTING ON)
+set(BUILD_TESTING ON CACHE BOOL "Enable testing")
 
 add_subdirectory(framework)
+
+add_subdirectory(mods/GLFW)

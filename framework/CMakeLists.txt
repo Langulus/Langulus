@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.22)
-
 # MSVC adds additional dependencies that interfere when libraries are       
 # combined into a single shared library. This avoid it...                   
 # https://stackoverflow.com/questions/41400536                              

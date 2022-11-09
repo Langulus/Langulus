@@ -3,7 +3,6 @@
 #	Langulus modules by Test.Framework										
 #																			
 project(Langulus.Test.Module)
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCE_FILES)
 
 # We're importing symbols from Langulus.Framework                           
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS OFF)
@@ -12,6 +11,7 @@ if(NOT WIN32)
     add_compile_options(-fvisibility=hidden)
 endif()
 
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCE_FILES)
 add_library(Mod.Test SHARED ${SOURCE_FILES})
 target_link_libraries(Mod.Test PRIVATE Langulus.Framework)
 

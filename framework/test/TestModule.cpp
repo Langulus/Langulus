@@ -16,7 +16,6 @@ CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
    return ::std::string {Token {serialized}};
 }
 
-using uint = unsigned int;
 
 SCENARIO("Framework initialization and shutdown", "[framework]") {
    GIVEN("A root entity") {
@@ -25,10 +24,14 @@ SCENARIO("Framework initialization and shutdown", "[framework]") {
       root.AddTrait(Traits::Name {"ROOT"_text});
 
       // Create runtime at the root                                     
-      root.CreateRuntime();
+      auto runtime = root.CreateRuntime();
 
       // Load test module                                               
-      root.LoadMod("Test");
+      auto module = root.LoadMod("Test");
+      REQUIRE(module);
+      REQUIRE(module->GetRuntime() == runtime);
+      REQUIRE(runtime->GetDependency("SomeReflectedType1").IsValid());
+      REQUIRE(runtime->GetModules("TestModule").GetCount() == 1);
 
       WHEN("The hierarchy is updated") {
          // Update once                                                 

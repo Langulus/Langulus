@@ -1,0 +1,115 @@
+name: Langulus CI
+on: [push, pull_request, repository_dispatch] # Trigger on pushes to all branches and for all pull-requests
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false # do not abort on a failed job
+      matrix:
+        os: [ubuntu-22.04, windows-latest]
+        build: [Release]
+        architecture: [x86, x64]
+        feature: [
+          [SSE, 16, '-msse', '/arch:SSE'],
+          [SSE2, 16, '-msse2', '/arch:SSE2'],
+          [SSE3, 16, '-msse3', '/arch:SSE3'],
+          [SSSE3, 16, '-mssse3', '/arch:SSSE3'],
+          [SSE4.1, 16, '-msse4.1', '/arch:SSE4.1'],
+          [SSE4.2, 16, '-msse4.2', '/arch:SSE4.2'],
+          [AVX, 32, '-mavx', '/arch:AVX'],
+          [AVX2, 32, '-mavx2', '/arch:AVX2'],
+          [AVX512, 64, '-mavx512f', '/arch:AVX512']
+        ]
+        compiler: [g++, clang++, cl]
+        exclude:
+          - os: ubuntu-22.04
+            compiler: cl
+          - os: ubuntu-22.04
+            architecture: x86
+          - os: windows-latest
+            compiler: g++
+          - os: windows-latest
+            compiler: clang++
+          - architecture: x64
+            compiler: cl
+            feature: [SSE, 16, '-msse', '/arch:SSE']
+          - architecture: x64
+            compiler: cl
+            feature: [SSE2, 16, '-msse2', '/arch:SSE2']
+          - architecture: x64
+            compiler: cl
+            feature: [SSE3, 16, '-msse3', '/arch:SSE3']
+          - architecture: x64
+            compiler: cl
+            feature: [SSSE3, 16, '-mssse3', '/arch:SSSE3']
+          - architecture: x64
+            compiler: cl
+            feature: [SSE4.1, 16, '-msse4.1', '/arch:SSE4.1']
+          - architecture: x64
+            compiler: cl
+            feature: [SSE4.2, 16, '-msse4.2', '/arch:SSE4.2']
+          - architecture: x86
+            compiler: cl
+            feature: [SSE3, 16, '-msse3', '/arch:SSE3']
+          - architecture: x86
+            compiler: cl
+            feature: [SSSE3, 16, '-mssse3', '/arch:SSSE3']
+          - architecture: x86
+            compiler: cl
+            feature: [SSE4.1, 16, '-msse4.1', '/arch:SSE4.1']
+          - architecture: x86
+            compiler: cl
+            feature: [SSE4.2, 16, '-msse4.2', '/arch:SSE4.2']
+
+          # Seems the cloud at github doesn't have the avx512 extensions
+          - feature: [AVX512, 64, '-mavx512f', '/arch:AVX512']
+
+        include:
+          - os: ubuntu-22.04
+            cmake_args: ""
+          - os: windows-latest
+            architecture: x86
+            cmake_args: "-G \"Visual Studio 17 2022\" -A Win32"
+          - os: windows-latest
+            architecture: x64
+            cmake_args: "-G \"Visual Studio 17 2022\" -A x64"
+
+    name: "${{matrix.os}}-${{matrix.compiler}}-${{matrix.build}}-${{matrix.architecture}}-${{matrix.feature[0]}}"
+    runs-on: ${{matrix.os}}
+    steps:
+      - name: Dispatch Trigger
+        if: github.event.action == 'Dependency changed'
+        run: >
+          echo "Triggered by dependency: ${{github.event.client_payload.cause}}"
+      - name: Clone
+        uses: actions/checkout@v2
+      - if: matrix.os == 'ubuntu-22.04'
+        name: Configure Linux
+        run: >
+          cmake
+          -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
+          -S .
+          -B out/${{matrix.name}}
+          ${{matrix.cmake_args}}
+          -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
+          -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
+          -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
+          -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
+      - if: matrix.os == 'windows-latest'
+        name: Configure Windows
+        run: >
+          cmake
+          -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
+          -S .
+          -B out/${{matrix.name}}
+          ${{matrix.cmake_args}}
+          -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DCMAKE_CXX_FLAGS="/DWIN32 /D_WINDOWS /EHsc ${{matrix.feature[3]}}"
+          -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
+          -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
+          -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
+      - name: Build
+        run: cmake --build out/${{matrix.name}} --config ${{matrix.build}}
+      - name: Test
+        run: cd out/${{matrix.name}} && ctest -V -C ${{matrix.build}}

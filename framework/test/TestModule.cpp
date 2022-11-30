@@ -44,4 +44,31 @@ SCENARIO("Framework initialization and shutdown", "[framework]") {
          }
       }
    }
+
+   GIVEN("A root entity") {
+      // Create root entity                                             
+      Thing root;
+      root.AddTrait(Traits::Name {"ROOT"_text});
+
+      // Create runtime at the root                                     
+      auto runtime = root.CreateRuntime();
+
+      // Load test module                                               
+      auto module = root.LoadMod("Test");
+      REQUIRE(module);
+      REQUIRE(module->GetRuntime() == runtime);
+      REQUIRE(runtime->GetDependency("SomeReflectedType1").IsValid());
+      REQUIRE(runtime->GetModules("TestModule").GetCount() == 1);
+
+      WHEN("The hierarchy is updated") {
+         // Update once                                                 
+         root.Update(Time::zero());
+
+         THEN("Various traits change") {
+            root.DumpHierarchy();
+
+            REQUIRE(true);
+         }
+      }
+   }
 }

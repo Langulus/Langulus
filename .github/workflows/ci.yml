@@ -83,6 +83,9 @@ jobs:
           echo "Triggered by dependency: ${{github.event.client_payload.cause}}"
       - name: Clone
         uses: actions/checkout@v2
+      - name: Fetch submodules
+        run: >
+          git submodule update --init --recursive
       - if: matrix.os == 'ubuntu-22.04'
         name: Configure Linux
         run: >

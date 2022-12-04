@@ -27,4 +27,10 @@ target_link_libraries(Test.Framework
 
 add_dependencies(Test.Framework Mod.Test)
 
+add_custom_command(
+    TARGET Test.Framework POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:Langulus.Framework>" "$<TARGET_FILE_DIR:Test.Framework>"
+    COMMENT "Copying `$<TARGET_FILE:Langulus.Framework>` to `$<TARGET_FILE_DIR:Test.Framework>`"
+)
+
 add_test(NAME Test.Framework COMMAND Test.Framework)

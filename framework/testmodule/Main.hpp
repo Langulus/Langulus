@@ -36,6 +36,3 @@ struct SomeCategory {
 
 };
 
-LANGULUS_DEFINE_MODULE(TestModule, 1, "TestModule", "Just some module for testing", ""
-   , SomeCategory, SomeReflectedType1, SomeReflectedType2
-)

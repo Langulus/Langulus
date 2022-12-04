@@ -60,10 +60,4 @@ endif()
 if(BUILD_TESTING)
     add_subdirectory(testmodule)
     add_subdirectory(test)
-
-    add_custom_command(
-        TARGET Langulus.Framework POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:Langulus.Framework>" "$<TARGET_FILE_DIR:Test.Framework>"
-        COMMENT "Copying `$<TARGET_FILE:Langulus.Framework>` to `$<TARGET_FILE_DIR:Test.Framework>`"
-    )
 endif()

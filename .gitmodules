@@ -28,3 +28,6 @@
 [submodule "mods/GLFW"]
 	path = mods/GLFW
 	url = https://github.com/Langulus/Mod-GLFW.git
+[submodule "mods/Mod-ImGui"]
+	path = mods/Mod-ImGui
+	url = https://github.com/Langulus/Mod-ImGui.git

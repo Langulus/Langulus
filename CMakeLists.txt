@@ -26,3 +26,4 @@ set(BUILD_TESTING ON CACHE BOOL "Enable testing")
 add_subdirectory(framework)
 
 add_subdirectory(mods/GLFW)
+add_subdirectory(mods/Mod-ImGui)

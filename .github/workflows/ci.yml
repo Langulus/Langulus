@@ -84,22 +84,23 @@ jobs:
       - name: Clone
         uses: actions/checkout@v2
       - if: matrix.os == 'ubuntu-22.04'
-        - name: Install dependencies on Linux
-          run: |
-            sudo apt update
-            sudo apt install libxrandr-dev
-        - name: Configure project for Linux
-          run: >
-            cmake
-            -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
-            -S .
-            -B out/${{matrix.name}}
-            ${{matrix.cmake_args}}
-            -DCMAKE_BUILD_TYPE=${{matrix.build}}
-            -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
-            -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-            -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
-            -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
+        name: Install dependencies on Linux
+        run: |
+          sudo apt update
+          sudo apt install libxrandr-dev
+      - if: matrix.os == 'ubuntu-22.04'
+        name: Configure project for Linux
+        run: >
+          cmake
+          -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
+          -S .
+          -B out/${{matrix.name}}
+          ${{matrix.cmake_args}}
+          -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
+          -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
+          -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
+          -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
       - if: matrix.os == 'windows-latest'
         name: Configure project for Windows
         run: >

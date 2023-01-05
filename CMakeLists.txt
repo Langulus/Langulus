@@ -7,7 +7,7 @@ option(LANGULUS_BUILD_SHARED_LIBRARIES "Build shared (so/dll) libraries" ON)
 
 project(Langulus)
 
-include(InitializeGitSubmodule.cmake)
+include(LangulusUtilities.cmake)
 langulus_init_git_submodule(cmake)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -21,8 +21,4 @@ enable_testing()
 set(BUILD_TESTING ON CACHE BOOL "Enable testing")
 
 add_subdirectory(framework)
-
-langulus_init_git_submodule(mods/Mod-GLFW)
-add_subdirectory(mods/Mod-GLFW)
-langulus_init_git_submodule(mods/Mod-ImGui)
-add_subdirectory(mods/Mod-ImGui)
+add_subdirectory(mods)

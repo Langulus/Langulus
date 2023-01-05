@@ -1,14 +1,7 @@
 project(Langulus.Test.Framework)
-
-# We're importing symbols from Langulus.Framework                           
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS OFF)
-remove_definitions(-DLANGULUS_EXPORT_ALL)
-if(NOT WIN32)
-    add_compile_options(-fvisibility=hidden)
-endif()
+langulus_import_framework()
 
 # Configure Catch2 library                                                  
-message(STATUS "Configuring external project: Catch2...")
 download_project(
     PROJ                Catch2
     GIT_REPOSITORY      https://github.com/catchorg/Catch2.git
@@ -17,8 +10,8 @@ download_project(
 )
 add_subdirectory(${Catch2_SOURCE_DIR} ${Catch2_BINARY_DIR})
 
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCE_FILES)
-add_executable(Test.Framework ${SOURCE_FILES})
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} LANGULUS_FRAMEWORK_TEST_SOURCES)
+add_executable(Test.Framework ${LANGULUS_FRAMEWORK_TEST_SOURCES})
 
 target_link_libraries(Test.Framework
     PRIVATE     Langulus.Framework
@@ -26,11 +19,9 @@ target_link_libraries(Test.Framework
 )
 
 add_dependencies(Test.Framework Mod.Test)
-
-add_custom_command(
-    TARGET Test.Framework POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:Langulus.Framework>" "$<TARGET_FILE_DIR:Test.Framework>"
-    COMMENT "Copying `$<TARGET_FILE:Langulus.Framework>` to `$<TARGET_FILE_DIR:Test.Framework>`"
+langulus_copy_dlls(
+	TO		Test.Framework
+	FROM	Mod.Test
 )
 
 add_test(NAME Test.Framework COMMAND Test.Framework)

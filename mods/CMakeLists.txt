@@ -1,0 +1,6 @@
+langulus_import_framework()
+
+langulus_init_git_submodule(Mod-GLFW)
+add_subdirectory(Mod-GLFW)
+langulus_init_git_submodule(Mod-ImGui)
+add_subdirectory(Mod-ImGui)

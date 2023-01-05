@@ -7,13 +7,10 @@ option(LANGULUS_BUILD_SHARED_LIBRARIES "Build shared (so/dll) libraries" ON)
 
 project(Langulus)
 
-find_package(Git REQUIRED)
-execute_process(
-    COMMAND ${GIT_EXECUTABLE} submodule update --init -- cmake 
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMAND_ERROR_IS_FATAL ANY
-)
+include(InitializeGitSubmodule.cmake)
+langulus_init_git_submodule(cmake)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 include(FetchLangulusModule)
 include(HandleLangulusFeatures)
 
@@ -25,5 +22,7 @@ set(BUILD_TESTING ON CACHE BOOL "Enable testing")
 
 add_subdirectory(framework)
 
-add_subdirectory(mods/GLFW)
+langulus_init_git_submodule(mods/Mod-GLFW)
+add_subdirectory(mods/Mod-GLFW)
+langulus_init_git_submodule(mods/Mod-ImGui)
 add_subdirectory(mods/Mod-ImGui)

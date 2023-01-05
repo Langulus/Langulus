@@ -26,7 +26,7 @@
 	path = cmake
 	url = https://github.com/Langulus/CMake.git
 [submodule "mods/GLFW"]
-	path = mods/GLFW
+	path = mods/Mod-GLFW
 	url = https://github.com/Langulus/Mod-GLFW.git
 [submodule "mods/Mod-ImGui"]
 	path = mods/Mod-ImGui

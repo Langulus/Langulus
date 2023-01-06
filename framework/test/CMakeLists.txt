@@ -21,7 +21,7 @@ target_link_libraries(Test.Framework
 add_dependencies(Test.Framework Mod.Test)
 langulus_copy_dlls(
 	TO		Test.Framework
-	FROM	Mod.Test
+	FROM	Langulus.Framework Mod.Test
 )
 
 add_test(NAME Test.Framework COMMAND Test.Framework)

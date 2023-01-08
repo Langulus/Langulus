@@ -31,3 +31,6 @@
 [submodule "mods/Mod-ImGui"]
 	path = mods/Mod-ImGui
 	url = https://github.com/Langulus/Mod-ImGui.git
+[submodule "mods/Mod-Vulkan"]
+	path = mods/Mod-Vulkan
+	url = https://github.com/Langulus/Mod-Vulkan.git

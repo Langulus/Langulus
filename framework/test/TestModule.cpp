@@ -16,58 +16,46 @@ CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
    return ::std::string {Token {serialized}};
 }
 
+SCENARIO("Framework initialization and shutdown, 1000 times", "[framework]") {
+   for (int repeat = 0; repeat != 1000; ++repeat) {
+      GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
+         // Create root entity                                          
+         Thing root;
+         root.AddTrait(Traits::Name {"ROOT"_text});
 
-SCENARIO("Framework initialization and shutdown", "[framework]") {
-   GIVEN("A root entity") {
-      // Create root entity                                             
-      Thing root;
-      root.AddTrait(Traits::Name {"ROOT"_text});
+         // Create runtime at the root                                  
+         auto runtime = root.CreateRuntime();
+         REQUIRE(runtime);
 
-      // Create runtime at the root                                     
-      auto runtime = root.CreateRuntime();
+         // Create runtime at the root, again, make sure it's the same  
+         auto runtime2 = root.CreateRuntime();
+         REQUIRE(runtime2);
+         REQUIRE(runtime == runtime2);
 
-      // Load test module                                               
-      auto module = root.LoadMod("Test");
-      REQUIRE(module);
-      REQUIRE(module->GetRuntime() == runtime);
-      REQUIRE(runtime->GetDependency("SomeReflectedType1").IsValid());
-      REQUIRE(runtime->GetModules("TestModule").GetCount() == 1);
+         // Load test module                                            
+         auto module = root.LoadMod("Test");
+         REQUIRE(module);
+         REQUIRE(module->GetRuntime() == runtime);
+         REQUIRE(runtime->GetDependency("SomeReflectedType1").IsValid());
+         REQUIRE(runtime->GetModules("TestModule").GetCount() == 1);
 
-      WHEN("The hierarchy is updated") {
-         // Update once                                                 
-         root.Update(Time::zero());
+         // Load test module again, make sure it's the same instance    
+         auto module2 = root.LoadMod("Test");
+         REQUIRE(module2);
+         REQUIRE(module2 == module);
+         REQUIRE(module2->GetRuntime() == runtime);
+         REQUIRE(runtime->GetDependency("SomeReflectedType1").IsValid());
+         REQUIRE(runtime->GetModules("TestModule").GetCount() == 1);
 
-         THEN("Various traits change") {
-            root.DumpHierarchy();
+         WHEN("The hierarchy is updated") {
+            // Update once                                              
+            root.Update(Time::zero());
 
-            REQUIRE(true);
-         }
-      }
-   }
+            THEN("Various traits change") {
+               root.DumpHierarchy();
 
-   GIVEN("A root entity") {
-      // Create root entity                                             
-      Thing root;
-      root.AddTrait(Traits::Name {"ROOT"_text});
-
-      // Create runtime at the root                                     
-      auto runtime = root.CreateRuntime();
-
-      // Load test module                                               
-      auto module = root.LoadMod("Test");
-      REQUIRE(module);
-      REQUIRE(module->GetRuntime() == runtime);
-      REQUIRE(runtime->GetDependency("SomeReflectedType1").IsValid());
-      REQUIRE(runtime->GetModules("TestModule").GetCount() == 1);
-
-      WHEN("The hierarchy is updated") {
-         // Update once                                                 
-         root.Update(Time::zero());
-
-         THEN("Various traits change") {
-            root.DumpHierarchy();
-
-            REQUIRE(true);
+               REQUIRE(true);
+            }
          }
       }
    }

@@ -10,6 +10,8 @@
 #include <any>
 #include <vector>
 
+//LANGULUS_MONOPOLIZE_MEMORY();
+
 /// See https://github.com/catchorg/Catch2/blob/devel/docs/tostring.md        
 CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
    const Text serialized {ex};
@@ -17,6 +19,9 @@ CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
 }
 
 SCENARIO("Framework initialization and shutdown, 1000 times", "[framework]") {
+   bool statistics_provided = false;
+   Anyness::Inner::Allocator::Statistics memory_statistics;
+
    for (int repeat = 0; repeat != 1000; ++repeat) {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
@@ -57,6 +62,13 @@ SCENARIO("Framework initialization and shutdown, 1000 times", "[framework]") {
                REQUIRE(true);
             }
          }
+
+         // Detect memory leaks                                         
+         if (!statistics_provided) {
+            memory_statistics = Anyness::Inner::Allocator::GetStatistics();
+            statistics_provided = true;
+         }
+         else REQUIRE(memory_statistics == Anyness::Inner::Allocator::GetStatistics());
       }
    }
 }

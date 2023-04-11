@@ -11,6 +11,8 @@
 #include <vector>
 
 //LANGULUS_MONOPOLIZE_MEMORY();
+static bool statistics_provided = false;
+static Anyness::Inner::Allocator::Statistics memory_statistics;
 
 /// See https://github.com/catchorg/Catch2/blob/devel/docs/tostring.md        
 CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
@@ -19,9 +21,6 @@ CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
 }
 
 SCENARIO("Framework initialization and shutdown, 1000 times", "[framework]") {
-   bool statistics_provided = false;
-   Anyness::Inner::Allocator::Statistics memory_statistics;
-
    for (int repeat = 0; repeat != 1000; ++repeat) {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
@@ -68,7 +67,9 @@ SCENARIO("Framework initialization and shutdown, 1000 times", "[framework]") {
             memory_statistics = Anyness::Inner::Allocator::GetStatistics();
             statistics_provided = true;
          }
-         else REQUIRE(memory_statistics == Anyness::Inner::Allocator::GetStatistics());
+         else {
+            REQUIRE(memory_statistics == Anyness::Inner::Allocator::GetStatistics());
+         }
       }
    }
 }

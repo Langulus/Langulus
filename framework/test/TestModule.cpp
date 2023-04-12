@@ -10,9 +10,10 @@
 #include <any>
 #include <vector>
 
-//LANGULUS_MONOPOLIZE_MEMORY();
+#if LANGULUS_FEATURE(MEMORY_STATISTICS)
 static bool statistics_provided = false;
 static Anyness::Inner::Allocator::Statistics memory_statistics;
+#endif
 
 /// See https://github.com/catchorg/Catch2/blob/devel/docs/tostring.md        
 CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
@@ -62,14 +63,16 @@ SCENARIO("Framework initialization and shutdown, 1000 times", "[framework]") {
             }
          }
 
-         // Detect memory leaks                                         
-         if (!statistics_provided) {
-            memory_statistics = Anyness::Inner::Allocator::GetStatistics();
-            statistics_provided = true;
-         }
-         else {
-            REQUIRE(memory_statistics == Anyness::Inner::Allocator::GetStatistics());
-         }
+         #if LANGULUS_FEATURE(MEMORY_STATISTICS)
+            // Detect memory leaks                                      
+            if (!statistics_provided) {
+               memory_statistics = Anyness::Inner::Allocator::GetStatistics();
+               statistics_provided = true;
+            }
+            else {
+               REQUIRE(memory_statistics == Anyness::Inner::Allocator::GetStatistics());
+            }
+         #endif
       }
    }
 }

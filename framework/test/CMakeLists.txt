@@ -13,6 +13,10 @@ add_subdirectory(${Catch2_SOURCE_DIR} ${Catch2_BINARY_DIR})
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} LANGULUS_FRAMEWORK_TEST_SOURCES)
 add_executable(Test.Framework ${LANGULUS_FRAMEWORK_TEST_SOURCES})
 
+if (MSVC)
+    target_compile_options(Test.Framework PRIVATE /bigobj)
+endif()
+
 target_link_libraries(Test.Framework
     PRIVATE     Langulus.Framework
                 Catch2

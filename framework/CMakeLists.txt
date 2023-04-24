@@ -36,7 +36,6 @@ add_subdirectory(Math)
 
 if(LANGULUS_BUILD_SHARED_LIBRARIES)
     # These settings are for the framework                                  
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     set(LANGULUS_LIBRARY_TYPE SHARED)
 else()
     # These settings are for the framework                                  
@@ -46,6 +45,10 @@ endif()
 # Combine all submodules as one library                                     
 message("Building Langulus as: ${LANGULUS_LIBRARY_TYPE} library")
 add_library(Langulus.Framework ${LANGULUS_LIBRARY_TYPE} Empty.cpp)
+
+if (MSVC)
+    target_compile_options(Langulus.Framework PRIVATE /bigobj)
+endif()
 
 target_include_directories(Langulus.Framework PUBLIC include)
 

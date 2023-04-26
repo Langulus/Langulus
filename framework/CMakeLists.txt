@@ -50,7 +50,7 @@ if (MSVC)
     target_compile_options(Langulus.Framework PRIVATE /bigobj)
 endif()
 
-target_include_directories(Langulus.Framework PUBLIC include)
+#target_include_directories(Langulus.Framework PUBLIC include)
 
 target_link_libraries(Langulus.Framework
     PUBLIC  Langulus.Core

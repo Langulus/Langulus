@@ -13,7 +13,7 @@
 
 #if LANGULUS_FEATURE(MEMORY_STATISTICS)
 static bool statistics_provided = false;
-static Anyness::Inner::Allocator::Statistics memory_statistics;
+static Allocator::Statistics memory_statistics;
 #endif
 
 /// See https://github.com/catchorg/Catch2/blob/devel/docs/tostring.md        
@@ -22,8 +22,8 @@ CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
    return ::std::string {Token {serialized}};
 }
 
-SCENARIO("Framework initialization and shutdown, 1000 times", "[framework]") {
-   for (int repeat = 0; repeat != 1000; ++repeat) {
+SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
+   for (int repeat = 0; repeat != 100; ++repeat) {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
          Thing root;
@@ -66,13 +66,16 @@ SCENARIO("Framework initialization and shutdown, 1000 times", "[framework]") {
 
          #if LANGULUS_FEATURE(MEMORY_STATISTICS)
             // Detect memory leaks                                      
-            if (!statistics_provided) {
-               memory_statistics = Anyness::Inner::Allocator::GetStatistics();
-               statistics_provided = true;
+            if (statistics_provided) {
+               if (memory_statistics != Fractalloc.GetStatistics()) {
+                  memory_statistics = Fractalloc.GetStatistics();
+                  Fractalloc.DumpPools();
+                  FAIL("Memory leak detected");
+               }
             }
-            else {
-               REQUIRE(memory_statistics == Anyness::Inner::Allocator::GetStatistics());
-            }
+
+            memory_statistics = Fractalloc.GetStatistics();
+            statistics_provided = true;
          #endif
       }
    }

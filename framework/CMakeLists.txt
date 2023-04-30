@@ -59,8 +59,8 @@ target_link_libraries(Langulus.Framework
             Langulus.SIMD
             Langulus.Anyness
             Langulus.Flow
-            Langulus.Entity
             Langulus.Math
+            Langulus.Entity
             fmt
 )
 

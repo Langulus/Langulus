@@ -1,24 +1,19 @@
 cmake_minimum_required(VERSION 3.24)
+project(LangulusRoot)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+message("Compiler:  ${CMAKE_CXX_COMPILER_ID} - ${CMAKE_CXX_COMPILER_VERSION}")
+set(LANGULUS ON CACHE INTERNAL "Defines the build tree as Langulus")
 
-option(LANGULUS_BUILD_SHARED_LIBRARIES "Build shared (so/dll) libraries" ON)
-
-project(Langulus)
-
+# Populate the cmake directory											
 include(LangulusUtilities.cmake)
-langulus_init_git_submodule(cmake)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+langulus_fetch_cmake()
 
-include(FetchLangulusModule)
+# Handle feature flags and global definitions/requirements				
 include(HandleLangulusFeatures)
-
 handle_langulus_features()
 
-add_compile_definitions(LANGULUS_ENABLE_TESTING)
-enable_testing()
-set(BUILD_TESTING ON CACHE BOOL "Enable testing")
-
+# Add framework															
 add_subdirectory(framework)
+
+# Add plugins															
 add_subdirectory(mods)

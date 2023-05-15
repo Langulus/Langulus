@@ -22,10 +22,7 @@
 [submodule "Math"]
 	path = framework/Math
 	url = https://github.com/Langulus/Math.git
-[submodule "cmake"]
-	path = cmake
-	url = https://github.com/Langulus/CMake.git
-[submodule "mods/GLFW"]
+[submodule "mods/Mod-GLFW"]
 	path = mods/Mod-GLFW
 	url = https://github.com/Langulus/Mod-GLFW.git
 [submodule "mods/Mod-ImGui"]

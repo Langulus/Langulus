@@ -78,11 +78,11 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - name: Dispatch Trigger
-        if: github.event.action == 'Dependency changed'
+        if: ${{ startsWith(github.event.action, 'Dependency') }}
         run: >
           echo "Triggered by dependency: ${{github.event.client_payload.cause}}"
       - name: Clone
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - if: matrix.os == 'ubuntu-22.04'
         name: Install dependencies on Linux
         run: |
@@ -101,6 +101,8 @@ jobs:
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
           -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
           -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
+          -DLANGULUS_FEATURE_ENABLE_TESTING=ON
+          -DLANGULUS_BUILD_SHARED_LIBRARIES=ON
       - if: matrix.os == 'windows-latest'
         name: Configure project for Windows
         run: >
@@ -114,6 +116,8 @@ jobs:
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
           -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
           -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
+          -DLANGULUS_FEATURE_ENABLE_TESTING=ON
+          -DLANGULUS_BUILD_SHARED_LIBRARIES=ON
       - name: Build
         run: cmake --build out/${{matrix.name}} --config ${{matrix.build}}
       - name: Test

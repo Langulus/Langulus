@@ -1,15 +1,10 @@
 #																			
 #	This is a template external module for testing runtime loading of		
-#	Langulus modules by Test.Framework										
+#	Langulus modules 										                
 #																			
-project(Langulus.Test.Module)
-langulus_import_framework()
+project(LangulusModTest)
 
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} LANGULUS_TESTMODULE_SOURCES)
-add_library(Mod.Test SHARED ${LANGULUS_TESTMODULE_SOURCES})
+add_library(LangulusModTest SHARED Main.cpp)
+target_link_libraries(LangulusModTest PRIVATE Langulus)
 
-if (MSVC)
-    target_compile_options(Mod.Test PRIVATE /bigobj)
-endif()
-
-target_link_libraries(Mod.Test PRIVATE Langulus.Framework)
+langulus_copy_dlls_advanced(LangulusModTest TO LangulusTest FROM LangulusModTest)

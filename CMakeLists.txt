@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 project(LangulusRoot)
 
-message("Compiler:  ${CMAKE_CXX_COMPILER_ID} - ${CMAKE_CXX_COMPILER_VERSION}")
+message("Compiler: ${CMAKE_CXX_COMPILER_ID} - ${CMAKE_CXX_COMPILER_VERSION}")
 set(LANGULUS ON CACHE INTERNAL "Defines the build tree as Langulus")
 
 # Populate the cmake directory											

@@ -8,7 +8,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-latest]
         build: [Release]
-        architecture: [x86, x64]
+        arch: [x86, x64]
         feature: [
           [SSE, 16, '-msse', '/arch:SSE'],
           [SSE2, 16, '-msse2', '/arch:SSE2'],
@@ -25,39 +25,39 @@ jobs:
           - os: ubuntu-22.04
             compiler: cl
           - os: ubuntu-22.04
-            architecture: x86
+            arch: x86
           - os: windows-latest
             compiler: g++
           - os: windows-latest
             compiler: clang++
-          - architecture: x64
+          - arch: x64
             compiler: cl
             feature: [SSE, 16, '-msse', '/arch:SSE']
-          - architecture: x64
+          - arch: x64
             compiler: cl
             feature: [SSE2, 16, '-msse2', '/arch:SSE2']
-          - architecture: x64
+          - arch: x64
             compiler: cl
             feature: [SSE3, 16, '-msse3', '/arch:SSE3']
-          - architecture: x64
+          - arch: x64
             compiler: cl
             feature: [SSSE3, 16, '-mssse3', '/arch:SSSE3']
-          - architecture: x64
+          - arch: x64
             compiler: cl
             feature: [SSE4.1, 16, '-msse4.1', '/arch:SSE4.1']
-          - architecture: x64
+          - arch: x64
             compiler: cl
             feature: [SSE4.2, 16, '-msse4.2', '/arch:SSE4.2']
-          - architecture: x86
+          - arch: x86
             compiler: cl
             feature: [SSE3, 16, '-msse3', '/arch:SSE3']
-          - architecture: x86
+          - arch: x86
             compiler: cl
             feature: [SSSE3, 16, '-mssse3', '/arch:SSSE3']
-          - architecture: x86
+          - arch: x86
             compiler: cl
             feature: [SSE4.1, 16, '-msse4.1', '/arch:SSE4.1']
-          - architecture: x86
+          - arch: x86
             compiler: cl
             feature: [SSE4.2, 16, '-msse4.2', '/arch:SSE4.2']
 
@@ -68,13 +68,13 @@ jobs:
           - os: ubuntu-22.04
             cmake_args: ""
           - os: windows-latest
-            architecture: x86
+            arch: x86
             cmake_args: "-G \"Visual Studio 17 2022\" -A Win32"
           - os: windows-latest
-            architecture: x64
+            arch: x64
             cmake_args: "-G \"Visual Studio 17 2022\" -A x64"
 
-    name: "${{matrix.os}}-${{matrix.compiler}}-${{matrix.build}}-${{matrix.architecture}}-${{matrix.feature[0]}}"
+    name: "${{matrix.os}}-${{matrix.compiler}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}"
     runs-on: ${{matrix.os}}
     steps:
       - name: Dispatch Trigger
@@ -94,31 +94,31 @@ jobs:
           cmake
           -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
           -S .
-          -B out/${{matrix.name}}
-          ${{matrix.cmake_args}}
+          -B out
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
           -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
           -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
-          -DLANGULUS_FEATURE_ENABLE_TESTING=ON
+          -DLANGULUS_ENABLE_TESTING=ON
           -DLANGULUS_BUILD_SHARED_LIBRARIES=ON
+          ${{matrix.cmake_args}}
       - if: matrix.os == 'windows-latest'
         name: Configure project for Windows
         run: >
           cmake
           -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
           -S .
-          -B out/${{matrix.name}}
-          ${{matrix.cmake_args}}
+          -B out
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_CXX_FLAGS="/DWIN32 /D_WINDOWS /EHsc ${{matrix.feature[3]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
           -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
           -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
-          -DLANGULUS_FEATURE_ENABLE_TESTING=ON
+          -DLANGULUS_ENABLE_TESTING=ON
           -DLANGULUS_BUILD_SHARED_LIBRARIES=ON
+          ${{matrix.cmake_args}}
       - name: Build
-        run: cmake --build out/${{matrix.name}} --config ${{matrix.build}}
+        run: cmake --build out --config ${{matrix.build}}
       - name: Test
-        run: cd out/${{matrix.name}} && ctest -V -C ${{matrix.build}}
+        run: cd out && ctest -V -C ${{matrix.build}}

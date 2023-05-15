@@ -51,8 +51,8 @@ target_compile_definitions(Langulus
 )
 
 if(LANGULUS_ENABLE_TESTING)
+    enable_testing()
     add_subdirectory(test)
     add_subdirectory(testmodule)
-    langulus_copy_dlls(LangulusTest ON Langulus)
 endif()
 

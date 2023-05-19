@@ -31,3 +31,12 @@
 [submodule "mods/Mod-Vulkan"]
 	path = mods/Mod-Vulkan
 	url = https://github.com/Langulus/Mod-Vulkan.git
+[submodule "mods/Mod-Assets-Materials"]
+	path = mods/Mod-Assets-Materials
+	url = https://github.com/Langulus/Mod-Assets-Materials.git
+[submodule "mods/Mod-Assets-Geometry"]
+	path = mods/Mod-Assets-Geometry
+	url = https://github.com/Langulus/Mod-Assets-Geometry.git
+[submodule "mods/Mod-Assets-Images"]
+	path = mods/Mod-Assets-Images
+	url = https://github.com/Langulus/Mod-Assets-Images.git

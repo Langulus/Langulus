@@ -1,3 +1,5 @@
+langulus_init_git_submodule(Mod-FileSystem)
+add_subdirectory(Mod-FileSystem)
 langulus_init_git_submodule(Mod-GLFW)
 add_subdirectory(Mod-GLFW)
 langulus_init_git_submodule(Mod-ImGui)

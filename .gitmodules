@@ -40,3 +40,6 @@
 [submodule "mods/Mod-Assets-Images"]
 	path = mods/Mod-Assets-Images
 	url = https://github.com/Langulus/Mod-Assets-Images.git
+[submodule "mods/Mod-FileSystem"]
+	path = mods/Mod-FileSystem
+	url = https://github.com/Langulus/Mod-FileSystem.git

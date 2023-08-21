@@ -67,14 +67,14 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
          #if LANGULUS_FEATURE(MEMORY_STATISTICS)
             // Detect memory leaks                                      
             if (statistics_provided) {
-               if (memory_statistics != Fractalloc.GetStatistics()) {
-                  memory_statistics = Fractalloc.GetStatistics();
-                  Fractalloc.DumpPools();
+               if (memory_statistics != Allocator::GetStatistics()) {
+                  memory_statistics = Allocator::GetStatistics();
+                  Allocator::DumpPools();
                   FAIL("Memory leak detected");
                }
             }
 
-            memory_statistics = Fractalloc.GetStatistics();
+            memory_statistics = Allocator::GetStatistics();
             statistics_provided = true;
          #endif
       }

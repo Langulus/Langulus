@@ -1,5 +1,3 @@
-project(LangulusTest)
-
 add_executable(LangulusTest
     Main.cpp
     TestModule.cpp

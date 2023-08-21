@@ -1,4 +1,9 @@
-project(Langulus)
+project(Langulus
+    VERSION         1.0.0
+    DESCRIPTION     "The Langulus library, used to develop mods and tools for the Langulus framework"
+    HOMEPAGE_URL    https://langulus.com
+    LANGUAGES       CXX
+)
 
 langulus_init_git_submodule(Core)
 add_subdirectory(Core)
@@ -6,6 +11,8 @@ langulus_init_git_submodule(Logger)
 add_subdirectory(Logger)
 langulus_init_git_submodule(RTTI)
 add_subdirectory(RTTI)
+langulus_init_git_submodule(Fractalloc)
+add_subdirectory(Fractalloc)
 langulus_init_git_submodule(SIMD)
 add_subdirectory(SIMD)
 langulus_init_git_submodule(Anyness)
@@ -22,6 +29,7 @@ message("Building Langulus as: ${LANGULUS_LIBRARY_TYPE} library")
 add_library(Langulus ${LANGULUS_LIBRARY_TYPE} 
     $<TARGET_OBJECTS:LangulusLogger>
     $<TARGET_OBJECTS:LangulusRTTI>
+    $<TARGET_OBJECTS:LangulusFractalloc>
     $<TARGET_OBJECTS:LangulusAnyness>
     $<TARGET_OBJECTS:LangulusFlow>
     $<TARGET_OBJECTS:LangulusEntity>
@@ -31,6 +39,7 @@ target_include_directories(Langulus
     PUBLIC      include
                 $<TARGET_PROPERTY:LangulusLogger,INTERFACE_INCLUDE_DIRECTORIES>
                 $<TARGET_PROPERTY:LangulusRTTI,INTERFACE_INCLUDE_DIRECTORIES>
+                $<TARGET_PROPERTY:LangulusFractalloc,INTERFACE_INCLUDE_DIRECTORIES>
                 $<TARGET_PROPERTY:LangulusAnyness,INTERFACE_INCLUDE_DIRECTORIES>
                 $<TARGET_PROPERTY:LangulusFlow,INTERFACE_INCLUDE_DIRECTORIES>
                 $<TARGET_PROPERTY:LangulusMath,INTERFACE_INCLUDE_DIRECTORIES>

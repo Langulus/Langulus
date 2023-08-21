@@ -43,3 +43,6 @@
 [submodule "mods/Mod-FileSystem"]
 	path = mods/Mod-FileSystem
 	url = https://github.com/Langulus/Mod-FileSystem.git
+[submodule "framework/Fractalloc"]
+	path = framework/Fractalloc
+	url = https://github.com/Langulus/Fractalloc.git

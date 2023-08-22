@@ -107,7 +107,7 @@
       "configurationType": "Debug",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "-DCMAKE_CL_SHOWINCLUDES_PREFIX=\"Note: including file:\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "clang_cl_x86" ],
@@ -206,7 +206,7 @@
       "configurationType": "RelWithDebInfo",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "-DCMAKE_CL_SHOWINCLUDES_PREFIX=\"Note: including file:\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "clang_cl_x86" ],
@@ -274,19 +274,19 @@
       "configurationType": "RelWithDebInfo",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "-DCMAKE_CL_SHOWINCLUDES_PREFIX=\"Note: including file:\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "clang_cl_x64_x64" ],
       "variables": [
         {
           "name": "LANGULUS_FEATURE_MANAGED_MEMORY",
-          "value": "ON",
+          "value": "OFF",
           "type": "BOOL"
         },
         {
           "name": "LANGULUS_FEATURE_MANAGED_REFLECTION",
-          "value": "ON",
+          "value": "OFF",
           "type": "BOOL"
         },
         {
@@ -307,19 +307,19 @@
       "configurationType": "Debug",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "-DCMAKE_CL_SHOWINCLUDES_PREFIX=\"Note: including file:\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "clang_cl_x64_x64" ],
       "variables": [
         {
           "name": "LANGULUS_FEATURE_MANAGED_MEMORY",
-          "value": "ON",
+          "value": "OFF",
           "type": "BOOL"
         },
         {
           "name": "LANGULUS_FEATURE_MANAGED_REFLECTION",
-          "value": "ON",
+          "value": "OFF",
           "type": "BOOL"
         },
         {

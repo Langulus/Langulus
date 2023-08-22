@@ -2,7 +2,6 @@ project(Langulus
     VERSION         1.0.0
     DESCRIPTION     "The Langulus library, used to develop mods and tools for the Langulus framework"
     HOMEPAGE_URL    https://langulus.com
-    LANGUAGES       CXX
 )
 
 langulus_init_git_submodule(Core)

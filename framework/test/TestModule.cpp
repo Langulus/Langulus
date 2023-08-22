@@ -35,16 +35,20 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
          auto module = root.LoadMod("Test");
          REQUIRE(module);
          REQUIRE(module->GetRuntime() == runtime);
-         REQUIRE(runtime->GetDependency("SomeReflectedType1").IsValid());
-         REQUIRE(runtime->GetModules("TestModule").GetCount() == 1);
+         #if LANGULUS_FEATURE(MANAGED_REFLECTION)
+            REQUIRE(runtime->GetDependencyToken("SomeReflectedType1").IsValid());
+            REQUIRE(runtime->GetModulesToken("TestModule").GetCount() == 1);
+         #endif
 
          // Load test module again, make sure it's the same instance    
          auto module2 = root.LoadMod("Test");
          REQUIRE(module2);
          REQUIRE(module2 == module);
          REQUIRE(module2->GetRuntime() == runtime);
-         REQUIRE(runtime->GetDependency("SomeReflectedType1").IsValid());
-         REQUIRE(runtime->GetModules("TestModule").GetCount() == 1);
+         #if LANGULUS_FEATURE(MANAGED_REFLECTION)
+            REQUIRE(runtime->GetDependencyToken("SomeReflectedType1").IsValid());
+            REQUIRE(runtime->GetModulesToken("TestModule").GetCount() == 1);
+         #endif
 
          WHEN("The hierarchy is updated") {
             // Update once                                              

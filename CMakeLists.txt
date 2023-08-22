@@ -3,7 +3,6 @@ project(LangulusRoot
     VERSION         1.0.0
     DESCRIPTION     "The Langulus SDK, containing the entire framework, tools, and modules"
     HOMEPAGE_URL    https://langulus.com
-    LANGUAGES       CXX
 )
 
 message("Compiler: ${CMAKE_CXX_COMPILER_ID} - ${CMAKE_CXX_COMPILER_VERSION}")

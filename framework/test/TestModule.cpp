@@ -11,23 +11,16 @@
 #include <any>
 #include <vector>
 
-#if LANGULUS_FEATURE(MEMORY_STATISTICS)
-static bool statistics_provided = false;
-static Allocator::Statistics memory_statistics;
-#endif
-
-/// See https://github.com/catchorg/Catch2/blob/devel/docs/tostring.md        
-CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) {
-   const Text serialized {ex};
-   return ::std::string {Token {serialized}};
-}
+LANGULUS_EXCEPTION_HANDLER
 
 SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
+   Allocator::State memoryState;
+
    for (int repeat = 0; repeat != 100; ++repeat) {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
          Thing root;
-         root.AddTrait(Traits::Name {"ROOT"_text});
+         root.AddTrait(Traits::Name {"ROOT"});
 
          // Create runtime at the root                                  
          auto runtime = root.CreateRuntime();
@@ -64,19 +57,8 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
             }
          }
 
-         #if LANGULUS_FEATURE(MEMORY_STATISTICS)
-            // Detect memory leaks                                      
-            if (statistics_provided) {
-               if (memory_statistics != Allocator::GetStatistics()) {
-                  memory_statistics = Allocator::GetStatistics();
-                  Allocator::DumpPools();
-                  FAIL("Memory leak detected");
-               }
-            }
-
-            memory_statistics = Allocator::GetStatistics();
-            statistics_provided = true;
-         #endif
+         // Check for memory leaks after each cycle                     
+         REQUIRE(memoryState.Assert());
       }
    }
 }

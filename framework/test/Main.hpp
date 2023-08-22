@@ -11,3 +11,10 @@
 using namespace Langulus;
 using namespace Langulus::Anyness;
 using namespace Langulus::Entity;
+
+/// See https://github.com/catchorg/Catch2/blob/devel/docs/tostring.md        
+#define LANGULUS_EXCEPTION_HANDLER \
+   CATCH_TRANSLATE_EXCEPTION(::Langulus::Exception const& ex) { \
+      const Text serialized {ex}; \
+      return ::std::string {Token {serialized}}; \
+   }

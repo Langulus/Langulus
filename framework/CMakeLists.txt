@@ -1,6 +1,6 @@
 project(Langulus
     VERSION         1.0.0
-    DESCRIPTION     "The Langulus library, used to develop mods and tools for the Langulus framework"
+    DESCRIPTION     "Langulus library, used to develop mods and tools"
     HOMEPAGE_URL    https://langulus.com
 )
 
@@ -60,7 +60,7 @@ target_compile_definitions(Langulus
     PRIVATE     LANGULUS_EXPORT_ALL
 )
 
-if(LANGULUS_ENABLE_TESTING)
+if(LANGULUS_TESTING)
     enable_testing()
     add_subdirectory(test)
     add_subdirectory(testmodule)

@@ -98,10 +98,6 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
-          -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
-          -DLANGULUS_ENABLE_TESTING=ON
-          -DLANGULUS_BUILD_SHARED_LIBRARIES=ON
           ${{matrix.cmake_args}}
       - if: matrix.os == 'windows-latest'
         name: Configure project for Windows
@@ -113,10 +109,6 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_CXX_FLAGS="/DWIN32 /D_WINDOWS /EHsc ${{matrix.feature[3]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_FEATURE_MANAGED_MEMORY=ON
-          -DLANGULUS_FEATURE_MANAGED_REFLECTION=ON
-          -DLANGULUS_ENABLE_TESTING=ON
-          -DLANGULUS_BUILD_SHARED_LIBRARIES=ON
           ${{matrix.cmake_args}}
       - name: Build
         run: cmake --build out --config ${{matrix.build}}

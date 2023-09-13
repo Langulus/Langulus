@@ -30,6 +30,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -63,6 +68,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -98,6 +108,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -131,6 +146,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -164,6 +184,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -197,6 +222,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -230,6 +260,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -265,6 +300,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -298,6 +338,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     },
@@ -331,6 +376,11 @@
           "name": "LANGULUS_SHARED_LIBRARIES",
           "value": "ON",
           "type": "BOOL"
+        },
+        {
+          "name": "LANGULUS_ALIGNMENT",
+          "value": "32",
+          "type": "STRING"
         }
       ]
     }

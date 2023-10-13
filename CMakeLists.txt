@@ -5,11 +5,9 @@ project(LangulusRoot
     HOMEPAGE_URL    https://langulus.com
 )
 
-set(LANGULUS ON CACHE INTERNAL "Defines the build tree as Langulus")
-
-# Add framework															
+# Add framework                                                         
 include(LangulusUtilities.cmake)
 add_subdirectory(framework)
 
-# Add plugins															
+# Add plugins                                                           
 add_subdirectory(mods)

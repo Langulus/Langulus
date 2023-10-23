@@ -1,20 +1,20 @@
 include(FetchContent)
 
-function(fetch_langulus_module NAME)
+function(fetch_langulus_module NAME GIT_TAG TAG)
     if(NOT DEFINED LANGULUS_EXTERNAL_DIRECTORY)
         set(LANGULUS_EXTERNAL_DIRECTORY "${CMAKE_SOURCE_DIR}/external" CACHE PATH
-            "Place where external dependencies will be downloaded and configured")
+            "Place where external dependencies will be downloaded")
         message(WARNING "LANGULUS_EXTERNAL_DIRECTORY not defined, using default: ${LANGULUS_EXTERNAL_DIRECTORY}")
     endif()
 
-    message(STATUS "Fetching external Langulus${NAME}...")
+    message(STATUS "Fetching external Langulus::${NAME}...")
     FetchContent_Declare(
         Langulus${NAME}
         GIT_REPOSITORY  https://github.com/Langulus/${NAME}.git
-        GIT_TAG         main
+        GIT_TAG         ${TAG}
         GIT_SHALLOW     TRUE
-        SOURCE_DIR      ${LANGULUS_EXTERNAL_DIRECTORY}/${NAME}-src
-        SUBBUILD_DIR    ${LANGULUS_EXTERNAL_DIRECTORY}/${NAME}-subbuild
+        SOURCE_DIR      "${LANGULUS_EXTERNAL_DIRECTORY}/${NAME}-src"
+        SUBBUILD_DIR    "${CMAKE_BINARY_DIR}/external/${NAME}-subbuild"
         ${ARGN}
     )
     FetchContent_MakeAvailable(Langulus${NAME})
@@ -23,7 +23,7 @@ endfunction()
 function(fetch_external_module NAME GIT_REPOSITORY REPO GIT_TAG TAG)
     if(NOT DEFINED LANGULUS_EXTERNAL_DIRECTORY)
         set(LANGULUS_EXTERNAL_DIRECTORY "${CMAKE_SOURCE_DIR}/external" CACHE PATH
-            "Place where external dependencies will be downloaded and configured")
+            "Place where external dependencies will be downloaded")
         message(WARNING "LANGULUS_EXTERNAL_DIRECTORY not defined, using default: ${LANGULUS_EXTERNAL_DIRECTORY}")
     endif()
 
@@ -33,7 +33,7 @@ function(fetch_external_module NAME GIT_REPOSITORY REPO GIT_TAG TAG)
         GIT_REPOSITORY  ${REPO}
         GIT_TAG         ${TAG}
         SOURCE_DIR      "${LANGULUS_EXTERNAL_DIRECTORY}/${NAME}-src"
-        SUBBUILD_DIR    "${LANGULUS_EXTERNAL_DIRECTORY}/${NAME}-subbuild"
+        SUBBUILD_DIR    "${CMAKE_BINARY_DIR}/external/${NAME}-subbuild"
         ${ARGN}
     )
     FetchContent_MakeAvailable(${NAME})

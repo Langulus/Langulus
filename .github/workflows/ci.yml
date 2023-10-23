@@ -1,5 +1,5 @@
 name: Langulus CI
-on: [push, repository_dispatch] # Trigger on pushes to all branches and for all pull-requests
+on: push
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -7,69 +7,109 @@ concurrency:
 jobs:
   build:
     strategy:
-      fail-fast: false # do not abort on a failed job
+      fail-fast: false
       matrix:
         os: [ubuntu-22.04, windows-latest]
         build: [Release]
         arch: [x86, x64]
+        cxx: [g++, clang++, ClangCl, v143]
         feature: [
+          [NoSIMD, 16, ' ', ' '],
           [SSE, 16, '-msse', '/arch:SSE'],
           [SSE2, 16, '-msse2', '/arch:SSE2'],
-          [SSE3, 16, '-msse3', '/arch:SSE3'],
-          [SSSE3, 16, '-mssse3', '/arch:SSSE3'],
-          [SSE4.1, 16, '-msse4.1', '/arch:SSE4.1'],
-          [SSE4.2, 16, '-msse4.2', '/arch:SSE4.2'],
+          [SSE3, 16, '-msse3', '<not available on msvc>'],
+          [SSSE3, 16, '-mssse3', '<not available on msvc>'],
+          [SSE4.1, 16, '-msse4.1', '<not available on msvc>'],
+          [SSE4.2, 16, '-msse4.2', '<not available on msvc>'],
           [AVX, 32, '-mavx', '/arch:AVX'],
           [AVX2, 32, '-mavx2', '/arch:AVX2'],
           [AVX512, 64, '-mavx512f', '/arch:AVX512']
         ]
-        compiler: [g++, clang++, cl]
+
         exclude:
           - os: ubuntu-22.04
-            compiler: cl
+            cxx: v143
           - os: ubuntu-22.04
-            arch: x86
+            cxx: ClangCl
           - os: windows-latest
-            compiler: g++
+            cxx: g++
           - os: windows-latest
-            compiler: clang++
+            cxx: clang++
+
           - arch: x64
-            compiler: cl
+            cxx: ClangCl
             feature: [SSE, 16, '-msse', '/arch:SSE']
           - arch: x64
-            compiler: cl
+            cxx: ClangCl
             feature: [SSE2, 16, '-msse2', '/arch:SSE2']
           - arch: x64
-            compiler: cl
-            feature: [SSE3, 16, '-msse3', '/arch:SSE3']
+            cxx: ClangCl
+            feature: [SSE3, 16, '-msse3', '<not available on msvc>']
           - arch: x64
-            compiler: cl
-            feature: [SSSE3, 16, '-mssse3', '/arch:SSSE3']
+            cxx: ClangCl
+            feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
           - arch: x64
-            compiler: cl
-            feature: [SSE4.1, 16, '-msse4.1', '/arch:SSE4.1']
+            cxx: ClangCl
+            feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
           - arch: x64
-            compiler: cl
-            feature: [SSE4.2, 16, '-msse4.2', '/arch:SSE4.2']
+            cxx: ClangCl
+            feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+
           - arch: x86
-            compiler: cl
-            feature: [SSE3, 16, '-msse3', '/arch:SSE3']
+            cxx: ClangCl
+            feature: [SSE3, 16, '-msse3', '<not available on msvc>']
           - arch: x86
-            compiler: cl
-            feature: [SSSE3, 16, '-mssse3', '/arch:SSSE3']
+            cxx: ClangCl
+            feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
           - arch: x86
-            compiler: cl
-            feature: [SSE4.1, 16, '-msse4.1', '/arch:SSE4.1']
+            cxx: ClangCl
+            feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
           - arch: x86
-            compiler: cl
-            feature: [SSE4.2, 16, '-msse4.2', '/arch:SSE4.2']
+            cxx: ClangCl
+            feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+
+          - arch: x64
+            cxx: v143
+            feature: [SSE, 16, '-msse', '/arch:SSE']
+          - arch: x64
+            cxx: v143
+            feature: [SSE2, 16, '-msse2', '/arch:SSE2']
+          - arch: x64
+            cxx: v143
+            feature: [SSE3, 16, '-msse3', '<not available on msvc>']
+          - arch: x64
+            cxx: v143
+            feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
+          - arch: x64
+            cxx: v143
+            feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
+          - arch: x64
+            cxx: v143
+            feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+
+          - arch: x86
+            cxx: v143
+            feature: [SSE3, 16, '-msse3', '<not available on msvc>']
+          - arch: x86
+            cxx: v143
+            feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
+          - arch: x86
+            cxx: v143
+            feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
+          - arch: x86
+            cxx: v143
+            feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
 
           # Seems the cloud at github doesn't have the avx512 extensions
           - feature: [AVX512, 64, '-mavx512f', '/arch:AVX512']
 
         include:
           - os: ubuntu-22.04
-            cmake_args: ""
+            arch: x86
+            cmake_args: "-DCMAKE_CXX_FLAGS=-m32"
+          - os: ubuntu-22.04
+            arch: x64
+            cmake_args: "-DCMAKE_CXX_FLAGS=-m64"
           - os: windows-latest
             arch: x86
             cmake_args: "-G \"Visual Studio 17 2022\" -A Win32"
@@ -77,43 +117,50 @@ jobs:
             arch: x64
             cmake_args: "-G \"Visual Studio 17 2022\" -A x64"
 
-    name: "${{matrix.os}}-${{matrix.compiler}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}"
+    name: "${{matrix.os}}-${{matrix.cxx}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}"
     runs-on: ${{matrix.os}}
     steps:
-      - name: Dispatch Trigger
-        if: ${{ startsWith(github.event.action, 'Dependency') }}
-        run: >
-          echo "Triggered by dependency: ${{github.event.client_payload.cause}}"
       - name: Clone
         uses: actions/checkout@v3
+
+      - if: matrix.os == 'ubuntu-22.04' && matrix.arch == 'x86'
+        name: Prepare Linux for cross-compilation
+        run: |
+          sudo apt update
+          sudo apt install g++-multilib
+
       - if: matrix.os == 'ubuntu-22.04'
         name: Install dependencies on Linux
         run: |
           sudo apt update
           sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
+
       - if: matrix.os == 'ubuntu-22.04'
-        name: Configure project for Linux
+        name: Configure (Linux)
         run: >
           cmake
-          -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
+          -DCMAKE_CXX_COMPILER=${{matrix.cxx}}
           -S .
           -B out
+          ${{matrix.cmake_args}}
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          ${{matrix.cmake_args}}
+
       - if: matrix.os == 'windows-latest'
-        name: Configure project for Windows
+        name: Configure (Windows)
         run: >
           cmake
-          -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
+          -DCMAKE_CXX_COMPILER=${{matrix.cxx}}
           -S .
           -B out
+          ${{matrix.cmake_args}} -T "${{matrix.cxx}}"
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
-          -DCMAKE_CXX_FLAGS="/DWIN32 /D_WINDOWS /EHsc ${{matrix.feature[3]}}"
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          ${{matrix.cmake_args}}
+
       - name: Build
         run: cmake --build out --config ${{matrix.build}}
+
       - name: Test
         run: cd out && ctest -V -C ${{matrix.build}}

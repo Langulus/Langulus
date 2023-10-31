@@ -46,3 +46,9 @@
 [submodule "framework/Fractalloc"]
 	path = framework/Fractalloc
 	url = https://github.com/Langulus/Fractalloc.git
+[submodule "mods/Mod-FTXUI"]
+	path = mods/Mod-FTXUI
+	url = https://github.com/Langulus/Mod-FTXUI.git
+[submodule "mods/Mod-Physics"]
+	path = mods/Mod-Physics
+	url = https://github.com/Langulus/Mod-Physics.git

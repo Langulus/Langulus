@@ -18,10 +18,6 @@ class TestModule : public Module {
 
    TestModule(Runtime* runtime, const Any&) noexcept
       : Module {MetaOf<TestModule>(), runtime} {}
-
-   virtual void Update(Time) final {
-
-   }
 };
 
 struct SomeReflectedType1 {

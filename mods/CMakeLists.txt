@@ -1,16 +1,27 @@
 langulus_init_git_submodule(Mod-FileSystem)
 add_subdirectory(Mod-FileSystem)
-langulus_init_git_submodule(Mod-GLFW)
-add_subdirectory(Mod-GLFW)
-langulus_init_git_submodule(Mod-ImGui)
-add_subdirectory(Mod-ImGui)
-langulus_init_git_submodule(Mod-Vulkan)
-add_subdirectory(Mod-Vulkan)
+
+if (${LANGULUS_TOASTER_MODE})
+	message(STATUS "[FEATURE] Toaster mode enabled - all graphics modules disabled")
+else()
+	langulus_init_git_submodule(Mod-GLFW)
+	add_subdirectory(Mod-GLFW)
+
+	langulus_init_git_submodule(Mod-ImGui)
+	add_subdirectory(Mod-ImGui)
+
+	langulus_init_git_submodule(Mod-Vulkan)
+	add_subdirectory(Mod-Vulkan)
+endif()
+
 langulus_init_git_submodule(Mod-Assets-Images)
 add_subdirectory(Mod-Assets-Images)
+
 langulus_init_git_submodule(Mod-Assets-Geometry)
 add_subdirectory(Mod-Assets-Geometry)
+
 langulus_init_git_submodule(Mod-Assets-Materials)
 add_subdirectory(Mod-Assets-Materials)
+
 langulus_init_git_submodule(Mod-FTXUI)
 add_subdirectory(Mod-FTXUI)

@@ -166,7 +166,7 @@ jobs:
           #-DLANGULUS_TESTING=ON
 
       - name: Build
-        run: cmake --build build -j16 --config ${{matrix.build}}
+        run: cmake --build build -j4 --config ${{matrix.build}}
 
       - name: Test
         run: cd build && ctest -V -C ${{matrix.build}}

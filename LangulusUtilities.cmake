@@ -66,7 +66,7 @@ function(langulus_copy_dlls TARGET ON THIS)
 endfunction()
 
 function(langulus_copy_dlls_advanced THIS TO TARGET FROM)
-    if(WIN32)
+    #if(WIN32)
         add_dependencies(${TARGET} ${ARGN})
         foreach(element ${ARGN})
             add_custom_command(
@@ -75,5 +75,5 @@ function(langulus_copy_dlls_advanced THIS TO TARGET FROM)
                 COMMENT "Copying `$<TARGET_FILE:${element}>` to `$<TARGET_FILE_DIR:${TARGET}>`"
             )
         endforeach()
-    endif()
+    #endif()
 endfunction()

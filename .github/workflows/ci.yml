@@ -153,13 +153,22 @@ jobs:
           -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
 
-      - if: matrix.os == 'windows-latest'
-        name: Configure (Windows)
+      - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl'
+        name: Configure (Windows, clang-cl)
+        run: >
+          mkdir build && cd build && cmake ..
+          -DCMAKE_C_COMPILER=clang-cl
+          -DCMAKE_CXX_COMPILER=clang-cl
+          -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
+          -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
+
+      - if: matrix.os == 'windows-latest' && matrix.cxx == 'v143'
+        name: Configure (Windows, MSVC)
         run: >
           mkdir build && cd build && cmake ..
           -DCMAKE_CXX_COMPILER=${{matrix.cxx}}
           ${{matrix.cmake_args}} -T "${{matrix.cxx}}"
-          -DCMAKE_SYSTEM_NAME=Windows
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}

@@ -159,6 +159,7 @@ jobs:
           mkdir build && cd build && cmake ..
           -DCMAKE_CXX_COMPILER=${{matrix.cxx}}
           ${{matrix.cmake_args}} -T "${{matrix.cxx}}"
+          -DCMAKE_SYSTEM_NAME=Windows
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}

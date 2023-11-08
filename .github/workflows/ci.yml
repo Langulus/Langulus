@@ -153,14 +153,42 @@ jobs:
           -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
 
-      - if: matrix.os == 'windows-latest'
-        name: Configure (Windows)
+      - if: matrix.os == 'windows-latest' && matrix.cxx == 'v143'
+        name: Configure (Windows, MSVC)
         run: >
           mkdir build && cd build && cmake ..
           ${{matrix.cmake_args}} -T "${{matrix.cxx}}"
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_C_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
+          -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
+
+      - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl' && matrix.arch == 'x86'
+        name: Configure (Windows, ClangCl, x86)
+        run: >
+          cmd /c "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/Tools/VsDevCmd.bat" -arch=x86 &&
+          mkdir build && cd build && cmake ..
+          -G "Ninja"
+          -DCMAKE_C_COMPILER=clang-cl
+          -DCMAKE_CXX_COMPILER=clang-cl
+          -DCMAKE_MT="C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x86/mt.exe"
+          -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DCMAKE_C_FLAGS="${{matrix.feature[3]}} /EHsc -m32"
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc -m32"
+          -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
+
+      - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl' && matrix.arch == 'x64'
+        name: Configure (Windows, ClangCl, x64)
+        run: >
+          cmd /c "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/Tools/VsDevCmd.bat" -arch=x64 &&
+          mkdir build && cd build && cmake ..
+          -G "Ninja"
+          -DCMAKE_C_COMPILER=clang-cl
+          -DCMAKE_CXX_COMPILER=clang-cl
+          -DCMAKE_MT="C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/mt.exe"
+          -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DCMAKE_C_FLAGS="${{matrix.feature[3]}} /EHsc -m64"
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc -m64"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
 
       - name: Build

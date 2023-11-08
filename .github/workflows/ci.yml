@@ -166,6 +166,7 @@ jobs:
       - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl' && matrix.arch == 'x86'
         name: Configure (Windows, ClangCl, x86)
         run: >
+          choco install --no-progress ninja &&
           cmd /c "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/Tools/VsDevCmd.bat" -arch=x86 &&
           mkdir build && cd build && cmake ..
           -G "Ninja"
@@ -180,6 +181,7 @@ jobs:
       - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl' && matrix.arch == 'x64'
         name: Configure (Windows, ClangCl, x64)
         run: >
+          choco install --no-progress ninja &&
           cmd /c "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/Tools/VsDevCmd.bat" -arch=x64 &&
           mkdir build && cd build && cmake ..
           -G "Ninja"

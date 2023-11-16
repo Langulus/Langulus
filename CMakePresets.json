@@ -1,6 +1,7 @@
 ﻿{
   "version": 3,
   "configurePresets": [
+    //                                                                        
     {
       "name": "linux-debug",
       "displayName": "Linux Debug",
@@ -16,6 +17,8 @@
       },
       "vendor": { "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": { "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}" } }
     },
+
+    //                                                                        
     {
       "name": "macos-debug",
       "displayName": "macOS Debug",
@@ -31,19 +34,19 @@
       },
       "vendor": { "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": { "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}" } }
     },
+
+    //                                                                        
     {
-      "name": "windows-base",
-      "description": "Target Windows with the Visual Studio development environment.",
+      "name": "windows",
+      "description": "Target Windows",
       "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe",
         "LANGULUS_TESTING": "ON",
         "LANGULUS_TOASTER_MODE": "OFF",
-        "LANGULUS_ALIGNMENT": "32",
+        "LANGULUS_ALIGNMENT": "32"
       },
       "condition": {
         "type": "equals",
@@ -51,11 +54,35 @@
         "rhs": "Windows"
       }
     },
+
+    //                                                                        
     {
-      "name": "x64-debug",
-      "displayName": "x64 Debug",
+      "name": "windows-cl",
+      "description": "Target Windows with the Visual Studio development environment.",
+      "inherits": "windows",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      }
+    },
+    {
+      "name": "windows-clang-cl",
+      "description": "Target Windows with Clang-Cl.",
+      "inherits": "windows",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-cl.exe",
+        "CMAKE_CXX_COMPILER": "clang-cl.exe"
+      }
+    },
+
+    //                                                                        
+    {
+      "name": "windows-cl-x64-debug",
+      "displayName": "Windows x64 CL Debug",
       "description": "Target Windows (64-bit) with the Visual Studio development environment. (Debug)",
-      "inherits": "windows-base",
+      "inherits": "windows-cl",
       "architecture": {
         "value": "x64",
         "strategy": "external"
@@ -63,17 +90,17 @@
       "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
     },
     {
-      "name": "x64-release",
-      "displayName": "x64 Release",
+      "name": "windows-cl-x64",
+      "displayName": "Windows x64 CL Release",
       "description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
-      "inherits": "x64-debug",
+      "inherits": "windows-cl-x64-debug",
       "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
     },
     {
-      "name": "x86-debug",
-      "displayName": "x86 Debug",
+      "name": "windows-cl-x86-debug",
+      "displayName": "Windows x86 CL Debug",
       "description": "Target Windows (32-bit) with the Visual Studio development environment. (Debug)",
-      "inherits": "windows-base",
+      "inherits": "windows-cl",
       "architecture": {
         "value": "x86",
         "strategy": "external"
@@ -81,10 +108,48 @@
       "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
     },
     {
-      "name": "x86-release",
-      "displayName": "x86 Release",
+      "name": "windows-cl-x86",
+      "displayName": "Windows x86 CL Release",
       "description": "Target Windows (32-bit) with the Visual Studio development environment. (RelWithDebInfo)",
-      "inherits": "x86-debug",
+      "inherits": "windows-cl-x86-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+
+    //                                                                        
+    {
+      "name": "windows-clang-cl-x64-debug",
+      "displayName": "Windows x64 Clang-CL Debug",
+      "description": "Target Windows (64-bit) with Clang-Cl. (Debug)",
+      "inherits": "windows-clang-cl",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "windows-clang-cl-x64",
+      "displayName": "Windows x64 Clang-CL Release",
+      "description": "Target Windows (64-bit) with Clang-Cl. (RelWithDebInfo)",
+      "inherits": "windows-clang-cl-x64-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "windows-clang-cl-x86-debug",
+      "displayName": "Windows x86 Clang-CL Debug",
+      "description": "Target Windows (32-bit) with Clang-Cl. (Debug)",
+      "inherits": "windows-clang-cl",
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "windows-clang-cl-x86",
+      "displayName": "Windows x86 Clang-CL Release",
+      "description": "Target Windows (32-bit) with Clang-Cl. (RelWithDebInfo)",
+      "inherits": "windows-clang-cl-x86-debug",
       "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
     }
   ]

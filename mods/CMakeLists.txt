@@ -25,3 +25,6 @@ add_subdirectory(Mod-Assets-Materials)
 
 langulus_init_git_submodule(Mod-FTXUI)
 add_subdirectory(Mod-FTXUI)
+
+langulus_init_git_submodule(Mod-Physics)
+add_subdirectory(Mod-Physics)

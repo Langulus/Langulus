@@ -114,6 +114,31 @@
       "inherits": "windows-cl-x86-debug",
       "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
     },
+    //                                                                        
+    {
+      "name": "windows-cl-x86-sse",
+      "displayName": "Windows x86 CL Release (with SSE)",
+      "inherits": "windows-cl-x86",
+      "cacheVariables": { "CMAKE_CXX_FLAGS": "/arch:SSE" }
+    },
+    {
+      "name": "windows-cl-x86-sse2",
+      "displayName": "Windows x86 CL Release (with SSE2)",
+      "inherits": "windows-cl-x86",
+      "cacheVariables": { "CMAKE_CXX_FLAGS": "/arch:SSE2" }
+    },
+    {
+      "name": "windows-cl-x86-avx",
+      "displayName": "Windows x86 CL Release (with AVX)",
+      "inherits": "windows-cl-x86",
+      "cacheVariables": { "CMAKE_CXX_FLAGS": "/arch:AVX" }
+    },
+    {
+      "name": "windows-cl-x86-avx2",
+      "displayName": "Windows x86 CL Release (with AVX2)",
+      "inherits": "windows-cl-x86",
+      "cacheVariables": { "CMAKE_CXX_FLAGS": "/arch:AVX2" }
+    },
 
     //                                                                        
     {

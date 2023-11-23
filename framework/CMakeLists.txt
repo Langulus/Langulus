@@ -4,8 +4,6 @@ project(Langulus
     HOMEPAGE_URL    https://langulus.com
 )
 
-langulus_init_git_submodule(Core)
-add_subdirectory(Core)
 langulus_init_git_submodule(Logger)
 add_subdirectory(Logger)
 langulus_init_git_submodule(RTTI)

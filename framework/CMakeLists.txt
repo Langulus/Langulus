@@ -60,7 +60,6 @@ target_compile_definitions(Langulus
 )
 
 if(LANGULUS_TESTING)
-    enable_testing()
     add_subdirectory(test)
     add_subdirectory(testmodule)
 endif()

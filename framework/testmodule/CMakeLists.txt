@@ -4,8 +4,3 @@
 #																			
 add_library(LangulusModTest SHARED Main.cpp)
 target_link_libraries(LangulusModTest PRIVATE Langulus)
-
-langulus_copy_dlls_advanced(LangulusModTest
-	TO		LangulusTest
-	FROM	LangulusModTest
-)

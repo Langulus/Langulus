@@ -9,7 +9,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin/lib)
 
 option(LANGULUS_TOASTER_MODE "Removes all modules that require massive dependencies, like Vulkan" ON)
-set(LANGULUS_TESTING OFF CACHE BOOL "Disable testing by default")
 
 # Add framework                                                         
 include(LangulusUtilities.cmake)

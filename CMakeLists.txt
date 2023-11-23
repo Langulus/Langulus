@@ -10,7 +10,7 @@ include(LangulusUtilities.cmake)
 option(LANGULUS_TOASTER_MODE "Removes all modules that require massive dependencies, like Vulkan" ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
 # Add Langulus::Core first, because we need the cached variables		
 langulus_init_git_submodule(framework/Core)

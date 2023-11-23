@@ -54,26 +54,3 @@ function(langulus_init_git_submodule NAME)
         )
 	endif()
 endfunction()
-
-function(langulus_copy_dlls TARGET ON THIS)
-    if(WIN32 AND LANGULUS_SHARED_LIBRARIES)
-        add_custom_command(
-            TARGET ${THIS} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_RUNTIME_DLLS:${TARGET}>" "$<TARGET_FILE_DIR:${TARGET}>"
-            COMMAND_EXPAND_LISTS
-        )
-    endif()
-endfunction()
-
-function(langulus_copy_dlls_advanced THIS TO TARGET FROM)
-    #if(WIN32)
-        add_dependencies(${TARGET} ${ARGN})
-        foreach(element ${ARGN})
-            add_custom_command(
-                TARGET ${THIS} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:${element}>" "$<TARGET_FILE_DIR:${TARGET}>"
-                COMMENT "Copying `$<TARGET_FILE:${element}>` to `$<TARGET_FILE_DIR:${TARGET}>`"
-            )
-        endforeach()
-    #endif()
-endfunction()

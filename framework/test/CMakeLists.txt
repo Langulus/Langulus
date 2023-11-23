@@ -11,4 +11,5 @@ target_link_libraries(LangulusTest
 add_test(
 	NAME		LangulusTest
 	COMMAND		LangulusTest
+	WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
 )

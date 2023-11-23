@@ -17,7 +17,6 @@ langulus_init_git_submodule(framework/Core)
 add_subdirectory(framework/Core)
 
 if(LANGULUS_TESTING)
-	message("[TESTING] Building all Langulus tests")
     enable_testing()
 endif()
 

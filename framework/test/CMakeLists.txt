@@ -1,11 +1,18 @@
-add_executable(LangulusTest
-    Main.cpp
-    TestModule.cpp
+file(GLOB_RECURSE
+	LANGULUS_TEST_SOURCES 
+	LIST_DIRECTORIES FALSE CONFIGURE_DEPENDS
+	*.cpp *.hpp
 )
+
+add_executable(LangulusTest ${LANGULUS_TEST_SOURCES})
 
 target_link_libraries(LangulusTest
     PRIVATE     Langulus
                 Catch2
+)
+
+add_dependencies(LangulusTest
+	LangulusModTest
 )
 
 add_test(

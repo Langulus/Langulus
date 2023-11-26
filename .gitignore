@@ -2,6 +2,7 @@
 /build
 /.vs
 /external
+/Testing
 *.user
 *.bak
 *.hint

@@ -104,6 +104,10 @@ jobs:
           - feature: [AVX512, 64, '-mavx512f', '/arch:AVX512']
 
         include:
+          - cxx: g++
+            c: gcc
+          - cxx: clang++-16
+            c: clang-16
           - os: ubuntu-22.04
             arch: x86
             cmake_args: "-DCMAKE_CXX_FLAGS=-m32"
@@ -147,9 +151,11 @@ jobs:
         name: Configure (Linux)
         run: >
           mkdir build && cd build && cmake ..
+          -DCMAKE_C_COMPILER=${{matrix.c}}
           -DCMAKE_CXX_COMPILER=${{matrix.cxx}}
           ${{matrix.cmake_args}} 
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DCMAKE_C_FLAGS="${{matrix.feature[2]}}"
           -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
 
@@ -159,7 +165,6 @@ jobs:
           mkdir build && cd build && cmake ..
           ${{matrix.cmake_args}} -T "${{matrix.cxx}}"
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
-          -DCMAKE_C_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
 

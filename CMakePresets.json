@@ -3,9 +3,10 @@
   "configurePresets": [
     //                                                                        
     {
-      "name": "linux-debug",
-      "displayName": "Linux Debug",
+      "name": "linux",
+      "displayName": "Target WSL",
       "description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system.",
+      "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
@@ -20,9 +21,60 @@
 
     //                                                                        
     {
+      "name": "linux-g++",
+      "description": "Target WSL with the GNU compiler",
+      "inherits": "linux",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+
+    //                                                                        
+    {
+      "name": "linux-g++-x64-debug",
+      "displayName": "Linux x64 G++ Debug",
+      "description": "Target WSL with the 64bit GNU compiler (debug)",
+      "inherits": "linux-g++",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "linux-g++-x64",
+      "displayName": "Linux x64 G++ Release",
+      "description": "Target WSL with the 64bit GNU compiler",
+      "inherits": "linux-g++-x64-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "linux-g++-x86-debug",
+      "displayName": "Linux x86 G++ Debug",
+      "description": "Target WSL with the 32bit GNU compiler (debug)",
+      "inherits": "linux-g++",
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "linux-g++-x86",
+      "displayName": "Linux x86 G++ Release",
+      "description": "Target WSL with the 32bit GNU compiler",
+      "inherits": "linux-g++-x86-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+
+    //
+    {
       "name": "macos-debug",
       "displayName": "macOS Debug",
       "description": "Target a remote macOS system.",
+      "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",

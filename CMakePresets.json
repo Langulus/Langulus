@@ -31,6 +31,17 @@
       }
     },
 
+    {
+      "name": "linux-clang++16",
+      "description": "Target WSL with the Clang 16 compiler",
+      "inherits": "linux",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-16",
+        "CMAKE_CXX_COMPILER": "clang++-16"
+      }
+    },
+
     //                                                                        
     {
       "name": "linux-g++-x64-debug",
@@ -69,7 +80,45 @@
       "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
     },
 
-    //
+    //                                                                        
+    {
+      "name": "linux-clang++16-x64-debug",
+      "displayName": "Linux x64 Clang 16 Debug",
+      "description": "Target WSL with the 64bit Clang 16 compiler (debug)",
+      "inherits": "linux-clang++16",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "linux-clang++16-x64",
+      "displayName": "Linux x64 Clang 16 Release",
+      "description": "Target WSL with the 64bit Clang 16 compiler",
+      "inherits": "linux-clang++16-x64-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "linux-clang++16-x86-debug",
+      "displayName": "Linux x86 Clang 16 Debug",
+      "description": "Target WSL with the 32bit Clang 16 compiler (debug)",
+      "inherits": "linux-clang++16",
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "linux-clang++16-x86",
+      "displayName": "Linux x86 Clang 16 Release",
+      "description": "Target WSL with the 32bit Clang 16 compiler",
+      "inherits": "linux-clang++16-x86-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+
+    //                                                                        
     {
       "name": "macos-debug",
       "displayName": "macOS Debug",

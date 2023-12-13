@@ -15,6 +15,7 @@ using namespace Langulus::Entity;
 
 class TestModule : public Module {
    LANGULUS(ABSTRACT) false;
+   LANGULUS_BASES(Module);
 
    TestModule(Runtime* runtime, const Any&) noexcept
       : Module {MetaOf<TestModule>(), runtime} {}

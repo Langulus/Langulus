@@ -1,0 +1,4 @@
+cleanup the concept of CT::POD
+experiment with using RTTI::SomeTrait; and detecting those upon reflection, instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
+rename Traits to Tags?
+delete generators from MetaData

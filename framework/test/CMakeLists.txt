@@ -1,7 +1,7 @@
 file(GLOB_RECURSE
 	LANGULUS_TEST_SOURCES 
 	LIST_DIRECTORIES FALSE CONFIGURE_DEPENDS
-	*.cpp *.hpp
+	*.cpp
 )
 
 add_executable(LangulusTest ${LANGULUS_TEST_SOURCES})

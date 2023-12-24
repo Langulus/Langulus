@@ -9,9 +9,6 @@
 #include <Entity/External.hpp>
 
 using namespace Langulus;
-using namespace Langulus::Flow;
-using namespace Langulus::Anyness;
-using namespace Langulus::Entity;
 
 class TestModule : public Module {
    LANGULUS(ABSTRACT) false;

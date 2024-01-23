@@ -1,0 +1,10 @@
+- cleanup the concept of CT::POD
+- experiment with using RTTI::SomeTrait; and detecting those upon reflection, instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
+- rename Traits to Tags?
+- rename Any to Many, and make Any specialized for one element only?
+- mInfo in maps moves around to first map entry, so that iterations always beging with the first pair
+- implement ordered maps and sets using an ordering array of indices after the mInfo array - that way we can directly transfer maps between ordered/unordered variations without any trouble
+- use redundant map data (mValues.mCount and mValues.mReserved) for keeping track of ordering array
+- map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
+- when deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use if consteval
+- add multiplication operators to meta types to multiply by their size

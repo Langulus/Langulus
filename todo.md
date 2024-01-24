@@ -8,3 +8,4 @@
 - map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
 - when deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use if consteval
 - add multiplication operators to meta types to multiply by their size
+- remove CT::Inner duplicated concepts, use Decay when needed to use the non-inner version

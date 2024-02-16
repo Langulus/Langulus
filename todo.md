@@ -10,3 +10,4 @@
 - add multiplication operators to meta types to multiply by their size
 - remove CT::Inner duplicated concepts, use Decay when needed to use the non-inner version
 - ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can's stress this enough.
+- Ditch monocast nonsense, and instead add Shallow semantic that affects whether verbs are executed deeply or not?

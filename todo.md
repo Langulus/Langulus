@@ -11,3 +11,5 @@
 - remove CT::Inner duplicated concepts, use Decay when needed to use the non-inner version
 - ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can's stress this enough.
 - Ditch monocast nonsense, and instead add Shallow semantic that affects whether verbs are executed deeply or not?
+- In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead
+- Many of the containers call two destructors instead of one, inherit directly from Block/BlockMap/BlockSet to avoid it

@@ -14,7 +14,7 @@
 LANGULUS_EXCEPTION_HANDLER
 
 SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
-   Allocator::State memoryState;
+   static Allocator::State memoryState;
 
    for (int repeat = 0; repeat != 100; ++repeat) {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
@@ -53,12 +53,7 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
          WHEN("The hierarchy is updated") {
             // Update once                                              
             root.Update(Time::zero());
-
-            THEN("Various traits change") {
-               root.DumpHierarchy();
-
-               REQUIRE(true);
-            }
+            root.DumpHierarchy();
          }
 
          // Check for memory leaks after each cycle                     

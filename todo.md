@@ -14,3 +14,4 @@
 - In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead
 - Many of the containers call two destructors instead of one, inherit directly from Block/BlockMap/BlockSet to avoid it
 - Block, BlockMap, BlockSet are unsafe when inserting/removing with more than one ref - the newly implemented Copy/Refer semantics will help branch out the container before touching any memory
+- Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case

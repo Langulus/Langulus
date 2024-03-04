@@ -1,6 +1,5 @@
 - cleanup the concept of CT::POD
 - experiment with using RTTI::SomeTrait; and detecting those upon reflection, instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
-- rename Traits to Tags?
 - rename Any to Many, and make Any specialized for one element only?
 - mInfo in maps moves around to first map entry, so that iterations always beging with the first pair
 - implement ordered maps and sets using an ordering array of indices after the mInfo array - that way we can directly transfer maps between ordered/unordered variations without any trouble
@@ -13,6 +12,7 @@
 - Ditch monocast nonsense, and instead add Shallow semantic that affects whether verbs are executed deeply or not?
 - In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead
 - Many of the containers call two destructors instead of one, inherit directly from Block/BlockMap/BlockSet to avoid it
-- Block, BlockMap, BlockSet are unsafe when inserting/removing with more than one ref - the newly implemented Copy/Refer semantics will help branch out the container before touching any memory
 - Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case
 - Add NameOf corner case tests where the typename starts or ends overlapping with the provided helper_name
+- Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized
+- Why hardcode Traits::Parent to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???

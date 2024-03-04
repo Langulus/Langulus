@@ -59,7 +59,7 @@
       "displayName": "Linux x64 G++ Release",
       "description": "Target WSL with the 64bit GNU compiler",
       "inherits": "linux-g++-x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
     {
       "name": "linux-g++-x86-debug",
@@ -77,7 +77,7 @@
       "displayName": "Linux x86 G++ Release",
       "description": "Target WSL with the 32bit GNU compiler",
       "inherits": "linux-g++-x86-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
 
     //                                                                        
@@ -97,7 +97,7 @@
       "displayName": "Linux x64 Clang 16 Release",
       "description": "Target WSL with the 64bit Clang 16 compiler",
       "inherits": "linux-clang++16-x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
     {
       "name": "linux-clang++16-x86-debug",
@@ -115,7 +115,7 @@
       "displayName": "Linux x86 Clang 16 Release",
       "description": "Target WSL with the 32bit Clang 16 compiler",
       "inherits": "linux-clang++16-x86-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
 
     //                                                                        
@@ -195,7 +195,7 @@
       "displayName": "Windows x64 CL Release",
       "description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
       "inherits": "windows-cl-x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
     {
       "name": "windows-cl-x86-debug",
@@ -213,7 +213,7 @@
       "displayName": "Windows x86 CL Release",
       "description": "Target Windows (32-bit) with the Visual Studio development environment. (RelWithDebInfo)",
       "inherits": "windows-cl-x86-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
     //                                                                        
     {
@@ -258,7 +258,7 @@
       "displayName": "Windows x64 Clang-CL Release",
       "description": "Target Windows (64-bit) with Clang-Cl. (RelWithDebInfo)",
       "inherits": "windows-clang-cl-x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
     {
       "name": "windows-clang-cl-x86-debug",
@@ -276,7 +276,7 @@
       "displayName": "Windows x86 Clang-CL Release",
       "description": "Target Windows (32-bit) with Clang-Cl. (RelWithDebInfo)",
       "inherits": "windows-clang-cl-x86-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     }
   ]
 }

@@ -16,3 +16,4 @@
 - Add NameOf corner case tests where the typename starts or ends overlapping with the provided helper_name
 - Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized
 - Why hardcode Traits::Parent to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???
+- Check if vector/point/normal/sampler/etc. constructors make sense and play well with semantics, when inside containers

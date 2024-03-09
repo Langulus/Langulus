@@ -18,3 +18,4 @@
 - Why hardcode Traits::Parent to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???
 - Test if vector/point/normal/sampler/etc. constructors make sense and play well with semantics, when inside containers
 - Since Couple is now invoked by the user's whim, mOwners is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor!
+- It would be _really_ cool if Langulus::Logger supports markdown, through _md literal for example? Will save on a lot of Logger::Command pushes

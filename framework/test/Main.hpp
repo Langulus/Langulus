@@ -1,15 +1,15 @@
 ///                                                                           
-/// Langulus::Framework                                                       
-/// Copyright(C) 2016 Dimo Markov <langulusteam@gmail.com>                    
+/// Langulus::Test                                                            
+/// Copyright (c) 2016 Dimo Markov <team@langulus.com>                        
+/// Part of the Langulus framework, see https://langulus.com                  
 ///                                                                           
 /// Distributed under GNU General Public License v3+                          
 /// See LICENSE file, or https://www.gnu.org/licenses                         
 ///                                                                           
 #pragma once
-#include <Entity/Thing.hpp>
+#include <Langulus.hpp>
 
 using namespace Langulus;
-using namespace Entity;
 
 
 /// See https://github.com/catchorg/Catch2/blob/devel/docs/tostring.md        

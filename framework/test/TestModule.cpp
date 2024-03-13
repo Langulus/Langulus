@@ -6,12 +6,10 @@
 /// See LICENSE file, or https://www.gnu.org/licenses                         
 ///                                                                           
 #include "Main.hpp"
-#include <Entity/Thing.hpp>
 #include <catch2/catch.hpp>
-#include <any>
-#include <vector>
 
 LANGULUS_EXCEPTION_HANDLER
+
 
 SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
    static Allocator::State memoryState;

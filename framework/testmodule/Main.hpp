@@ -6,11 +6,13 @@
 /// See LICENSE file, or https://www.gnu.org/licenses                         
 ///                                                                           
 #pragma once
-#include <Entity/External.hpp>
+#include <Entity/Thing.hpp>
 
 using namespace Langulus;
+using namespace Entity;
 
-class TestModule : public Module {
+
+class TestModule : public A::Module {
    LANGULUS(ABSTRACT) false;
    LANGULUS_BASES(Module);
 

@@ -6,9 +6,11 @@
 /// See LICENSE file, or https://www.gnu.org/licenses                         
 ///                                                                           
 #pragma once
-#include <Entity/External.hpp>
+#include <Entity/Thing.hpp>
 
 using namespace Langulus;
+using namespace Entity;
+
 
 /// See https://github.com/catchorg/Catch2/blob/devel/docs/tostring.md        
 #define LANGULUS_EXCEPTION_HANDLER \

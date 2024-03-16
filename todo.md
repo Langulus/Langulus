@@ -5,12 +5,12 @@
 - implement ordered maps and sets using an ordering array of indices after the mInfo array - that way we can directly transfer maps between ordered/unordered variations without any trouble
 - use redundant map data (mValues.mCount and mValues.mReserved) for keeping track of ordering array
 - map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
-- when deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use if consteval
+- when deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 - add multiplication operators to meta types to multiply by their size
 - remove CT::Inner duplicated concepts, use Decay when needed to use the non-inner version
 - ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can's stress this enough.
 - Ditch monocast nonsense, and instead add Shallow semantic that affects whether verbs are executed deeply or not?
-- In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead
+- In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)
 - Many of the containers call two destructors instead of one, inherit directly from Block/BlockMap/BlockSet to avoid it
 - Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case
 - Add NameOf corner case tests where the typename starts or ends overlapping with the provided helper_name
@@ -19,3 +19,4 @@
 - Test if vector/point/normal/sampler/etc. constructors make sense and play well with semantics, when inside containers
 - Since Couple is now invoked by the user's whim, mOwners is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor!
 - It would be _really_ cool if Langulus::Logger supports markdown, through _md literal for example? Will save on a lot of Logger::Command pushes
+- Check where the new Types::ForEach pattern can be useful to reduce code

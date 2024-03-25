@@ -28,3 +28,6 @@ add_subdirectory(Mod-FTXUI)
 
 langulus_init_git_submodule(Mod-Physics)
 add_subdirectory(Mod-Physics)
+
+langulus_init_git_submodule(Mod-ASCII)
+add_subdirectory(Mod-ASCII)

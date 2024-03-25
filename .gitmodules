@@ -52,3 +52,6 @@
 [submodule "mods/Mod-Physics"]
 	path = mods/Mod-Physics
 	url = https://github.com/Langulus/Mod-Physics.git
+[submodule "mods/Mod-ASCII"]
+	path = mods/Mod-ASCII
+	url = https://github.com/Langulus/Mod-ASCII.git

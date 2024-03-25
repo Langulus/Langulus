@@ -17,7 +17,8 @@ class TestModule : public A::Module {
    LANGULUS_BASES(Module);
 
    TestModule(Runtime* runtime, const Any&) noexcept
-      : Module {MetaOf<TestModule>(), runtime} {}
+      : Resolvable {MetaOf<TestModule>()}
+      , Module {runtime} {}
 };
 
 struct SomeReflectedType1 {

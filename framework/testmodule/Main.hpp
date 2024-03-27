@@ -17,7 +17,7 @@ class TestModule : public A::Module {
    LANGULUS_BASES(Module);
 
    TestModule(Runtime* runtime, const Any&) noexcept
-      : Resolvable {MetaOf<TestModule>()}
+      : Resolvable {this}
       , Module {runtime} {}
 };
 

@@ -27,7 +27,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "/usr/bin/gcc-11",
-        "CMAKE_CXX_COMPILER": "/usr/bin/g++-11"
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++-11",
       }
     },
 
@@ -38,7 +38,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-16",
-        "CMAKE_CXX_COMPILER": "clang++-16"
+        "CMAKE_CXX_COMPILER": "clang++-16",
       }
     },
 
@@ -52,7 +52,12 @@
         "value": "x64",
         "strategy": "external"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_ALIGNMENT": "32",
+        "CMAKE_C_FLAGS": "-mavx",
+        "CMAKE_CXX_FLAGS": "-m64 -mavx"
+      }
     },
     {
       "name": "linux-g++-x64",
@@ -70,7 +75,11 @@
         "value": "x86",
         "strategy": "external"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_ALIGNMENT": "16",
+        "CMAKE_CXX_FLAGS": "-m32"
+      }
     },
     {
       "name": "linux-g++-x86",
@@ -90,7 +99,12 @@
         "value": "x64",
         "strategy": "external"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_ALIGNMENT": "32",
+        "CMAKE_C_FLAGS": "-mavx",
+        "CMAKE_CXX_FLAGS": "-m64 -mavx"
+      }
     },
     {
       "name": "linux-clang++16-x64",
@@ -108,7 +122,11 @@
         "value": "x86",
         "strategy": "external"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_ALIGNMENT": "16",
+        "CMAKE_CXX_FLAGS": "-m32"
+      }
     },
     {
       "name": "linux-clang++16-x86",

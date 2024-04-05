@@ -20,3 +20,4 @@
 - Since Couple is now invoked by the user's whim, mOwners is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor!
 - It would be _really_ cool if Langulus::Logger supports markdown, through _md literal for example? Will save on a lot of Logger::Command pushes
 - Check where the new Types::ForEach pattern can be useful to reduce code
+- Move ASCII image support directly to ModAssetsImages

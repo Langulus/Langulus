@@ -1,4 +1,4 @@
-- cleanup the concept of CT::POD
+##TODO:
 - experiment with using RTTI::SomeTrait; and detecting those upon reflection, instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
 - rename Any to Many, and make Any specialized for one element only?
 - mInfo in maps moves around to first map entry, so that iterations always beging with the first pair
@@ -7,8 +7,6 @@
 - map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
 - when deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 - add multiplication operators to meta types to multiply by their size
-- remove CT::Inner duplicated concepts, use Decay when needed to use the non-inner version
-- ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can's stress this enough.
 - Ditch monocast nonsense, and instead add Shallow semantic that affects whether verbs are executed deeply or not?
 - In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)
 - Many of the containers call two destructors instead of one, inherit directly from Block/BlockMap/BlockSet to avoid it
@@ -21,3 +19,11 @@
 - It would be _really_ cool if Langulus::Logger supports markdown, through _md literal for example? Will save on a lot of Logger::Command pushes
 - Check where the new Types::ForEach pattern can be useful to reduce code
 - Move ASCII image support directly to ModAssetsImages
+- Test all containers with aggregates
+
+##In progress:
+- remove CT::Inner duplicated concepts, use Decay when needed to use the non-inner version
+- ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can's stress this enough.
+
+##Done:
+- cleanup the concept of CT::POD

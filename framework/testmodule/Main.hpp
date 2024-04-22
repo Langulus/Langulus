@@ -16,7 +16,7 @@ class TestModule : public A::Module {
    LANGULUS(ABSTRACT) false;
    LANGULUS_BASES(Module);
 
-   TestModule(Runtime* runtime, const Any&) noexcept
+   TestModule(Runtime* runtime, const Many&) noexcept
       : Resolvable {this}
       , Module {runtime} {}
 };

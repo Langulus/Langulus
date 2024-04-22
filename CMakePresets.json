@@ -10,7 +10,10 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_TESTING": "ON"
+      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -145,7 +148,10 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_TESTING": "ON"
+      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -165,7 +171,8 @@
       "cacheVariables": {
         "LANGULUS_TESTING": "ON",
         "LANGULUS_TOASTER_MODE": "OFF",
-        "LANGULUS_ALIGNMENT": "32"
+        "LANGULUS_ALIGNMENT": "32",
+        "LANGULUS_TESTING": "ON"
       },
       "condition": {
         "type": "equals",

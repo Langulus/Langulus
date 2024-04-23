@@ -8,7 +8,6 @@
 - add multiplication operators to meta types to multiply by their size
 - Ditch `monocast` nonsense, and instead add Shallow semantic that affects whether verbs are executed deeply or not?
 - In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)
-- Many of the containers call two destructors instead of one, inherit directly from Block/BlockMap/BlockSet to avoid it
 - Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case
 - Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized
 - Why hardcode `Traits::Parent` to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???
@@ -18,12 +17,15 @@
 - Check where the new `Types::ForEach` pattern can be useful to reduce code
 - Move ASCII image support directly to `ModAssetsImages`
 - Test all containers with aggregates
-- Separate containers into reusable components
+- Rename Semantic to Intent, and NotSemantic to Peek or NoIntent
+- Rename Crop/CropInner to Select
 
 ## In progress:
 - remove `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version
 - ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can's stress this enough.
 - rename Any to Many, and make Any specialized for one element only?
+- Separate containers into reusable components
+- Many of the containers call two destructors instead of one, inherit directly from Block/BlockMap/BlockSet to avoid it
 
 ## Done:
 - cleanup the concept of `CT::POD`

@@ -170,7 +170,6 @@
       "installDir": "${sourceDir}/out/install/${presetName}",
       "cacheVariables": {
         "LANGULUS_TESTING": "ON",
-        "LANGULUS_TOASTER_MODE": "OFF",
         "LANGULUS_ALIGNMENT": "32",
         "LANGULUS_TESTING": "ON"
       },

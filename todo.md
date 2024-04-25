@@ -19,6 +19,7 @@
 - Test all containers with aggregates
 - Rename Semantic to Intent, and NotSemantic to Peek or NoIntent
 - Rename Crop/CropInner to Select
+- Is it possible to use generator function to iterate based on concepts?? like: ForEach([](const CT::Block auto& block) {...}) ????? that would be bloody awesome
 
 ## In progress:
 - remove `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version

@@ -18,8 +18,7 @@
 - Move ASCII image support directly to `ModAssetsImages`
 - Test all containers with aggregates
 - Rename `Semantic` to `Intent`, and `NotSemantic` to `NoIntent`
-- Rename `Crop/CropInner` to Select
-- Is it possible to use generator function to iterate based on concepts?? like: `ForEach([](const CT::Block auto& block) {...})` ????? that would be bloody awesome
+- Is it possible to use generator function to iterate blocks based on concepts?? like: `ForEach([](const CT::Block auto& block) {...})` ????? that would be bloody awesome
 - Test all containers with `void*/const void*`
 - Test all containers with double pointers, including for `void**/const void* const*`
 - Test containers with function pointers, make them executable
@@ -34,3 +33,4 @@
 - cleanup the concept of `CT::POD`
 - Add `NameOf` corner case tests where the typename starts or ends overlapping with the provided `helper_name`
 - `Many` of the containers call two destructors instead of one, inherit directly from `Block/BlockMap/BlockSet` to avoid it
+- Rename `Crop/CropInner` to `Select`

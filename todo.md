@@ -22,6 +22,7 @@
 - Test all containers with `void*/const void*`
 - Test all containers with double pointers, including for `void**/const void* const*`
 - Test containers with function pointers, make them executable
+- Many::Past() and Many::Future() should accept arguments as filters? or even better: remove missing states, add new containers instead! use the ones in Flow
 
 ## In progress:
 - remove `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version

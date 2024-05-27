@@ -24,7 +24,8 @@
 - Test containers with function pointers, make them executable
 - Many::Past() and Many::Future() should accept arguments as filters? or even better: remove missing states, add new containers instead! use the ones in Flow
 - Improve color multiplication, currently oversaturates, must be renormalized after multiplication
-
+- Events wouldn't be serializable or deterministic with this kinds of timestamp. Use the relative time context for it?
+ 
 ## In progress:
 - remove `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version
 - ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can's stress this enough.

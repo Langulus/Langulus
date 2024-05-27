@@ -31,3 +31,6 @@ add_subdirectory(Mod-Physics)
 
 langulus_init_git_submodule(Mod-ASCII)
 add_subdirectory(Mod-ASCII)
+
+langulus_init_git_submodule(Mod-InputSDL)
+add_subdirectory(Mod-InputSDL)

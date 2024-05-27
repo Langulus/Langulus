@@ -55,3 +55,6 @@
 [submodule "mods/Mod-ASCII"]
 	path = mods/Mod-ASCII
 	url = https://github.com/Langulus/Mod-ASCII.git
+[submodule "mods/Mod-InputSDL"]
+	path = mods/Mod-InputSDL
+	url = https://github.com/Langulus/Mod-InputSDL.git

@@ -34,18 +34,13 @@ function(fetch_external_module NAME GIT_REPOSITORY REPO GIT_TAG TAG)
         SOURCE_DIR      "${LANGULUS_EXTERNAL_DIRECTORY}/${NAME}-src"
         SUBBUILD_DIR    "${CMAKE_BINARY_DIR}/external/${NAME}-subbuild"
         ${ARGN}
+		EXCLUDE_FROM_ALL
     )
-
+    FetchContent_MakeAvailable(${NAME})
+	
 	string(TOLOWER ${NAME} LOWERCASE_NAME)
-    set(${NAME}_SOURCE_DIR "${${LOWERCASE_NAME}_SOURCE_DIR}" CACHE INTERNAL "")
-    set(${NAME}_BINARY_DIR "${${LOWERCASE_NAME}_BINARY_DIR}" CACHE INTERNAL "")
-
-    #FetchContent_MakeAvailable(${NAME})
-	FetchContent_GetProperties(${NAME})
-    if(NOT ${NAME}_POPULATED)
-        FetchContent_Populate(${NAME})
-        add_subdirectory(${${NAME}_SOURCE_DIR} ${${NAME}_BINARY_DIR} EXCLUDE_FROM_ALL)
-    endif()
+    set(${NAME}_SOURCE_DIR "${${LOWERCASE_NAME}_SOURCE_DIR}" CACHE INTERNAL "${NAME} source directory")
+    set(${NAME}_BINARY_DIR "${${LOWERCASE_NAME}_BINARY_DIR}" CACHE INTERNAL "${NAME} binary directory")
 endfunction()
 
 function(langulus_init_git_submodule NAME)

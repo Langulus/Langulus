@@ -12,6 +12,7 @@ jobs:
         os: [ubuntu-22.04, windows-latest]
         build: [Release]
         arch: [x86, x64]
+        testing: [ON, OFF]
         cxx: [g++, clang++-16, ClangCl, v143]
         feature: [
           [NoSIMD, 16, ' ', ' '],
@@ -121,7 +122,7 @@ jobs:
             arch: x64
             cmake_args: "-G \"Visual Studio 17 2022\" -A x64"
 
-    name: "${{matrix.os}}-${{matrix.cxx}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}"
+    name: "${{matrix.os}}-${{matrix.cxx}}-${{matrix.arch}}-${{matrix.feature[0]}}-testing${{matrix.testing}}"
     runs-on: ${{matrix.os}}
     steps:
       - name: Clone
@@ -158,7 +159,7 @@ jobs:
           -DCMAKE_C_FLAGS="${{matrix.feature[2]}}"
           -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_TESTING=ON
+          -DLANGULUS_TESTING=${{matrix.testing}}
 
       - if: matrix.os == 'windows-latest' && matrix.cxx == 'v143'
         name: Configure (Windows, MSVC)
@@ -168,7 +169,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_TESTING=ON
+          -DLANGULUS_TESTING=${{matrix.testing}}
 
       - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl' && matrix.arch == 'x86'
         name: Configure (Windows, ClangCl, x86)
@@ -184,7 +185,7 @@ jobs:
           -DCMAKE_C_FLAGS="${{matrix.feature[3]}} /EHsc -m32"
           -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc -m32"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_TESTING=ON
+          -DLANGULUS_TESTING=${{matrix.testing}}
 
       - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl' && matrix.arch == 'x64'
         name: Configure (Windows, ClangCl, x64)
@@ -200,7 +201,7 @@ jobs:
           -DCMAKE_C_FLAGS="${{matrix.feature[3]}} /EHsc -m64"
           -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc -m64"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_TESTING=ON
+          -DLANGULUS_TESTING=${{matrix.testing}}
 
       - name: Build
         run: cmake --build build -j4 --config ${{matrix.build}}

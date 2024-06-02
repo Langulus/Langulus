@@ -12,7 +12,7 @@ jobs:
         os: [ubuntu-22.04, windows-latest]
         build: [Release]
         arch: [x86, x64]
-        testing: [ON, OFF]
+        testing: [ON]
         cxx: [g++, clang++-16, ClangCl, v143]
         feature: [
           [NoSIMD, 16, ' ', ' '],

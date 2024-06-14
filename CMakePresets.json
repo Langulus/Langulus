@@ -274,7 +274,11 @@
         "value": "x64",
         "strategy": "external"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_ALIGNMENT": "32",
+        "CMAKE_CXX_FLAGS": "/arch:AVX2 /EHsc -m64"
+      }
     },
     {
       "name": "windows-clang-cl-x64",

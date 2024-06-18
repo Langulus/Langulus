@@ -169,8 +169,7 @@
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
       "cacheVariables": {
-        "LANGULUS_TESTING": "ON",
-        "LANGULUS_ALIGNMENT": "32"
+        "LANGULUS_TESTING": "ON"
       },
       "condition": {
         "type": "equals",
@@ -211,7 +210,10 @@
         "value": "x64",
         "strategy": "external"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_ALIGNMENT": "32"
+      }
     },
     {
       "name": "windows-cl-x64",
@@ -296,7 +298,10 @@
         "value": "x86",
         "strategy": "external"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS": "/arch:SSE /EHsc -m32"
+      }
     },
     {
       "name": "windows-clang-cl-x86",

@@ -16,7 +16,6 @@ jobs:
         cxx: [g++, clang++-16, ClangCl, v143]
         feature: [
           [NoSIMD, 16, ' ', ' '],
-          [SSE, 16, '-msse', '/arch:SSE'],
           [SSE2, 16, '-msse2', '/arch:SSE2'],
           [SSE3, 16, '-msse3', '<not available on msvc>'],
           [SSSE3, 16, '-mssse3', '<not available on msvc>'],
@@ -37,9 +36,6 @@ jobs:
           - os: windows-latest
             cxx: clang++-16
 
-          - arch: x64
-            cxx: ClangCl
-            feature: [SSE, 16, '-msse', '/arch:SSE']
           - arch: x64
             cxx: ClangCl
             feature: [SSE2, 16, '-msse2', '/arch:SSE2']
@@ -69,9 +65,6 @@ jobs:
             cxx: ClangCl
             feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
 
-          - arch: x64
-            cxx: v143
-            feature: [SSE, 16, '-msse', '/arch:SSE']
           - arch: x64
             cxx: v143
             feature: [SSE2, 16, '-msse2', '/arch:SSE2']

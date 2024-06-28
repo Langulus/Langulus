@@ -14,7 +14,7 @@
 - Test if vector/point/normal/sampler/etc. constructors make sense and play well with semantics, when inside containers
 - Since `Couple` is now invoked by the user's whim, `mOwners` is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor!
 - It would be _really_ cool if `Langulus::Logger` supports markdown, through `_md` literal for example? Will save on a lot of `Logger::Command` pushes
-- Check where the new `Types::ForEach` pattern can be useful to reduce code
+- Check where the new `Types::ForEach` pattern can be useful to reduce code. Types::ForEach don't behave well on Clang - detected bad member list reflection. investigate!!
 - Move ASCII image support directly to `ModAssetsImages`
 - Test all containers with aggregates
 - Rename `Semantic` to `Intent`, and `NotSemantic` to `NoIntent`
@@ -27,18 +27,20 @@
 - Events wouldn't be serializable or deterministic with this kinds of timestamp. Use the relative time context for it?
 - RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling NameOf didn't affect anything - just the main reflection routine does.
 - Unnecessary Block code includes double the compilation time - minimize those. Maybe separate include files with separate intents?
-- Fix vector swizzling with itself, once and for all
-- Fix tags assigning different tags
-- Fix scaling/translation sneaking in normal transformation in ASCII rasterizer
+- Separate CT into a separate concept library, carry all canonical types like `A::Block` and `A::Verb` with it?
 
 ## In progress:
-- remove `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version
-- ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can's stress this enough.
-- rename `Any` to `Many`, and make `Any` specialized for one element only?
+- ALL CONCEPTS NEED TESTS, because i just fixed a plethora of logical mistakes in them. can't stress this enough.
+- Make `Any` specialized for one element only (std::any analogy)?
 - Separate containers into reusable components
 
 ## Done:
-- cleanup the concept of `CT::POD`
-- Add `NameOf` corner case tests where the typename starts or ends overlapping with the provided `helper_name`
+- Cleaned up the concept of `CT::POD`
+- Added `NameOf` corner case tests where the typename starts or ends overlapping with the provided `helper_name`
 - `Many` of the containers call two destructors instead of one, inherit directly from `Block/BlockMap/BlockSet` to avoid it
 - Rename `Crop/CropInner` to `Select`
+- Fix vector swizzling with itself, once and for all
+- Fix tags assigning different tags
+- Fix scaling/translation sneaking in normal transformation in ASCII rasterizer
+- Renamed `Any` to `Many`
+- Removed `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version.

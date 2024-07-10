@@ -30,7 +30,6 @@
 - Extensive Block::SmartPush tests are needed - preserving states, like staticness, must be ensured.
 - Derive/Integrate verb
 - Standalone constants reflection
-- Instead of appending a `Logger::Tabs{}`, just make a variant of `Logger::<Type>Tab`!
 
 ## In progress:
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
@@ -48,3 +47,4 @@
 - Fix scaling/translation sneaking in normal transformation in ASCII rasterizer
 - Renamed `Any` to `Many`
 - Removed `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version.
+- Instead of appending a `Logger::Tabs{}`, just make a variant of `Logger::<Type>Tab`!

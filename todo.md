@@ -1,12 +1,10 @@
 ## TODO:
-- Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection, instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
 - `mInfo` in maps moves around to first map entry, so that iterations always beging with the first pair
 - Implement ordered maps and sets using an ordering array of indices after the `mInfo` array - that way we can directly transfer maps between ordered/unordered variations without any trouble
 - Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
 - When deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 - Add multiplication operators to meta types to multiply by their size
-- Ditch `monocast` nonsense, and instead add `Shallow` semantic that affects whether verbs are executed deeply or not?
 - In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)
 - Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case
 - Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized
@@ -16,7 +14,6 @@
 - It would be _really_ cool if `Langulus::Logger` supports markdown, through `_md` literal for example? Will save on a lot of `Logger::Command` pushes
 - Check where the new `Types::ForEach` pattern can be useful to reduce code
 - Move ASCII image support directly to `ModAssetsImages`
-- Rename `Semantic` to `Intent`, and `NotSemantic` to `NoIntent`
 - Is it possible to use generator function to iterate blocks based on concepts?? like: `ForEach([](const CT::Block auto& block) {...})` ????? that would be bloody awesome
 - Test all containers with `void*/const void*`
 - Test all containers with double pointers, including for `void**/const void* const*`
@@ -36,6 +33,7 @@
 - Make `Any` specialized for one element only (std::any analogy)?
 - Separate containers into reusable components
 - Test all containers with aggregates
+- Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
 
 ## Done:
 - Cleaned up the concept of `CT::POD`
@@ -48,3 +46,7 @@
 - Renamed `Any` to `Many`
 - Removed `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version.
 - Instead of appending a `Logger::Tabs{}`, just make a variant of `Logger::<Type>Tab`!
+- Rename `Semantic` to `Intent`, and `NotSemantic` to `NoIntent`
+
+## Abandoned:
+- Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection, instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.

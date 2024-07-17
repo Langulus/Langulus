@@ -224,21 +224,27 @@
     },
     {
       "name": "windows-cl-x86-debug",
-      "displayName": "Windows x86 CL Debug",
+      "displayName": "Windows x86 CL Debug (no SIMD)",
       "description": "Target Windows (32-bit) with the Visual Studio development environment. (Debug)",
       "inherits": "windows-cl",
       "architecture": {
         "value": "x86",
         "strategy": "external"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS": "/arch:IA32"
+      }
     },
     {
       "name": "windows-cl-x86",
-      "displayName": "Windows x86 CL Release",
+      "displayName": "Windows x86 CL Release (no SIMD)",
       "description": "Target Windows (32-bit) with the Visual Studio development environment. (RelWithDebInfo)",
       "inherits": "windows-cl-x86-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_CXX_FLAGS": "/arch:IA32"
+      }
     },
     //                                                                        
     {
@@ -257,13 +263,19 @@
       "name": "windows-cl-x86-avx",
       "displayName": "Windows x86 CL Release (with AVX)",
       "inherits": "windows-cl-x86",
-      "cacheVariables": { "CMAKE_CXX_FLAGS": "/arch:AVX" }
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/arch:AVX",
+        "LANGULUS_ALIGNMENT": "32"
+      }
     },
     {
       "name": "windows-cl-x86-avx2",
       "displayName": "Windows x86 CL Release (with AVX2)",
       "inherits": "windows-cl-x86",
-      "cacheVariables": { "CMAKE_CXX_FLAGS": "/arch:AVX2" }
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/arch:AVX2",
+        "LANGULUS_ALIGNMENT": "32"
+      }
     },
 
     //                                                                        

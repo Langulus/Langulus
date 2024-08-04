@@ -58,3 +58,15 @@
 [submodule "mods/Mod-InputSDL"]
 	path = mods/Mod-InputSDL
 	url = https://github.com/Langulus/Mod-InputSDL.git
+[submodule "mods/Mod-AI"]
+	path = mods/Mod-AI
+	url = https://github.com/Langulus/Mod-AI.git
+[submodule "mods/Mod-Life"]
+	path = mods/Mod-Life
+	url = https://github.com/Langulus/Mod-Life.git
+[submodule "mods/Mod-Storyteller"]
+	path = mods/Mod-Storyteller
+	url = https://github.com/Langulus/Mod-Storyteller.git
+[submodule "mods/Mod-Network"]
+	path = mods/Mod-Network
+	url = https://github.com/Langulus/Mod-Network.git

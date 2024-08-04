@@ -34,3 +34,15 @@ add_subdirectory(Mod-ASCII)
 
 langulus_init_git_submodule(Mod-InputSDL)
 add_subdirectory(Mod-InputSDL)
+
+langulus_init_git_submodule(Mod-AI)
+add_subdirectory(Mod-AI)
+
+langulus_init_git_submodule(Mod-Life)
+add_subdirectory(Mod-Life)
+
+langulus_init_git_submodule(Mod-Network)
+add_subdirectory(Mod-Network)
+
+langulus_init_git_submodule(Mod-Storyteller)
+add_subdirectory(Mod-Storyteller)

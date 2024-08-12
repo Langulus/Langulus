@@ -30,7 +30,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "/usr/bin/gcc-11",
-        "CMAKE_CXX_COMPILER": "/usr/bin/g++-11",
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++-11"
       }
     },
 
@@ -41,7 +41,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-16",
-        "CMAKE_CXX_COMPILER": "clang++-16",
+        "CMAKE_CXX_COMPILER": "clang++-16"
       }
     },
 
@@ -303,7 +303,7 @@
     },
     {
       "name": "windows-clang-cl-x86-debug",
-      "displayName": "Windows x86 Clang-CL Debug",
+      "displayName": "Windows x86 Clang-CL Debug (no SIMD)",
       "description": "Target Windows (32-bit) with Clang-Cl. (Debug)",
       "inherits": "windows-clang-cl",
       "architecture": {
@@ -312,12 +312,12 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_CXX_FLAGS": "/arch:SSE /EHsc -m32"
+        "CMAKE_CXX_FLAGS": "/arch:IA32 /EHsc -m32"
       }
     },
     {
       "name": "windows-clang-cl-x86",
-      "displayName": "Windows x86 Clang-CL Release",
+      "displayName": "Windows x86 Clang-CL Release (no SIMD)",
       "description": "Target Windows (32-bit) with Clang-Cl. (RelWithDebInfo)",
       "inherits": "windows-clang-cl-x86-debug",
       "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }

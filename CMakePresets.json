@@ -281,7 +281,7 @@
     //                                                                        
     {
       "name": "windows-clang-cl-x64-debug",
-      "displayName": "Windows x64 Clang-CL Debug",
+      "displayName": "Windows x64 Clang-CL Debug (with AVX2)",
       "description": "Target Windows (64-bit) with Clang-Cl. (Debug)",
       "inherits": "windows-clang-cl",
       "architecture": {
@@ -296,7 +296,7 @@
     },
     {
       "name": "windows-clang-cl-x64",
-      "displayName": "Windows x64 Clang-CL Release",
+      "displayName": "Windows x64 Clang-CL Release (with AVX2)",
       "description": "Target Windows (64-bit) with Clang-Cl. (RelWithDebInfo)",
       "inherits": "windows-clang-cl-x64-debug",
       "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }

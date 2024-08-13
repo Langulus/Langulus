@@ -26,7 +26,9 @@
 - Separate CT into a separate concept library, carry all canonical types like `A::Block` and `A::Verb` with it?
 - Extensive Block::SmartPush tests are needed - preserving states, like staticness, must be ensured.
 - Derive/Integrate verb
-- Standalone constants reflection
+- Constants tested in RTTITest
+- Remove CustomNameOf wrappers when constexpr variables can be moved outside scopes in newer standards
+- Code should use {} instead of [] for nested code blocks
 
 ## In progress:
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
@@ -47,6 +49,7 @@
 - Removed `CT::Inner` duplicated concepts, use `Decay` when needed to use the non-inner version.
 - Instead of appending a `Logger::Tabs{}`, just make a variant of `Logger::<Type>Tab`!
 - Rename `Semantic` to `Intent`, and `NotSemantic` to `NoIntent`
+- Standalone constants reflection
 
 ## Abandoned:
 - Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection, instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.

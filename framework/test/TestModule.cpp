@@ -50,7 +50,7 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
 
          WHEN("The hierarchy is updated") {
             // Update once                                              
-            root.Update(Time::zero());
+            root.Update({});
             root.DumpHierarchy();
          }
 

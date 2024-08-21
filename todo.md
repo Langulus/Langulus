@@ -18,22 +18,24 @@
 - Test all containers with `void*/const void*`
 - Test all containers with double pointers, including for `void**/const void* const*`
 - Test containers with function pointers, make them executable
-- Many::Past() and Many::Future() should accept arguments as filters? or even better: remove missing states, add new containers instead! use the ones in Flow
+- `Many::Past()` and `Many::Future()` should accept arguments as filters? or even better: remove missing states, add new containers instead! use the ones in Flow
 - Improve color multiplication, currently oversaturates, must be renormalized after multiplication
 - Events wouldn't be serializable or deterministic with this kinds of timestamp. Use the relative time context for it?
-- RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling NameOf didn't affect anything - just the main reflection routine does.
+- RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling `NameOf` didn't affect anything - just the main reflection routine does.
 - Unnecessary Block code includes double the compilation time - minimize those. Maybe separate include files with separate intents?
-- Separate CT into a separate concept library, carry all canonical types like `A::Block` and `A::Verb` with it?
-- Extensive Block::SmartPush tests are needed - preserving states, like staticness, must be ensured.
-- Derive/Integrate verb
-- Constants tested in RTTITest
-- Remove CustomNameOf wrappers when constexpr variables can be moved outside scopes in newer standards
-- Code should use {} instead of [] for nested code blocks
+- Separate `CT` into a separate concept library, carry all canonical types like `A::Block` and `A::Verb` with it?
+- Extensive `Block::SmartPush` tests are needed - preserving states, like staticness, must be ensured.
+- `Derive`/`Integrate` verb
+- Constants tested in `RTTITest`
+- Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards
+- Code should use `{}` instead of `[]` for nested code blocks
+- `Traits::Time` conflicts undetectedly with `Langulus::Time` - fix it!
+- Separate containers into reusable components
+- Make `Any` specialized for one element only (std::any analogy)?
+- `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
 
 ## In progress:
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
-- Make `Any` specialized for one element only (std::any analogy)?
-- Separate containers into reusable components
 - Test all containers with aggregates
 - Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
 

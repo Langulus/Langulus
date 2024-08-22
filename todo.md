@@ -33,6 +33,7 @@
 - Separate containers into reusable components
 - Make `Any` specialized for one element only (std::any analogy)?
 - `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
+- Block::Emplace doesn't return a handle if sparse!
 
 ## In progress:
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.

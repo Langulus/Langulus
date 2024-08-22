@@ -28,17 +28,18 @@
 - `Derive`/`Integrate` verb
 - Constants tested in `RTTITest`
 - Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards
-- Code should use `{}` instead of `[]` for nested code blocks
 - `Traits::Time` conflicts undetectedly with `Langulus::Time` - fix it!
 - Separate containers into reusable components
 - Make `Any` specialized for one element only (std::any analogy)?
 - `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
 - Block::Emplace doesn't return a handle if sparse!
+- Open/Closed range support in Code parser
 
 ## In progress:
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - Test all containers with aggregates
 - Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
+- Code should use `{}` instead of `[]` for nested code blocks
 
 ## Done:
 - Cleaned up the concept of `CT::POD`

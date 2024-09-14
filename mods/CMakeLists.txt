@@ -46,3 +46,6 @@ add_subdirectory(Mod-Network)
 
 langulus_init_git_submodule(Mod-Storyteller)
 add_subdirectory(Mod-Storyteller)
+
+langulus_init_git_submodule(Mod-UMS)
+add_subdirectory(Mod-UMS)

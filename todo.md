@@ -1,4 +1,4 @@
-## TODO:
+﻿## TODO:
 - `mInfo` in maps moves around to first map entry, so that iterations always beging with the first pair
 - Implement ordered maps and sets using an ordering array of indices after the `mInfo` array - that way we can directly transfer maps between ordered/unordered variations without any trouble
 - Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array
@@ -34,7 +34,7 @@
 - `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
 - Block::Emplace doesn't return a handle if sparse!
 - Open/Closed range support in Code parser
-- Handle escapes in Code's string/char parser
+- Handle escapes in Code's string/char parser - symbols like ∞ screw with attached operators, because op can't be isolated around them
 
 ## In progress:
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.

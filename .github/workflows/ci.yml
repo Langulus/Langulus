@@ -201,3 +201,10 @@ jobs:
 
       - name: Test
         run: cd build && ctest -V -C ${{matrix.build}}
+        
+      - name: 'Upload artifacts'
+        uses: actions/upload-artifact@v4
+        with:
+          name: logfile.htm
+          path: build/bin/logfile.htm
+          retention-days: 5

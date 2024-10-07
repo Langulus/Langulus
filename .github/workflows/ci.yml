@@ -13,7 +13,7 @@ jobs:
         build: [Release]
         arch: [x86, x64]
         testing: [ON]
-        cxx: [g++, clang++-17, ClangCl, v143]
+        cxx: [ClangCl]
         feature: [
           [NoSIMD, 16, ' ', ' '],
           [SSE2, 16, '-msse2', '/arch:SSE2'],

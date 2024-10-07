@@ -35,6 +35,7 @@ function(fetch_external_module NAME GIT_REPOSITORY REPO GIT_TAG TAG)
         SOURCE_DIR      "${LANGULUS_EXTERNAL_DIRECTORY}/${NAME}-src"
         SUBBUILD_DIR    "${CMAKE_BINARY_DIR}/external/${NAME}-subbuild"
         ${ARGN}
+		EXCLUDE_FROM_ALL
     )
     FetchContent_MakeAvailable(${NAME})
 	

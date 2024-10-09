@@ -8,7 +8,6 @@
 - Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case
 - Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized
 - Test if vector/point/normal/sampler/etc. constructors make sense and play well with semantics, when inside containers
-- Since `Couple` is now invoked by the user's whim, `mOwners` is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor!
 - It would be _really_ cool if `Langulus::Logger` supports markdown, through `_md` literal for example? Will save on a lot of `Logger::Command` pushes
 - Check where the new `Types::ForEach` pattern can be useful to reduce code
 - Move ASCII image support directly to `ModAssetsImages`
@@ -33,6 +32,7 @@
 - Handle escapes in Code's string/char parser - symbols like ∞ screw with attached operators, because op can't be isolated around them
 - `;` operator for parsing order-independent lists (`Neat`)
 - Add font size to `Logger` using ASCII art
+- `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
 
 ## In progress:
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
@@ -40,6 +40,7 @@
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - Test all containers with aggregates
 - Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
+- Since `Couple` is now invoked by the user's whim, `mOwners` is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor!
 
 ## Done:
 - RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling `NameOf` didn't affect anything - just the main reflection routine does. Reduced by the addition of `LANGULUS(ACT_AS)`

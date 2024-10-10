@@ -25,12 +25,14 @@
 - Constants tested in `RTTITest`
 - Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards
 - Separate containers into reusable components
-- Make `Any` specialized for one element only (std::any analogy)?
+- Make `Any` specialized for one element only (`std::any` analogy)?
 - `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
 - Block::Emplace doesn't return a handle if sparse!
 - Open/Closed range support in Code parser
 - Handle escapes in Code's string/char parser - symbols like ∞ screw with attached operators, because op can't be isolated around them
 - `;` operator for parsing order-independent lists (`Neat`)
+- `->` mapping operator for assembling pairs? also could be useful for `if` statements
+- `|` operator for assembling sets?
 - Add font size to `Logger` using ASCII art
 - `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
 
@@ -40,7 +42,6 @@
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - Test all containers with aggregates
 - Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
-- Since `Couple` is now invoked by the user's whim, `mOwners` is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor!
 
 ## Done:
 - RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling `NameOf` didn't affect anything - just the main reflection routine does. Reduced by the addition of `LANGULUS(ACT_AS)`
@@ -61,3 +62,4 @@
 
 ## Abandoned:
 - Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
+- Since `Couple` is now invoked by the user's whim, `mOwners` is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor! No, the non-aux functions are still used on Refersh routines.

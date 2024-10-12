@@ -14,8 +14,8 @@ else()
 	add_subdirectory(Mod-Vulkan)
 endif()
 
-#langulus_init_git_submodule(Mod-Assets-Images)
-#add_subdirectory(Mod-Assets-Images)
+langulus_init_git_submodule(Mod-Assets-Images)
+add_subdirectory(Mod-Assets-Images)
 
 langulus_init_git_submodule(Mod-Assets-Geometry)
 add_subdirectory(Mod-Assets-Geometry)

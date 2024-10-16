@@ -27,7 +27,7 @@
 - Separate containers into reusable components
 - Make `Any` specialized for one element only (`std::any` analogy)?
 - `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
-- Block::Emplace doesn't return a handle if sparse!
+- Block::Emplace doesn't return a handle if sparse! Same applies for mutable iterators!!!
 - Open/Closed range support in Code parser
 - Handle escapes in Code's string/char parser - symbols like ∞ screw with attached operators, because op can't be isolated around them
 - `;` operator for parsing order-independent lists (`Neat`)
@@ -35,6 +35,7 @@
 - `|` operator for assembling sets?
 - Add font size to `Logger` using ASCII art
 - `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
+- Rename `Constraint` to `Bond` - an emergent unit that is often produced on collision, when some electromagnetic/chemical interaction forms a strong bond, linking bodies and forcing them to share kinetic and potential energy
 
 ## In progress:
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount

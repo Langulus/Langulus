@@ -12,13 +12,15 @@
 using namespace Langulus;
 
 
-class TestModule : public A::Module {
+class TestModule final : public A::Module {
    LANGULUS(ABSTRACT) false;
    LANGULUS_BASES(Module);
 
    TestModule(Runtime* runtime, const Many&) noexcept
       : Resolvable {this}
-      , Module {runtime} {}
+      , Module     {runtime} {}
+
+   void Teardown() {}
 };
 
 struct SomeReflectedType1 {

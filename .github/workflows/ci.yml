@@ -102,7 +102,6 @@ jobs:
             c: gcc-14
           - cxx: clang++-19
             c: clang-19
-            workaround: "-stdlib=libc++" # temporary until this is resolved: https://github.com/llvm/llvm-project/issues/102336
           - os: ubuntu-24.04
             arch: x86
             cmake_args: "-DCMAKE_CXX_FLAGS=-m32"
@@ -140,8 +139,8 @@ jobs:
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
           sudo apt-add-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main"
           sudo apt update
-          sudo apt install clang-19 
-          sudo apt install libc++-19-dev # temporary until this is resolved: https://github.com/llvm/llvm-project/issues/102336
+          sudo apt install gcc-14.2 g++-14.2 # clang-19 needs stdc++14.2 see https://github.com/llvm/llvm-project/issues/102336
+          sudo apt install clang-19
 
       #- if: matrix.os == 'ubuntu-24.04'
       #  name: Install dependencies on Linux
@@ -158,7 +157,7 @@ jobs:
           ${{matrix.cmake_args}} 
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
           -DCMAKE_C_FLAGS="${{matrix.feature[2]}}"
-          -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}} ${{matrix.workaround}}" # workaround is temporary until this is resolved: https://github.com/llvm/llvm-project/issues/102336
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
           -DLANGULUS_TESTING=${{matrix.testing}}
 

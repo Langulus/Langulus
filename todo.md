@@ -2,7 +2,6 @@
 - `mInfo` in maps moves around to first map entry, so that iterations always beging with the first pair
 - Implement ordered maps and sets using an ordering array of indices after the `mInfo` array - that way we can directly transfer maps between ordered/unordered variations without any trouble
 - Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array
-- When deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 - Add multiplication operators to meta types to multiply by their size
 - In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)
 - Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case
@@ -23,7 +22,6 @@
 - Extensive `Block::SmartPush` tests are needed - preserving states, like staticness, must be ensured.
 - `Derive`/`Integrate` verb
 - Constants tested in `RTTITest`
-- Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards
 - Separate containers into reusable components
 - Make `Any` specialized for one element only (`std::any` analogy)?
 - `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
@@ -36,6 +34,7 @@
 - Add font size to `Logger` using ASCII art
 - `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
 - Rename `Constraint` to `Bond` - an emergent unit that is often produced on collision, when some electromagnetic/chemical interaction forms a strong bond, linking bodies and forcing them to share kinetic and potential energy
+- Implement external reflections
 
 ## In progress:
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
@@ -43,6 +42,8 @@
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - Test all containers with aggregates
 - Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
+- Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards
+- When deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 
 ## Done:
 - RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling `NameOf` didn't affect anything - just the main reflection routine does. Reduced by the addition of `LANGULUS(ACT_AS)`

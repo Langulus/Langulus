@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, windows-latest]
+        os: [ubuntu-24.04, windows-latest]
         build: [Release]
         arch: [x86, x64]
         testing: [ON]
@@ -27,9 +27,9 @@ jobs:
         ]
 
         exclude:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             cxx: v143
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             cxx: ClangCl
           - os: windows-latest
             cxx: g++-14
@@ -102,10 +102,10 @@ jobs:
             c: gcc-14
           - cxx: clang++-19
             c: clang-19
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: x86
             cmake_args: "-DCMAKE_CXX_FLAGS=-m32"
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             arch: x64
             cmake_args: "-DCMAKE_CXX_FLAGS=-m64"
           - os: windows-latest
@@ -121,33 +121,33 @@ jobs:
       - name: Clone
         uses: actions/checkout@v4
 
-      - if: matrix.os == 'ubuntu-22.04' && matrix.arch == 'x86'
+      - if: matrix.os == 'ubuntu-24.04' && matrix.arch == 'x86'
         name: Prepare Linux for cross-compilation
         run: |
           sudo apt update
           sudo apt install g++-multilib
 
-      - if: matrix.cxx == 'g++-14'
-        name: Installing G++ 14
-        run: |
-          sudo apt update
-          sudo apt install gcc-14 g++-14
+      #- if: matrix.cxx == 'g++-14'
+      #  name: Installing G++ 14
+      #  run: |
+      #    sudo apt update
+      #    sudo apt install gcc-14 g++-14
+	  #
+      #- if: matrix.cxx == 'clang++-19'
+      #  name: Installing Clang 19
+      #  run: |
+      #    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+      #    sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main"
+      #    sudo apt update
+      #    sudo apt install clang-19
 
-      - if: matrix.cxx == 'clang++-19'
-        name: Installing Clang 19
-        run: |
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main"
-          sudo apt update
-          sudo apt install clang-19
-
-      #- if: matrix.os == 'ubuntu-22.04'
+      #- if: matrix.os == 'ubuntu-24.04'
       #  name: Install dependencies on Linux
       #  run: |
       #    sudo apt update
       #    sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
 
-      - if: matrix.os == 'ubuntu-22.04'
+      - if: matrix.os == 'ubuntu-24.04'
         name: Configure (Linux)
         run: >
           mkdir build && cd build && cmake ..

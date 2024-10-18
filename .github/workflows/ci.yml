@@ -13,7 +13,7 @@ jobs:
         build: [Release]
         arch: [x86, x64]
         testing: [ON]
-        cxx: [g++, clang++-17, ClangCl, v143]
+        cxx: [g++-14, clang++-19, ClangCl, v143]
         feature: [
           [NoSIMD, 16, ' ', ' '],
           [SSE2, 16, '-msse2', '/arch:SSE2'],
@@ -32,9 +32,9 @@ jobs:
           - os: ubuntu-22.04
             cxx: ClangCl
           - os: windows-latest
-            cxx: g++
+            cxx: g++-14
           - os: windows-latest
-            cxx: clang++-17
+            cxx: clang++-19
 
           - arch: x64
             cxx: ClangCl
@@ -98,10 +98,10 @@ jobs:
           - feature: [AVX512, 64, '-mavx512f', '/arch:AVX512']
 
         include:
-          - cxx: g++
-            c: gcc
-          - cxx: clang++-17
-            c: clang-17
+          - cxx: g++-14
+            c: gcc-14
+          - cxx: clang++-19
+            c: clang-19
           - os: ubuntu-22.04
             arch: x86
             cmake_args: "-DCMAKE_CXX_FLAGS=-m32"
@@ -127,13 +127,19 @@ jobs:
           sudo apt update
           sudo apt install g++-multilib
 
-      - if: matrix.cxx == 'clang++-17'
-        name: Installing Clang 17
+      - if: matrix.cxx == 'g++-14'
+        name: Installing G++ 14
+        run: |
+          sudo apt update
+          sudo apt install gcc-14 g++-14
+
+      - if: matrix.cxx == 'clang++-19'
+        name: Installing Clang 19
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main"
+          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main"
           sudo apt update
-          sudo apt install clang-17
+          sudo apt install clang-19
 
       #- if: matrix.os == 'ubuntu-22.04'
       #  name: Install dependencies on Linux

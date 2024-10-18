@@ -127,6 +127,24 @@ jobs:
           sudo apt update
           sudo apt install g++-multilib
 
+      - if: matrix.cxx == 'g++-14'
+        name: Installing G++ 14
+        run: |
+          sudo apt update
+          sudo apt install gcc-14 g++-14
+
+      - if: matrix.cxx == 'clang++-19'
+        name: Installing Clang 19
+        run: |
+          sudo apt update
+          sudo apt install clang-19
+
+      #- if: matrix.os == 'ubuntu-24.04'
+      #  name: Install dependencies on Linux
+      #  run: |
+      #    sudo apt update
+      #    sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
+
       - if: matrix.os == 'ubuntu-24.04'
         name: Configure (Linux)
         run: >

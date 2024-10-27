@@ -36,6 +36,7 @@
 - Rename `Constraint` to `Bond` - an emergent unit that is often produced on collision, when some electromagnetic/chemical interaction forms a strong bond, linking bodies and forcing them to share kinetic and potential energy
 - Implement external reflections
 - Drop `CT::Complete` in various `CT::Destroyable` and other similar checks to avoid silencing incomplete types
+- `Loop::Discard` can cause the container to `BranchOut` while looping - make sure any raw pointers used for iteration are synchronized after element removal
 
 ## In progress:
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount

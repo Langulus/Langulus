@@ -35,6 +35,7 @@
 - `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
 - Rename `Constraint` to `Bond` - an emergent unit that is often produced on collision, when some electromagnetic/chemical interaction forms a strong bond, linking bodies and forcing them to share kinetic and potential energy
 - Implement external reflections
+- Drop `CT::Complete` in various `CT::Destroyable` and other similar checks to avoid silencing incomplete types
 
 ## In progress:
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
@@ -42,8 +43,7 @@
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - Test all containers with aggregates
 - Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
-- Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards
-- When deducing this is implemented for gcc, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
+- When `deducing this` is implemented for `clang-cl`, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 
 ## Done:
 - RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling `NameOf` didn't affect anything - just the main reflection routine does. Reduced by the addition of `LANGULUS(ACT_AS)`
@@ -61,6 +61,7 @@
 - Instead of appending a `Logger::Tabs{}`, just make a variant of `Logger::<Type>Tab`!
 - Rename `Semantic` to `Intent`, and `NotSemantic` to `NoIntent`
 - Standalone constants reflection
+- Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards. Fixed by just allowing LANGULUS(NAME) to be std::array
 
 ## Abandoned:
 - Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.

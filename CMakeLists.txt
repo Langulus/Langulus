@@ -7,7 +7,7 @@ project(LangulusRoot
 
 include(LangulusUtilities.cmake)
 
-option(LANGULUS_TOASTER_MODE "Removes all modules that require massive dependencies, like Vulkan" ON)
+option(LANGULUS_TOASTER_MODE "Removes all modules that require massive dependencies, graphical acceleration, desktop environments, etc." ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)

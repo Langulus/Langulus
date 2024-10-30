@@ -24,35 +24,15 @@ langulus_init_git_submodule(Math)
 add_subdirectory(Math)
 
 # Combine all submodules as one library                                         
-# Create a library dependent on build configuration								
-if (EMSCRIPTEN AND LANGULUS_SHARED_LIBRARIES)
-	# https://github.com/emscripten-core/emscripten/issues/17804				
-	add_executable(Langulus
-	    $<TARGET_OBJECTS:LangulusLogger>
-		$<TARGET_OBJECTS:LangulusRTTI>
-		$<$<BOOL:${LANGULUS_FEATURE_MANAGED_MEMORY}>:$<TARGET_OBJECTS:LangulusFractalloc>>
-		$<TARGET_OBJECTS:LangulusAnyness>
-		$<TARGET_OBJECTS:LangulusFlow>
-		$<TARGET_OBJECTS:LangulusMath>
-		$<TARGET_OBJECTS:LangulusEntity>
-	)
-	set_target_properties(Langulus PROPERTIES
-		COMPILE_FLAGS  "-sMAIN_MODULE=1"
-		LINK_FLAGS     "-sMAIN_MODULE=1 -sWASM=1 -sSTANDALONE_WASM --no-entry"
-		ENABLE_EXPORTS ON
-		SUFFIX         ".wasm"
-	)
-else()
-	add_library(Langulus ${LANGULUS_LIBRARY_TYPE}
-		$<TARGET_OBJECTS:LangulusLogger>
-		$<TARGET_OBJECTS:LangulusRTTI>
-		$<$<BOOL:${LANGULUS_FEATURE_MANAGED_MEMORY}>:$<TARGET_OBJECTS:LangulusFractalloc>>
-		$<TARGET_OBJECTS:LangulusAnyness>
-		$<TARGET_OBJECTS:LangulusFlow>
-		$<TARGET_OBJECTS:LangulusMath>
-		$<TARGET_OBJECTS:LangulusEntity>
-	)
-endif()
+add_langulus_library(Langulus
+	$<TARGET_OBJECTS:LangulusLogger>
+	$<TARGET_OBJECTS:LangulusRTTI>
+	$<$<BOOL:${LANGULUS_FEATURE_MANAGED_MEMORY}>:$<TARGET_OBJECTS:LangulusFractalloc>>
+	$<TARGET_OBJECTS:LangulusAnyness>
+	$<TARGET_OBJECTS:LangulusFlow>
+	$<TARGET_OBJECTS:LangulusMath>
+	$<TARGET_OBJECTS:LangulusEntity>
+)
 
 target_include_directories(Langulus PUBLIC
     $<TARGET_PROPERTY:LangulusLogger,INTERFACE_INCLUDE_DIRECTORIES>

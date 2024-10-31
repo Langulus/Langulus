@@ -32,12 +32,11 @@
 - `->` mapping operator for assembling pairs? also could be useful for `if` statements
 - `|` operator for assembling sets?
 - Add font size to `Logger` using ASCII art
-- `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
 - Rename `Constraint` to `Bond` - an emergent unit that is often produced on collision, when some electromagnetic/chemical interaction forms a strong bond, linking bodies and forcing them to share kinetic and potential energy
 - Implement external reflections
 - Drop `CT::Complete` in various `CT::Destroyable` and other similar checks to avoid silencing incomplete types
-- `Loop::Discard` can cause the container to `BranchOut` while looping - make sure any raw pointers used for iteration are synchronized after element removal
 - When tests are enabled in `Release` with `SAFE_MODE` some will fail in some framework libraries (like Fractalloc) - investigate!
+- Generate coverage on clang CI https://releases.llvm.org/19.1.0/tools/clang/docs/SourceBasedCodeCoverage.html
 
 ## In progress:
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
@@ -46,8 +45,12 @@
 - Test all containers with aggregates
 - Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
 - When `deducing this` is implemented for `clang-cl`, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
+- `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
+- Add `emcc` to the CI and pass tests
 
 ## Done:
+- Fractalloc::Reallocate should work only if 1 ref
+- `Loop::Discard` can cause the container to `BranchOut` while looping - make sure any raw pointers used for iteration are synchronized after element removal
 - RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling `NameOf` didn't affect anything - just the main reflection routine does. Reduced by the addition of `LANGULUS(ACT_AS)`
 - `Traits::Time` conflicts undetectedly with `Langulus::Time` - fix it! - Fixed by hinting whether its trait using first letter case - traits are always lowercased
 - Code should use `{}` instead of `[]` for nested code blocks

@@ -37,6 +37,7 @@
 - Drop `CT::Complete` in various `CT::Destroyable` and other similar checks to avoid silencing incomplete types
 - When tests are enabled in `Release` with `SAFE_MODE` some will fail in some framework libraries (like Fractalloc) - investigate!
 - Generate coverage on clang CI https://releases.llvm.org/19.1.0/tools/clang/docs/SourceBasedCodeCoverage.html
+- Block::Compare comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
 
 ## In progress:
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount

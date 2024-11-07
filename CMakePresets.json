@@ -29,8 +29,8 @@
       "inherits": "linux",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "/usr/bin/gcc-11",
-        "CMAKE_CXX_COMPILER": "/usr/bin/g++-11"
+        "CMAKE_C_COMPILER": "/usr/bin/gcc-14",
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++-14"
       }
     },
 

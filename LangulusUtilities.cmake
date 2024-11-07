@@ -45,7 +45,7 @@ function(fetch_external_module NAME GIT_REPOSITORY REPO GIT_TAG TAG)
 endfunction()
 
 function(langulus_init_git_submodule NAME)
-	if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}/.git" )
+	if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}/CMakeLists.txt" )
         # Submodule hasn't been initialized yet, so call git submodule update --init on it
         message(STATUS "Initializing submodule: ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}...")
         find_package(Git REQUIRED)

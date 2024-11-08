@@ -30,7 +30,8 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "/usr/bin/gcc-14",
-        "CMAKE_CXX_COMPILER": "/usr/bin/g++-14"
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++-14",
+        "LANGULUS_FEATURE_MANAGED_MEMORY": "OFF"
       }
     },
 

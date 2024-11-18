@@ -14,7 +14,6 @@
 - Test all containers with `void*/const void*`
 - Test all containers with double pointers, including for `void**/const void* const*`
 - Test containers with function pointers, make them executable
-- `Many::Past()` and `Many::Future()` should accept arguments as filters? or even better: remove missing states, add new containers instead! use the ones in Flow
 - Improve color multiplication, currently oversaturates, must be renormalized after multiplication
 - Events wouldn't be serializable or deterministic with this kinds of timestamp. Use the relative time context for it?
 - Unnecessary Block code includes double the compilation time - minimize those. Maybe separate include files with separate intents?
@@ -39,6 +38,7 @@
 - Generate coverage on clang CI https://releases.llvm.org/19.1.0/tools/clang/docs/SourceBasedCodeCoverage.html
 - Block::Compare comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
 - Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
+- When stringifying text containers, make sure the text literal operator isn't found in the string itself - use ` if there's a " and vice versa, use escapes if both
 
 ## In progress:
 - Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
@@ -51,6 +51,7 @@
 - Add `emcc` to the CI and pass tests
 
 ## Done:
+- `Many::Past()` and `Many::Future()` should accept arguments as filters? ~~or even better: remove missing states, add new containers instead! use the ones in Flow~~
 - Fractalloc::Reallocate should work only if 1 ref
 - `Loop::Discard` can cause the container to `BranchOut` while looping - make sure any raw pointers used for iteration are synchronized after element removal
 - RTTI origin type reflector doubles the compilation time - minimize those. Luckily disabling `NameOf` didn't affect anything - just the main reflection routine does. Reduced by the addition of `LANGULUS(ACT_AS)`

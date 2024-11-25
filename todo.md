@@ -34,7 +34,6 @@
 - Rename `Constraint` to `Bond` - an emergent unit that is often produced on collision, when some electromagnetic/chemical interaction forms a strong bond, linking bodies and forcing them to share kinetic and potential energy
 - Implement external reflections
 - Drop `CT::Complete` in various `CT::Destroyable` and other similar checks to avoid silencing incomplete types
-- When tests are enabled in `Release` with `SAFE_MODE` some will fail in some framework libraries (like Fractalloc) - investigate!
 - Generate coverage on clang CI https://releases.llvm.org/19.1.0/tools/clang/docs/SourceBasedCodeCoverage.html
 - Block::Compare comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
 - Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
@@ -51,6 +50,7 @@
 - Add `emcc` to the CI and pass tests
 
 ## Done:
+- When tests are enabled in `Release` with `SAFE_MODE` some will fail in some framework libraries (like Fractalloc) - investigate!
 - `Many::Past()` and `Many::Future()` should accept arguments as filters? ~~or even better: remove missing states, add new containers instead! use the ones in Flow~~
 - Fractalloc::Reallocate should work only if 1 ref
 - `Loop::Discard` can cause the container to `BranchOut` while looping - make sure any raw pointers used for iteration are synchronized after element removal

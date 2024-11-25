@@ -303,6 +303,16 @@
       "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
     {
+      "name": "windows-clang-cl-x64-safe",
+      "displayName": "Windows x64 Clang-CL Release (with AVX2) (SAFE MODE)",
+      "description": "Target Windows (64-bit) with Clang-Cl. (RelWithDebInfo)",
+      "inherits": "windows-clang-cl-x64-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "LANGULUS_SAFE_MODE": "ON"
+      }
+    },
+    {
       "name": "windows-clang-cl-x86-debug",
       "displayName": "Windows x86 Clang-CL Debug (no SIMD)",
       "description": "Target Windows (32-bit) with Clang-Cl. (Debug)",

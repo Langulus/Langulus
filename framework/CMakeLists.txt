@@ -32,6 +32,7 @@ add_langulus_library(Langulus
 	$<TARGET_OBJECTS:LangulusFlow>
 	$<TARGET_OBJECTS:LangulusMath>
 	$<TARGET_OBJECTS:LangulusEntity>
+	Langulus.cpp
 )
 
 target_include_directories(Langulus PUBLIC

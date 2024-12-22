@@ -11,8 +11,8 @@ using namespace Langulus;
 
 namespace
 {
-   Logger::ToHTML html_output {"langulus.htm"};
-   Thing root = Thing::Root();
+   Logger::ToHTML* html_output = nullptr;
+   Thing* root = nullptr;
    bool initialized = false;
 }
 
@@ -56,12 +56,17 @@ extern "C"
 ///   @return a handle to the root object                                     
 void* LangulusInit() {
    if (initialized)
-      return &root;
+      return root;
 
    // Redirect all logging to an external HTML file                     
-   Logger::AttachRedirector(&html_output);
+   html_output = new Logger::ToHTML {"langulus.htm"};
+   Logger::AttachRedirector(html_output);
+   root = new Thing;
+   root->SetName("ROOT");
+   root->CreateRuntime();
+   root->CreateFlow();
    initialized = true;
-   return &root;
+   return root;
 }
 
 /// Get the framework's root Thing                                            
@@ -77,7 +82,7 @@ void* LangulusRoot() {
    // Suppress any logging messages, so that we don't interfere with    
    // the ASCII renderer in the console. Instead, redirect all logging  
    // to an external HTML file.                                         
-   return &root;
+   return root;
 }
 
 /// Update the hierarchy, starting with the provided Thing                    
@@ -97,7 +102,7 @@ bool LangulusUpdate(void* thing, int deltaTime, int timeLevel) {
 #endif
 
    if (not thing)
-      thing = &root;
+      thing = root;
 
    Time converted;
    switch (timeLevel) {
@@ -140,9 +145,14 @@ void LangulusExit() {
    if (not initialized)
       return;
 
-   root.Reset();
+   root->Reference(-1);
+   delete root;
+   root = nullptr;
    Allocator::CollectGarbage();
-   Logger::DettachRedirector(&html_output);
+   Logger::DettachRedirector(html_output);
+   delete html_output;
+   html_output = nullptr;
+   initialized = false;
 }
 
 /// Load a langulus plug-in                                                   
@@ -154,6 +164,11 @@ void LangulusExit() {
 ///   @param desc_size - the number of characters in provided 'desc'          
 ///   @return a handle to the loaded module                                   
 void* LangulusLoadMod(void* thing, const void* name, int name_size, const void* desc, int desc_size) {
+   Logger::Info("Loading mod ", Token {
+      static_cast<const char*>(name),
+      static_cast<std::size_t>(name_size)
+   }, "...");
+
 #if LANGULUS(SAFE)
    if (not initialized) {
       Logger::Fatal("Langulus wasn't initialized - call LangulusInit() prior to LangulusLoadMod()");
@@ -162,7 +177,7 @@ void* LangulusLoadMod(void* thing, const void* name, int name_size, const void* 
 #endif
 
    if (not thing)
-      thing = &root;
+      thing = root;
 
 #if LANGULUS(SAFE)
    if (not name) {
@@ -196,10 +211,10 @@ void* LangulusLoadMod(void* thing, const void* name, int name_size, const void* 
             static_cast<const char*>(desc),
             static_cast<std::size_t>(desc_size)
          };
-         return typed->LoadMod(token, Code(code).Parse());
+         return typed->LoadModPath(token, Code(code).Parse());
       }
 
-      return typed->LoadMod(token);
+      return typed->LoadModPath(token);
    }
    catch (...) {
       Logger::Error("Exception while loading module: ", token);
@@ -221,7 +236,7 @@ void* LangulusCreateThing(void* thing, const void* desc, int desc_size) {
 #endif
 
    if (not thing)
-      thing = &root;
+      thing = root;
 
    Thing* typed = reinterpret_cast<Thing*>(thing);
 
@@ -259,7 +274,7 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
 #endif
 
    if (not thing)
-      thing = &root;
+      thing = root;
 
 #if LANGULUS(SAFE)
    if (not name) {

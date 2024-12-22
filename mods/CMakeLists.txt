@@ -49,3 +49,7 @@ add_subdirectory(Mod-Storyteller)
 
 langulus_init_git_submodule(Mod-UMS)
 add_subdirectory(Mod-UMS)
+
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Mod-EconomyOfAncientCities")
+	add_subdirectory(Mod-EconomyOfAncientCities)
+endif()

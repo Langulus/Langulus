@@ -326,7 +326,7 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
 ///   @param text_size - the number of bytes in 'text'                        
 void LangulusLog(int type, const void* text, int text_size) {
    const auto t = static_cast<Logger::Intent>(type);
-   if (not text or text_size < 1 or type < 0 or t >= Logger::Intent::Counter)
+   if (not text or text_size < 1 or type < 0 or t >= Logger::Intent::Ignore)
       return;
 
    Logger::Instance << t;

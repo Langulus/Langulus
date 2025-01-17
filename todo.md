@@ -8,7 +8,6 @@
 - Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized
 - Test if vector/point/normal/sampler/etc. constructors make sense and play well with semantics, when inside containers
 - It would be _really_ cool if `Langulus::Logger` supports markdown, through `_md` literal for example? Will save on a lot of `Logger::Command` pushes
-- Check where the new `Types::ForEach` pattern can be useful to reduce code
 - Move ASCII image support directly to `ModAssetsImages`
 - Is it possible to use generator function to iterate blocks based on concepts?? like: `ForEach([](const CT::Block auto& block) {...})` ????? that would be bloody awesome
 - Test all containers with `void*/const void*`
@@ -20,7 +19,6 @@
 - Separate `CT` into a separate concept library, carry all canonical types like `A::Block` and `A::Verb` with it?
 - Extensive `Block::SmartPush` tests are needed - preserving states, like staticness, must be ensured.
 - `Derive`/`Integrate` verb
-- Constants tested in `RTTITest`
 - Separate containers into reusable components
 - Make `Any` specialized for one element only (`std::any` analogy)?
 - `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
@@ -38,18 +36,24 @@
 - Block::Compare comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
 - Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
 - When stringifying text containers, make sure the text literal operator isn't found in the string itself - use ` if there's a " and vice versa, use escapes if both
-
-## In progress:
-- Map and set iterations tend to iterate to the end of mInfo, despite having gone past the inserted mCount
-- Why hardcode `Traits::Parent` to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???
-- ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
-- Test all containers with aggregates
-- Ditch `monocast` nonsense, and instead add `Shallow` intent that affects whether verbs are executed deeply or not?
+- Do SIMD functions work with volatile arguments?
+- Smaller HTML tags for Logger
 - When `deducing this` is implemented for `clang-cl`, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 - `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
 - Add `emcc` to the CI and pass tests
+- Map and set iterations tend to iterate to the end of `mInfo`, despite having gone past the inserted `mCount`
+- Why hardcode `Traits::Parent` to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???
+- Test all containers with aggregates
+- Should we somehow allow `LANGULUS_VERBS(Verbs::Multiply)` without a `void Multiply(Verb&)` member if operators are already defined?
+- `Clamp` and possibly other math functions don't work with tags for some reason. Add Vector tests for these as well.
+
+## In progress:
+- ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 
 ## Done:
+- Ditch `monocast` nonsense, and instead create custom wrapper types with a dispatcher? This simplifies flows A LOT.
+- Check where the new `Types::ForEach` pattern can be useful to reduce code - yes, yes it can.
+- Constants tested in `RTTITest`
 - When tests are enabled in `Release` with `SAFE_MODE` some will fail in some framework libraries (like Fractalloc) - investigate!
 - `Many::Past()` and `Many::Future()` should accept arguments as filters? ~~or even better: remove missing states, add new containers instead! use the ones in Flow~~
 - Fractalloc::Reallocate should work only if 1 ref

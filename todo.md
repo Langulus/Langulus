@@ -22,22 +22,19 @@
 - Separate containers into reusable components
 - Make `Any` specialized for one element only (`std::any` analogy)?
 - `TestTemporal.cpp` moved to Entity library - make it work, and it is going to be a big deal!
-- Block::Emplace doesn't return a handle if sparse! Same applies for mutable iterators!!!
+- `Block::Emplace` doesn't return a handle if sparse! Same applies for mutable iterators!!!
 - Open/Closed range support in Code parser
 - Handle escapes in Code's string/char parser - symbols like ∞ screw with attached operators, because op can't be isolated around them
 - `;` operator for parsing order-independent lists (`Neat`)
 - `->` mapping operator for assembling pairs? also could be useful for `if` statements
 - `|` operator for assembling sets?
 - Add font size to `Logger` using ASCII art
-- Rename `Constraint` to `Bond` - an emergent unit that is often produced on collision, when some electromagnetic/chemical interaction forms a strong bond, linking bodies and forcing them to share kinetic and potential energy
 - Implement external reflections
 - Drop `CT::Complete` in various `CT::Destroyable` and other similar checks to avoid silencing incomplete types
 - Generate coverage on clang CI https://releases.llvm.org/19.1.0/tools/clang/docs/SourceBasedCodeCoverage.html
 - Block::Compare comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
 - Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
 - When stringifying text containers, make sure the text literal operator isn't found in the string itself - use ` if there's a " and vice versa, use escapes if both
-- Do SIMD functions work with volatile arguments?
-- Smaller HTML tags for Logger
 - When `deducing this` is implemented for `clang-cl`, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 - `TColor>` - a weird defect in NameOf? Time to sanitize and check for reserved or invalid tokens upon reflection...
 - Add `emcc` to the CI and pass tests
@@ -46,11 +43,17 @@
 - Test all containers with aggregates
 - Should we somehow allow `LANGULUS_VERBS(Verbs::Multiply)` without a `void Multiply(Verb&)` member if operators are already defined?
 - `Clamp` and possibly other math functions don't work with tags for some reason. Add Vector tests for these as well.
+- Do SIMD functions work with `volatile` arguments?
+- Can we insert `volatile` stuff into containers?
 
 ## In progress:
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
+- TSet and TMap destructors destroy referenced elements! See Converter::Input::mResources
 
 ## Done:
+- Intents preserve `volatile` qualifiers
+- Rename `Constraint` to `Bond` - an emergent unit that is often produced on collision, when some electromagnetic/chemical interaction forms a strong bond, linking bodies and forcing them to share kinetic and potential energy
+- Smaller HTML tags for Logger
 - Ditch `monocast` nonsense, and instead create custom wrapper types with a dispatcher? This simplifies flows A LOT.
 - Check where the new `Types::ForEach` pattern can be useful to reduce code - yes, yes it can.
 - Constants tested in `RTTITest`

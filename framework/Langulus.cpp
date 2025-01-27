@@ -39,6 +39,7 @@ extern "C"
 
    LANGULUS_EXPORT() void LangulusLogLine(const void*, int);
    LANGULUS_EXPORT() void LangulusLogAppend(const void*, int);
+   LANGULUS_EXPORT() void LangulusDumpHierarchy();
 }
 
 
@@ -370,4 +371,9 @@ void LangulusLogAppend(const void* text, int text_size) {
       static_cast<const char*>(text),
       static_cast<std::size_t>(text_size)
    });
+}
+
+/// Logs the Thing hierarchy, starting from the root                          
+void LangulusDumpHierarchy() {
+   root->DumpHierarchy();
 }

@@ -48,6 +48,7 @@
 - `Clamp` and possibly other math functions don't work with tags for some reason. Add Vector tests for these as well.
 - Do SIMD functions work with `volatile` arguments?
 - Can we insert `volatile` stuff into containers?
+- `constexpr memcpy` and `memmove` utilizing `if consteval`? Mainly for `TVector` constructors
 
 ## Done:
 - Why hardcode `Traits::Parent` to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???

@@ -7,7 +7,7 @@
 /// See LICENSE file, or https://www.gnu.org/licenses                         
 ///                                                                           
 #pragma once
-#include <Langulus.hpp>
+#include <Langulus/Entity/Thing.hpp>
 
 using namespace Langulus;
 

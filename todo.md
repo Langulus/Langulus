@@ -2,7 +2,6 @@
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - `Block::Emplace` doesn't return a handle if sparse! Same applies for mutable iterators!!! same applies for `operator[]`!!!
 - Implement external reflections, by allowing all CT concepts be defined by an external template specialization
-- Add all includes under a common Langulus folder, for example: Langulus/Core Langulus/Math, etc.
 
 ## TODO:
 - `mInfo` in maps moves around to first map entry, so that iterations always beging with the first pair
@@ -36,7 +35,7 @@
 - Add font size to `Logger` using ASCII art
 - Drop `CT::Complete` in various `CT::Destroyable` and other similar checks to avoid silencing incomplete types
 - Generate coverage on clang CI https://releases.llvm.org/19.1.0/tools/clang/docs/SourceBasedCodeCoverage.html
-- Block::Compare comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
+- `Block::Compare` comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
 - Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
 - When stringifying text containers, make sure the text literal operator isn't found in the string itself - use ` if there's a " and vice versa, use escapes if both
 - When `deducing this` is implemented for `clang-cl`, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
@@ -51,6 +50,7 @@
 - `constexpr memcpy` and `memmove` utilizing `if consteval`? Mainly for `TVector` constructors
 
 ## Done:
+- Add all includes under a common Langulus folder, for example: Langulus/Core Langulus/Math, etc.
 - Why hardcode `Traits::Parent` to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???
 - `SIMD::Not` unary implemented
 - `TSet` and `TMap` destructors destroy referenced elements! See `Converter::Input::mResources`. Fixed!

@@ -5,7 +5,8 @@
 ///                                                                           
 /// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
-#include <Langulus.hpp>
+#include <Langulus/Entity/Thing.hpp>
+
 using namespace Langulus;
 
 

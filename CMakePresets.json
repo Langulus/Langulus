@@ -24,14 +24,31 @@
 
     //                                                                        
     {
+      "name": "windows",
+      "description": "Target Windows",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "LANGULUS_TESTING": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+
+    //                                                                        
+    {
       "name": "linux-g++",
       "description": "Target WSL with the GNU compiler",
       "inherits": "linux",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "/usr/bin/gcc-14",
-        "CMAKE_CXX_COMPILER": "/usr/bin/g++-14",
-        "LANGULUS_FEATURE_MANAGED_MEMORY": "OFF"
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++-14"
       }
     },
 
@@ -162,23 +179,7 @@
     },
 
     //                                                                        
-    {
-      "name": "windows",
-      "description": "Target Windows",
-      "hidden": true,
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "LANGULUS_TESTING": "ON"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
-    },
-
+    //   CL                                                                   
     //                                                                        
     {
       "name": "windows-cl",
@@ -190,18 +191,7 @@
         "CMAKE_CXX_COMPILER": "cl.exe"
       }
     },
-    {
-      "name": "windows-clang-cl",
-      "description": "Target Windows with Clang-Cl.",
-      "inherits": "windows",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "clang-cl.exe",
-        "CMAKE_CXX_COMPILER": "clang-cl.exe"
-      }
-    },
 
-    //                                                                        
     {
       "name": "windows-cl-x64-debug",
       "displayName": "Windows x64 CL Debug",
@@ -247,18 +237,27 @@
         "CMAKE_CXX_FLAGS": "/arch:IA32"
       }
     },
+
+    //                                                                        
+    //   CL with specific SIMD                                                
     //                                                                        
     {
       "name": "windows-cl-x86-sse",
       "displayName": "Windows x86 CL Release (with SSE)",
       "inherits": "windows-cl-x86",
-      "cacheVariables": { "CMAKE_CXX_FLAGS": "/arch:SSE" }
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/arch:SSE",
+        "LANGULUS_ALIGNMENT": "16"
+      }
     },
     {
       "name": "windows-cl-x86-sse2",
       "displayName": "Windows x86 CL Release (with SSE2)",
       "inherits": "windows-cl-x86",
-      "cacheVariables": { "CMAKE_CXX_FLAGS": "/arch:SSE2" }
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/arch:SSE2",
+        "LANGULUS_ALIGNMENT": "16"
+      }
     },
     {
       "name": "windows-cl-x86-avx",
@@ -280,6 +279,19 @@
     },
 
     //                                                                        
+    //   CLANG-CL                                                             
+    //                                                                        
+    {
+      "name": "windows-clang-cl",
+      "description": "Target Windows with Clang-Cl.",
+      "inherits": "windows",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-cl.exe",
+        "CMAKE_CXX_COMPILER": "clang-cl.exe"
+      }
+    },
+
     {
       "name": "windows-clang-cl-x64-debug",
       "displayName": "Windows x64 Clang-CL Debug (with AVX2)",
@@ -306,12 +318,11 @@
       "name": "windows-clang-cl-x64-safe",
       "displayName": "Windows x64 Clang-CL Release (with AVX2) (SAFE MODE)",
       "description": "Target Windows (64-bit) with Clang-Cl. (RelWithDebInfo)",
-      "inherits": "windows-clang-cl-x64-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "LANGULUS_SAFE_MODE": "ON"
-      }
+      "inherits": "windows-clang-cl-x64",
+      "cacheVariables": { "LANGULUS_SAFE_MODE": "ON" }
     },
+
+    //   CLANG-CL no SIMD                                                     
     {
       "name": "windows-clang-cl-x86-debug",
       "displayName": "Windows x86 Clang-CL Debug (no SIMD)",
@@ -323,6 +334,7 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_ALIGNMENT": "16",
         "CMAKE_CXX_FLAGS": "/arch:IA32 /EHsc -m32"
       }
     },
@@ -331,6 +343,30 @@
       "displayName": "Windows x86 Clang-CL Release (no SIMD)",
       "description": "Target Windows (32-bit) with Clang-Cl. (RelWithDebInfo)",
       "inherits": "windows-clang-cl-x86-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
+    },
+
+    //   CLANG-CL SSE2                                                        
+    {
+      "name": "windows-clang-cl-x86-debug-SSE2",
+      "displayName": "Windows x86 Clang-CL Debug (with SSE2)",
+      "description": "Target Windows (32-bit) with Clang-Cl and SSE2. (Debug)",
+      "inherits": "windows-clang-cl",
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_ALIGNMENT": "16",
+        "CMAKE_CXX_FLAGS": "/arch:SSE2 /EHsc -m32"
+      }
+    },
+    {
+      "name": "windows-clang-cl-x86-SSE2",
+      "displayName": "Windows x86 Clang-CL Release (with SSE2)",
+      "description": "Target Windows (32-bit) with Clang-Cl and SSE2. (RelWithDebInfo)",
+      "inherits": "windows-clang-cl-x86-debug-SSE2",
       "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     }
   ]

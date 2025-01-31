@@ -2,6 +2,8 @@
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - `Block::Emplace` doesn't return a handle if sparse! Same applies for mutable iterators!!! same applies for `operator[]`!!!
 - Implement external reflections, by allowing all CT concepts be defined by an external template specialization
+- Improve color addition, currently overflows/underflows, needs saturation
+- Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
 
 ## TODO:
 - `mInfo` in maps moves around to first map entry, so that iterations always beging with the first pair
@@ -18,17 +20,16 @@
 - Test all containers with `void*/const void*`
 - Test all containers with double pointers, including for `void**/const void* const*`
 - Test containers with function pointers, make them executable
-- Improve color multiplication, currently oversaturates, must be renormalized after multiplication
 - Events wouldn't be serializable or deterministic with this kinds of timestamp. Use the relative time context for it?
 - Unnecessary Block code includes double the compilation time - minimize those. Maybe separate include files with separate intents?
-- Separate `CT` into a separate concept library, carry all canonical types like `A::Block` and `A::Verb` with it?
+- ### Separate `CT` into a separate concept library, carry all canonical types like `A::Block` and `A::Verb` with it?
 - Extensive `Block::SmartPush` tests are needed - preserving states, like staticness, must be ensured.
 - `Derive`/`Integrate` verb
-- Separate containers into reusable components
+- ### Separate containers into reusable components
 - Make `Any` specialized for one element only (`std::any` analogy)?
 - `TestTemporal.cpp` moved to `Entity` library - make it work, and it is going to be a big deal!
 - Open/Closed range support in `Code` parser
-- Handle escapes in Code's string/char parser - symbols like ∞ screw with attached operators, because op can't be isolated around them
+- Handle escapes in Code's string/char parser - symbols like `∞` screw with attached operators, because op can't be isolated around them
 - `;` operator for parsing order-independent lists (`Neat`)
 - `->` mapping operator for assembling pairs? also could be useful for `if` statements
 - `|` operator for assembling sets?
@@ -39,8 +40,7 @@
 - Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
 - When stringifying text containers, make sure the text literal operator isn't found in the string itself - use ` if there's a " and vice versa, use escapes if both
 - When `deducing this` is implemented for `clang-cl`, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
-- `TColor>` - a weird defect in `NameOf`? Time to sanitize and check for reserved or invalid tokens upon reflection...
-- Add `emcc` to the CI and pass tests
+- ### Add `emcc` to the CI and pass tests
 - Map and set iterations tend to iterate to the end of `mInfo`, despite having gone past the inserted `mCount`
 - Test all containers with aggregates
 - Should we somehow allow `LANGULUS_VERBS(Verbs::Multiply)` without a `void Multiply(Verb&)` member if operators are already defined?
@@ -50,6 +50,10 @@
 - `constexpr memcpy` and `memmove` utilizing `if consteval`? Mainly for `TVector` constructors
 
 ## Done:
+- Improve color subtraction, currently overflows/underflows, needs saturation
+- Improve color multiplication, currently overflows/underflows, needs saturation
+- Rounding real numbers when serializing to `Text`
+- `TColor>` - a weird defect in `NameOf`? Time to sanitize and check for reserved or invalid tokens upon reflection...
 - Add all includes under a common Langulus folder, for example: Langulus/Core Langulus/Math, etc.
 - Why hardcode `Traits::Parent` to be not participating in hashing? Just add the trait as missing, so that it is dynamically linked depending on the context, and exclude all linking points from hashing???
 - `SIMD::Not` unary implemented

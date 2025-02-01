@@ -2,7 +2,6 @@
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - `Block::Emplace` doesn't return a handle if sparse! Same applies for mutable iterators!!! same applies for `operator[]`!!!
 - Implement external reflections, by allowing all CT concepts be defined by an external template specialization
-- Improve color addition, currently overflows/underflows, needs saturation
 - Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
 
 ## TODO:
@@ -50,6 +49,7 @@
 - `constexpr memcpy` and `memmove` utilizing `if consteval`? Mainly for `TVector` constructors
 
 ## Done:
+- Improve color addition, currently overflows/underflows, needs saturation
 - Improve color subtraction, currently overflows/underflows, needs saturation
 - Improve color multiplication, currently overflows/underflows, needs saturation
 - Rounding real numbers when serializing to `Text`

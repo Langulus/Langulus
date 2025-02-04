@@ -1,10 +1,14 @@
 ﻿## In progress:
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
-- `Block::Emplace` doesn't return a handle if sparse! Same applies for mutable iterators!!! same applies for `operator[]`!!!
+- ~~`Block::Emplace` doesn't return a handle if sparse!~~ Same applies for mutable iterators!!! ~~same applies for `operator[]`!!!~~
 - Implement external reflections, by allowing all CT concepts be defined by an external template specialization
-- Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
 
 ## TODO:
+- Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
+- `BlockMap` speed optimizations: dynamic `AllowedMisses` based on table size; Anticipate oversaturation while swapping
+- How come sparse map tests don't involve sparse keys??
+- Type erased map insertion is not defined
+- Create a common test utility library to reduce boilerplate in tests
 - `mInfo` in maps moves around to first map entry, so that iterations always beging with the first pair
 - Implement ordered maps and sets using an ordering array of indices after the `mInfo` array - that way we can directly transfer maps between ordered/unordered variations without any trouble
 - Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array
@@ -15,7 +19,7 @@
 - Test if vector/point/normal/sampler/etc. constructors make sense and play well with semantics, when inside containers
 - It would be _really_ cool if `Langulus::Logger` supports markdown, through `_md` literal for example? Will save on a lot of `Logger::Command` pushes
 - Move ASCII image support directly to `ModAssetsImages`
-- Is it possible to use generator function to iterate blocks based on concepts?? like: `ForEach([](const CT::Block auto& block) {...})` ????? that would be bloody awesome
+- Is it possible to use generator function to iterate blocks based on concepts?? like: `ForEach([](const CT::Block auto& block) {...})` ????? that would be bloody awesome. Should be possible only for non-type-erased ones?
 - Test all containers with `void*/const void*`
 - Test all containers with double pointers, including for `void**/const void* const*`
 - Test containers with function pointers, make them executable

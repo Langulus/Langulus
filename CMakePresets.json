@@ -224,7 +224,7 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_CXX_FLAGS": "/arch:IA32"
+        "CMAKE_CXX_FLAGS": "/arch:IA32 /EHsc"
       }
     },
     {
@@ -370,4 +370,12 @@
       "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     }
   ]
+  /*"buildPresets": [
+    {
+      "name": "windows-cl-x86-debug",
+      "configurePreset": "windows-cl-x86-debug",
+      "hidden": true,
+      "jobs": 8 // lower number of jobs to avoid heap saturation
+    }
+  ]*/
 }

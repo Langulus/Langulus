@@ -4,6 +4,7 @@
 - Implement external reflections, by allowing all CT concepts be defined by an external template specialization
 
 ## TODO:
+- Latest `BlockMap::Rehash` and widening while insertin needs to be carried over to `BlockSet`
 - Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
 - `BlockMap` speed optimizations: dynamic `AllowedMisses` based on table size; Anticipate oversaturation while swapping
 - How come sparse map tests don't involve sparse keys??

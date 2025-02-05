@@ -15,7 +15,7 @@ jobs:
         testing: [ON]
         cxx: [g++-14, clang++-19, ClangCl, v143]
         feature: [
-          [NoSIMD, 16, ' ', ' '],
+          [NoSIMD, 16, ' ', '/arch:IA32'],
           [SSE2, 16, '-msse2', '/arch:SSE2'],
           [SSE3, 16, '-msse3', '<not available on msvc>'],
           [SSSE3, 16, '-mssse3', '<not available on msvc>'],

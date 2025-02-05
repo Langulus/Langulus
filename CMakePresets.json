@@ -234,7 +234,7 @@
       "inherits": "windows-cl-x86-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "CMAKE_CXX_FLAGS": "/arch:IA32"
+        "CMAKE_CXX_FLAGS": "/arch:IA32  /EHsc"
       }
     },
 

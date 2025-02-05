@@ -234,7 +234,7 @@
       "inherits": "windows-cl-x86-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "CMAKE_CXX_FLAGS": "/arch:IA32  /EHsc"
+        "CMAKE_CXX_FLAGS": "/arch:IA32 /EHsc"
       }
     },
 
@@ -246,7 +246,7 @@
       "displayName": "Windows x86 CL Release (with SSE)",
       "inherits": "windows-cl-x86",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:SSE",
+        "CMAKE_CXX_FLAGS": "/arch:SSE /EHsc",
         "LANGULUS_ALIGNMENT": "16"
       }
     },
@@ -255,7 +255,7 @@
       "displayName": "Windows x86 CL Release (with SSE2)",
       "inherits": "windows-cl-x86",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:SSE2",
+        "CMAKE_CXX_FLAGS": "/arch:SSE2 /EHsc",
         "LANGULUS_ALIGNMENT": "16"
       }
     },
@@ -264,7 +264,7 @@
       "displayName": "Windows x86 CL Release (with AVX)",
       "inherits": "windows-cl-x86",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:AVX",
+        "CMAKE_CXX_FLAGS": "/arch:AVX /EHsc",
         "LANGULUS_ALIGNMENT": "32"
       }
     },
@@ -273,7 +273,7 @@
       "displayName": "Windows x86 CL Release (with AVX2)",
       "inherits": "windows-cl-x86",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:AVX2",
+        "CMAKE_CXX_FLAGS": "/arch:AVX2 /EHsc",
         "LANGULUS_ALIGNMENT": "32"
       }
     },
@@ -370,12 +370,4 @@
       "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     }
   ]
-  /*"buildPresets": [
-    {
-      "name": "windows-cl-x86-debug",
-      "configurePreset": "windows-cl-x86-debug",
-      "hidden": true,
-      "jobs": 8 // lower number of jobs to avoid heap saturation
-    }
-  ]*/
 }

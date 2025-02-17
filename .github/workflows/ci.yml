@@ -213,6 +213,6 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: "logfiles-${{matrix.os}}-${{matrix.cxx}}-${{matrix.arch}}-${{matrix.feature[0]}}-testing${{matrix.testing}}.txt"
-          path: build/bin/*-test.txt
+          name: "logfiles-${{matrix.os}}-${{matrix.cxx}}-${{matrix.arch}}-${{matrix.feature[0]}}-testing${{matrix.testing}}"
+          path: build/bin/*.htm
           retention-days: 5

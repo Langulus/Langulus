@@ -73,3 +73,6 @@
 [submodule "mods/Mod-UMS"]
 	path = mods/Mod-UMS
 	url = https://github.com/Langulus/Mod-UMS.git
+[submodule "framework/Testing"]
+	path = framework/Testing
+	url = https://github.com/Langulus/Testing.git

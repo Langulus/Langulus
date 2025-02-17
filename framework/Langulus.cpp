@@ -150,7 +150,7 @@ void LangulusExit() {
    root->Reference(-1);
    delete root;
    root = nullptr;
-   Allocator::CollectGarbage();
+   (void) Allocator::CollectGarbage();
    Logger::DettachRedirector(html_output);
    delete html_output;
    html_output = nullptr;

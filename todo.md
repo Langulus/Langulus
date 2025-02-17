@@ -2,6 +2,7 @@
 - ALL CONCEPTS NEED TESTS, because I just fixed a plethora of logical mistakes in them. can't stress this enough.
 - ~~`Block::Emplace` doesn't return a handle if sparse!~~ Same applies for mutable iterators!!! ~~same applies for `operator[]`!!!~~
 - Implement external reflections, by allowing all CT concepts be defined by an external template specialization
+- Persistent performance testing and benchmarking integrated with test utilty to keep track of performance regresses
 
 ## TODO:
 - Latest `BlockMap::Rehash` and widening while insertin needs to be carried over to `BlockSet`
@@ -9,7 +10,6 @@
 - `BlockMap` speed optimizations: dynamic `AllowedMisses` based on table size; Anticipate oversaturation while swapping
 - How come sparse map tests don't involve sparse keys??
 - Type erased map insertion is not defined
-- Create a common test utility library to reduce boilerplate in tests
 - `mInfo` in maps moves around to first map entry, so that iterations always beging with the first pair
 - Implement ordered maps and sets using an ordering array of indices after the `mInfo` array - that way we can directly transfer maps between ordered/unordered variations without any trouble
 - Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array
@@ -54,6 +54,7 @@
 - `constexpr memcpy` and `memmove` utilizing `if consteval`? Mainly for `TVector` constructors
 
 ## Done:
+- Create a common test utility library to reduce boilerplate in tests
 - Improve color addition, currently overflows/underflows, needs saturation
 - Improve color subtraction, currently overflows/underflows, needs saturation
 - Improve color multiplication, currently overflows/underflows, needs saturation

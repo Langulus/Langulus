@@ -1,19 +1,28 @@
 ﻿{
   "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
   "configurePresets": [
-    //                                                                        
     {
-      "name": "linux",
-      "displayName": "Target WSL",
-      "description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system.",
+      "name": "base",
       "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_TESTING": "ON"
-      },
+      "cacheVariables": { "LANGULUS_TESTING": "ON" }
+    },
+
+    //                                                                        
+    // OS LAYER                                                               
+    //                                                                        
+    {
+      "name": "linux",
+      "description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system",
+      "inherits": "base",
+      "hidden": true,
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -21,155 +30,22 @@
       },
       "vendor": { "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": { "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}" } }
     },
-
-    //                                                                        
     {
       "name": "windows",
       "description": "Target Windows",
+      "inherits": "base",
       "hidden": true,
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "LANGULUS_TESTING": "ON"
-      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
       }
     },
-
-    //                                                                        
     {
-      "name": "linux-g++",
-      "description": "Target WSL with the GNU compiler",
-      "inherits": "linux",
+      "name": "macos",
+      "description": "Target a remote macOS system",
+      "inherits": "base",
       "hidden": true,
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "/usr/bin/gcc-14",
-        "CMAKE_CXX_COMPILER": "/usr/bin/g++-14"
-      }
-    },
-
-    {
-      "name": "linux-clang++16",
-      "description": "Target WSL with the Clang 16 compiler",
-      "inherits": "linux",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "clang-16",
-        "CMAKE_CXX_COMPILER": "clang++-16"
-      }
-    },
-
-    //                                                                        
-    {
-      "name": "linux-g++-x64-debug",
-      "displayName": "Linux x64 G++ Debug",
-      "description": "Target WSL with the 64bit GNU compiler (debug)",
-      "inherits": "linux-g++",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_ALIGNMENT": "32",
-        "CMAKE_C_FLAGS": "-mavx",
-        "CMAKE_CXX_FLAGS": "-m64 -mavx"
-      }
-    },
-    {
-      "name": "linux-g++-x64",
-      "displayName": "Linux x64 G++ Release",
-      "description": "Target WSL with the 64bit GNU compiler",
-      "inherits": "linux-g++-x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
-    },
-    {
-      "name": "linux-g++-x86-debug",
-      "displayName": "Linux x86 G++ Debug",
-      "description": "Target WSL with the 32bit GNU compiler (debug)",
-      "inherits": "linux-g++",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_ALIGNMENT": "16",
-        "CMAKE_CXX_FLAGS": "-m32"
-      }
-    },
-    {
-      "name": "linux-g++-x86",
-      "displayName": "Linux x86 G++ Release",
-      "description": "Target WSL with the 32bit GNU compiler",
-      "inherits": "linux-g++-x86-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
-    },
-
-    //                                                                        
-    {
-      "name": "linux-clang++16-x64-debug",
-      "displayName": "Linux x64 Clang 16 Debug",
-      "description": "Target WSL with the 64bit Clang 16 compiler (debug)",
-      "inherits": "linux-clang++16",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_ALIGNMENT": "32",
-        "CMAKE_C_FLAGS": "-mavx",
-        "CMAKE_CXX_FLAGS": "-m64 -mavx"
-      }
-    },
-    {
-      "name": "linux-clang++16-x64",
-      "displayName": "Linux x64 Clang 16 Release",
-      "description": "Target WSL with the 64bit Clang 16 compiler",
-      "inherits": "linux-clang++16-x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
-    },
-    {
-      "name": "linux-clang++16-x86-debug",
-      "displayName": "Linux x86 Clang 16 Debug",
-      "description": "Target WSL with the 32bit Clang 16 compiler (debug)",
-      "inherits": "linux-clang++16",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_ALIGNMENT": "16",
-        "CMAKE_CXX_FLAGS": "-m32"
-      }
-    },
-    {
-      "name": "linux-clang++16-x86",
-      "displayName": "Linux x86 Clang 16 Release",
-      "description": "Target WSL with the 32bit Clang 16 compiler",
-      "inherits": "linux-clang++16-x86-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
-    },
-
-    //                                                                        
-    {
-      "name": "macos-debug",
-      "displayName": "macOS Debug",
-      "description": "Target a remote macOS system.",
-      "hidden": true,
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_TESTING": "ON"
-      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -179,195 +55,335 @@
     },
 
     //                                                                        
-    //   CL                                                                   
+    // COMPILER LAYER                                                         
     //                                                                        
     {
-      "name": "windows-cl",
-      "description": "Target Windows with the Visual Studio development environment.",
-      "inherits": "windows",
+      "name": "g++-14",
+      "description": "Target the GNU compiler (has to be at least 14)",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc-14",
+        "CMAKE_CXX_COMPILER": "g++-14",
+        "CMAKE_C_FLAGS": "$env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS}",
+        "CMAKE_CXX_FLAGS": "$env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS}"
+      }
+    },
+    {
+      "name": "clang++19",
+      "description": "Target Clang 19 compiler",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-19",
+        "CMAKE_CXX_COMPILER": "clang++-19",
+        "CMAKE_C_FLAGS": "$env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS}",
+        "CMAKE_CXX_FLAGS": "$env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS}"
+      }
+    },
+    {
+      "name": "cl-v143",
+      "description": "Target Visual C++ v143 compiler",
+      "inherits": "base",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe"
-      }
-    },
-
-    {
-      "name": "windows-cl-x64-debug",
-      "displayName": "Windows x64 CL Debug",
-      "description": "Target Windows (64-bit) with the Visual Studio development environment. (Debug)",
-      "inherits": "windows-cl",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_ALIGNMENT": "32"
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        "CMAKE_C_FLAGS": "/EHsc $env{ARCHITECTURE_FLAGS_MSVC} $env{SIMD_FLAGS_MSVC}",
+        "CMAKE_CXX_FLAGS": "/EHsc $env{ARCHITECTURE_FLAGS_MSVC} $env{SIMD_FLAGS_MSVC}"
       }
     },
     {
-      "name": "windows-cl-x64",
-      "displayName": "Windows x64 CL Release",
-      "description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
-      "inherits": "windows-cl-x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
-    },
-    {
-      "name": "windows-cl-x86-debug",
-      "displayName": "Windows x86 CL Debug (no SIMD)",
-      "description": "Target Windows (32-bit) with the Visual Studio development environment. (Debug)",
-      "inherits": "windows-cl",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_CXX_FLAGS": "/arch:IA32 /EHsc"
-      }
-    },
-    {
-      "name": "windows-cl-x86",
-      "displayName": "Windows x86 CL Release (no SIMD)",
-      "description": "Target Windows (32-bit) with the Visual Studio development environment. (RelWithDebInfo)",
-      "inherits": "windows-cl-x86-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "CMAKE_CXX_FLAGS": "/arch:IA32 /EHsc"
-      }
-    },
-
-    //                                                                        
-    //   CL with specific SIMD                                                
-    //                                                                        
-    {
-      "name": "windows-cl-x86-sse",
-      "displayName": "Windows x86 CL Release (with SSE)",
-      "inherits": "windows-cl-x86",
-      "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:SSE /EHsc",
-        "LANGULUS_ALIGNMENT": "16"
-      }
-    },
-    {
-      "name": "windows-cl-x86-sse2",
-      "displayName": "Windows x86 CL Release (with SSE2)",
-      "inherits": "windows-cl-x86",
-      "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:SSE2 /EHsc",
-        "LANGULUS_ALIGNMENT": "16"
-      }
-    },
-    {
-      "name": "windows-cl-x86-avx",
-      "displayName": "Windows x86 CL Release (with AVX)",
-      "inherits": "windows-cl-x86",
-      "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:AVX /EHsc",
-        "LANGULUS_ALIGNMENT": "32"
-      }
-    },
-    {
-      "name": "windows-cl-x86-avx2",
-      "displayName": "Windows x86 CL Release (with AVX2)",
-      "inherits": "windows-cl-x86",
-      "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:AVX2 /EHsc",
-        "LANGULUS_ALIGNMENT": "32"
-      }
-    },
-
-    //                                                                        
-    //   CLANG-CL                                                             
-    //                                                                        
-    {
-      "name": "windows-clang-cl",
-      "description": "Target Windows with Clang-Cl.",
-      "inherits": "windows",
+      "name": "clang-cl-19",
+      "description": "Target Clang-Cl 19",
+      "inherits": "base",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-cl.exe",
-        "CMAKE_CXX_COMPILER": "clang-cl.exe"
+        "CMAKE_CXX_COMPILER": "clang-cl.exe",
+        "CMAKE_C_FLAGS": "/EHsc $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS_MSVC}",
+        "CMAKE_CXX_FLAGS": "/EHsc $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS_MSVC}"
       }
     },
 
+    //                                                                        
+    // ARCHITECTURE LAYER                                                     
+    //                                                                        
     {
-      "name": "windows-clang-cl-x64-debug",
-      "displayName": "Windows x64 Clang-CL Debug (with AVX2)",
-      "description": "Target Windows (64-bit) with Clang-Cl. (Debug)",
-      "inherits": "windows-clang-cl",
+      "name": "x64",
+      "description": "Target x64 architecture",
+      "inherits": "base",
+      "hidden": true,
       "architecture": {
         "value": "x64",
         "strategy": "external"
       },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_ALIGNMENT": "32",
-        "CMAKE_CXX_FLAGS": "/arch:AVX2 /EHsc -m64"
+      "environment": {
+        "ARCHITECTURE_FLAGS": "-m64",
+        "ARCHITECTURE_FLAGS_MSVC": ""
       }
     },
     {
-      "name": "windows-clang-cl-x64",
-      "displayName": "Windows x64 Clang-CL Release (with AVX2)",
-      "description": "Target Windows (64-bit) with Clang-Cl. (RelWithDebInfo)",
-      "inherits": "windows-clang-cl-x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
-    },
-    {
-      "name": "windows-clang-cl-x64-safe",
-      "displayName": "Windows x64 Clang-CL Release (with AVX2) (SAFE MODE)",
-      "description": "Target Windows (64-bit) with Clang-Cl. (RelWithDebInfo)",
-      "inherits": "windows-clang-cl-x64",
-      "cacheVariables": { "LANGULUS_SAFE_MODE": "ON" }
-    },
-
-    //   CLANG-CL no SIMD                                                     
-    {
-      "name": "windows-clang-cl-x86-debug",
-      "displayName": "Windows x86 Clang-CL Debug (no SIMD)",
-      "description": "Target Windows (32-bit) with Clang-Cl. (Debug)",
-      "inherits": "windows-clang-cl",
+      "name": "x86",
+      "description": "Target x86 architecture",
+      "inherits": "base",
+      "hidden": true,
       "architecture": {
         "value": "x86",
         "strategy": "external"
       },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_ALIGNMENT": "16",
-        "CMAKE_CXX_FLAGS": "/arch:IA32 /EHsc -m32"
+      "environment": {
+        "ARCHITECTURE_FLAGS": "-m32",
+        "ARCHITECTURE_FLAGS_MSVC": ""
       }
     },
+
+    //                                                                        
+    // BUILD TYPE LAYER                                                       
+    //                                                                        
     {
-      "name": "windows-clang-cl-x86",
-      "displayName": "Windows x86 Clang-CL Release (no SIMD)",
-      "description": "Target Windows (32-bit) with Clang-Cl. (RelWithDebInfo)",
-      "inherits": "windows-clang-cl-x86-debug",
+      "name": "debug",
+      "description": "A debug build",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "release",
+      "description": "A release build",
+      "inherits": "base",
+      "hidden": true,
       "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
     },
 
-    //   CLANG-CL SSE2                                                        
+    //                                                                        
+    // SIMD LAYER                                                             
+    //                                                                        
     {
-      "name": "windows-clang-cl-x86-debug-SSE2",
-      "displayName": "Windows x86 Clang-CL Debug (with SSE2)",
-      "description": "Target Windows (32-bit) with Clang-Cl and SSE2. (Debug)",
-      "inherits": "windows-clang-cl",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "LANGULUS_ALIGNMENT": "16",
-        "CMAKE_CXX_FLAGS": "/arch:SSE2 /EHsc -m32"
+      "name": "NoSIMD",
+      "description": "Build without SIMD",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_ALIGNMENT": "16" },
+      "environment": {
+        "SIMD_FLAGS": "",
+        "SIMD_FLAGS_MSVC": "/arch:IA32"
       }
     },
     {
-      "name": "windows-clang-cl-x86-SSE2",
-      "displayName": "Windows x86 Clang-CL Release (with SSE2)",
-      "description": "Target Windows (32-bit) with Clang-Cl and SSE2. (RelWithDebInfo)",
-      "inherits": "windows-clang-cl-x86-debug-SSE2",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
+      "name": "SSE2",
+      "description": "Build with SSE2",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_ALIGNMENT": "16" },
+      "environment": {
+        "SIMD_FLAGS": "-msse2",
+        "SIMD_FLAGS_MSVC": "/arch:SSE2"
+      }
+    },
+    {
+      "name": "AVX",
+      "description": "Build with AVX",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_ALIGNMENT": "32" },
+      "environment": {
+        "SIMD_FLAGS": "-mavx",
+        "SIMD_FLAGS_MSVC": "/arch:AVX"
+      }
+    },
+    {
+      "name": "AVX2",
+      "description": "Build with AVX2",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_ALIGNMENT": "32" },
+      "environment": {
+        "SIMD_FLAGS": "-mavx2",
+        "SIMD_FLAGS_MSVC": "/arch:AVX2"
+      }
+    },
+
+    //                                                                        
+    // PRESETS                                                                
+    //                                                                        
+    // Linux g++ debug...
+    {
+      "name": "linux-g++-x64-debug-safe-noSIMD",
+      "displayName": "Linux x64 G++ Debug Safe NoSIMD",
+      "description": "Target Linux with the 64bit GNU compiler (debug, safe, no SIMD)",
+      "inherits": [ "linux", "g++-14", "x64", "debug", "NoSIMD" ]
+    },
+    {
+      "name": "linux-g++-x64-debug-safe-SSE2",
+      "displayName": "Linux x64 G++ Debug Safe SSE2",
+      "description": "Target Linux with the 64bit GNU compiler (debug, safe, SSE2)",
+      "inherits": [ "linux", "g++-14", "x64", "debug", "SSE2" ]
+    },
+    {
+      "name": "linux-g++-x64-debug-safe-AVX",
+      "displayName": "Linux x64 G++ Debug Safe AVX",
+      "description": "Target Linux with the 64bit GNU compiler (debug, safe, AVX)",
+      "inherits": [ "linux", "g++-14", "x64", "debug", "AVX" ]
+    },
+    {
+      "name": "linux-g++-x64-debug-safe-AVX2",
+      "displayName": "Linux x64 G++ Debug Safe AVX2",
+      "description": "Target Linux with the 64bit GNU compiler (debug, safe, AVX2)",
+      "inherits": [ "linux", "g++-14", "x64", "debug", "AVX2" ]
+    },
+
+    // Windows v143 debug...
+    {
+      "name": "windows-v143-x64-debug-safe-noSIMD",
+      "displayName": "v143 x64 Debug Safe NoSIMD",
+      "description": "Target Windows with the 64bit v143 compiler (debug, safe, no SIMD)",
+      "inherits": [ "windows", "cl-v143", "x64", "debug", "NoSIMD" ]
+    },
+    {
+      "name": "windows-v143-x64-debug-safe-SSE2",
+      "displayName": "v143 x64 Debug Safe SSE2",
+      "description": "Target Windows with the 64bit v143 compiler (debug, safe, SSE2)",
+      "inherits": [ "windows", "cl-v143", "x64", "debug", "SSE2" ]
+    },
+    {
+      "name": "windows-v143-x64-debug-safe-AVX",
+      "displayName": "v143 x64 Debug Safe AVX",
+      "description": "Target Windows with the 64bit v143 compiler (debug, safe, AVX)",
+      "inherits": [ "windows", "cl-v143", "x64", "debug", "AVX" ]
+    },
+    {
+      "name": "windows-v143-x64-debug-safe-AVX2",
+      "displayName": "v143 x64 Debug Safe AVX2",
+      "description": "Target Windows with the 64bit v143 compiler (debug, safe, AVX2)",
+      "inherits": [ "windows", "cl-v143", "x64", "debug", "AVX2" ]
+    },
+
+    {
+      "name": "windows-v143-x86-debug-safe-noSIMD",
+      "displayName": "v143 x86 Debug Safe NoSIMD",
+      "description": "Target Windows with the 32bit v143 compiler (debug, safe, no SIMD)",
+      "inherits": [ "windows", "cl-v143", "x86", "debug", "NoSIMD" ]
+    },
+    {
+      "name": "windows-v143-x86-debug-safe-SSE2",
+      "displayName": "v143 x86 Debug Safe SSE2",
+      "description": "Target Windows with the 32bit v143 compiler (debug, safe, SSE2)",
+      "inherits": [ "windows", "cl-v143", "x86", "debug", "SSE2" ]
+    },
+    {
+      "name": "windows-v143-x86-debug-safe-AVX",
+      "displayName": "v143 x86 Debug Safe AVX",
+      "description": "Target Windows with the 32bit v143 compiler (debug, safe, AVX)",
+      "inherits": [ "windows", "cl-v143", "x86", "debug", "AVX" ]
+    },
+    {
+      "name": "windows-v143-x86-debug-safe-AVX2",
+      "displayName": "v143 x86 Debug Safe AVX2",
+      "description": "Target Windows with the 32bit v143 compiler (debug, safe, AVX2)",
+      "inherits": [ "windows", "cl-v143", "x86", "debug", "AVX2" ]
+    },
+
+    // Windows v143 release...
+    {
+      "name": "windows-v143-x64-release-safe-noSIMD",
+      "displayName": "v143 x64 Release Safe NoSIMD",
+      "description": "Target Windows with the 64bit v143 compiler (release, safe, no SIMD)",
+      "inherits": [ "windows", "cl-v143", "x64", "release", "NoSIMD" ]
+    },
+    {
+      "name": "windows-v143-x64-release-safe-SSE2",
+      "displayName": "v143 x64 Release Safe SSE2",
+      "description": "Target Windows with the 64bit v143 compiler (release, safe, SSE2)",
+      "inherits": [ "windows", "cl-v143", "x64", "release", "SSE2" ]
+    },
+    {
+      "name": "windows-v143-x64-release-safe-AVX",
+      "displayName": "v143 x64 Release Safe AVX",
+      "description": "Target Windows with the 64bit v143 compiler (release, safe, AVX)",
+      "inherits": [ "windows", "cl-v143", "x64", "release", "AVX" ]
+    },
+    {
+      "name": "windows-v143-x64-release-safe-AVX2",
+      "displayName": "v143 x64 Release Safe AVX2",
+      "description": "Target Windows with the 64bit v143 compiler (release, safe, AVX2)",
+      "inherits": [ "windows", "cl-v143", "x64", "release", "AVX2" ]
+    },
+
+    {
+      "name": "windows-v143-x86-release-safe-noSIMD",
+      "displayName": "v143 x86 Release Safe NoSIMD",
+      "description": "Target Windows with the 32bit v143 compiler (release, safe, no SIMD)",
+      "inherits": [ "windows", "cl-v143", "x86", "release", "NoSIMD" ]
+    },
+    {
+      "name": "windows-v143-x86-release-safe-SSE2",
+      "displayName": "v143 x86 Release Safe SSE2 (BROKEN)",
+      "description": "Target Windows with the 32bit v143 compiler (release, safe, SSE2)",
+      "inherits": [ "windows", "cl-v143", "x86", "release", "SSE2" ]
+    },
+    {
+      "name": "windows-v143-x86-release-safe-AVX",
+      "displayName": "v143 x86 Release Safe AVX (BROKEN)",
+      "description": "Target Windows with the 32bit v143 compiler (release, safe, AVX)",
+      "inherits": [ "windows", "cl-v143", "x86", "release", "AVX" ]
+    },
+    {
+      "name": "windows-v143-x86-release-safe-AVX2",
+      "displayName": "v143 x86 Release Safe AVX2 (BROKEN)",
+      "description": "Target Windows with the 32bit v143 compiler (release, safe, AVX2)",
+      "inherits": [ "windows", "cl-v143", "x86", "release", "AVX2" ]
+    },
+
+    // Windows clang-cl debug...
+    {
+      "name": "windows-clang-cl-x64-debug-safe-noSIMD",
+      "displayName": "clang-cl x64 Debug Safe NoSIMD",
+      "description": "Target Windows with the 64bit Clang-Cl compiler (debug, safe, no SIMD)",
+      "inherits": [ "windows", "clang-cl-19", "x64", "debug", "NoSIMD" ]
+    },
+    {
+      "name": "windows-clang-cl-x64-debug-safe-SSE2",
+      "displayName": "clang-cl x64 Debug Safe SSE2",
+      "description": "Target Windows with the 64bit Clang-Cl compiler (debug, safe, SSE2)",
+      "inherits": [ "windows", "clang-cl-19", "x64", "debug", "SSE2" ]
+    },
+    {
+      "name": "windows-clang-cl-x64-debug-safe-AVX",
+      "displayName": "clang-cl x64 Debug Safe AVX",
+      "description": "Target Windows with the 64bit Clang-Cl compiler (debug, safe, AVX)",
+      "inherits": [ "windows", "clang-cl-19", "x64", "debug", "AVX" ]
+    },
+    {
+      "name": "windows-clang-cl-x64-debug-safe-AVX2",
+      "displayName": "clang-cl x64 Debug Safe AVX2",
+      "description": "Target Windows with the 64bit Clang-Cl compiler (debug, safe, AVX2)",
+      "inherits": [ "windows", "clang-cl-19", "x64", "debug", "AVX2" ]
+    },
+
+    {
+      "name": "windows-clang-cl-x86-debug-safe-noSIMD",
+      "displayName": "clang-cl x86 Debug Safe NoSIMD",
+      "description": "Target Windows with the 32bit Clang-Cl compiler (debug, safe, no SIMD)",
+      "inherits": [ "windows", "clang-cl-19", "x86", "debug", "NoSIMD" ]
+    },
+    {
+      "name": "windows-clang-cl-x86-debug-safe-SSE2",
+      "displayName": "clang-cl x86 Debug Safe SSE2",
+      "description": "Target Windows with the 32bit Clang-Cl compiler (debug, safe, SSE2)",
+      "inherits": [ "windows", "clang-cl-19", "x86", "debug", "SSE2" ]
+    },
+    {
+      "name": "windows-clang-cl-x86-debug-safe-AVX",
+      "displayName": "clang-cl x86 Debug Safe AVX",
+      "description": "Target Windows with the 32bit Clang-Cl compiler (debug, safe, AVX)",
+      "inherits": [ "windows", "clang-cl-19", "x86", "debug", "AVX" ]
+    },
+    {
+      "name": "windows-clang-cl-x86-debug-safe-AVX2",
+      "displayName": "clang-cl x86 Debug Safe AVX2",
+      "description": "Target Windows with the 32bit Clang-Cl compiler (debug, safe, AVX2)",
+      "inherits": [ "windows", "clang-cl-19", "x86", "debug", "AVX2" ]
     }
   ]
 }

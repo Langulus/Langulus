@@ -15,14 +15,14 @@ jobs:
         testing: [ON]
         cxx: [g++-14, clang++-19, ClangCl, v143]
         feature: [
-          [NoSIMD, 16, ' ', '/arch:IA32'],
-          [SSE2, 16, '-msse2', '/arch:SSE2'],
-          [SSE3, 16, '-msse3', '<not available on msvc>'],
-          [SSSE3, 16, '-mssse3', '<not available on msvc>'],
-          [SSE4.1, 16, '-msse4.1', '<not available on msvc>'],
-          [SSE4.2, 16, '-msse4.2', '<not available on msvc>'],
-          [AVX, 32, '-mavx', '/arch:AVX'],
-          [AVX2, 32, '-mavx2', '/arch:AVX2'],
+          [NoSIMD, 16, ' ',         '/arch:IA32'],
+          [SSE2,   16, '-msse2',    '/arch:SSE2'],
+          [SSE3,   16, '-msse3',    '<not available on msvc>'],
+          [SSSE3,  16, '-mssse3',   '<not available on msvc>'],
+          [SSE4.1, 16, '-msse4.1',  '<not available on msvc>'],
+          [SSE4.2, 16, '-msse4.2',  '<not available on msvc>'],
+          [AVX,    32, '-mavx',     '/arch:AVX'],
+          [AVX2,   32, '-mavx2',    '/arch:AVX2'],
           [AVX512, 64, '-mavx512f', '/arch:AVX512']
         ]
 
@@ -81,6 +81,15 @@ jobs:
             cxx: v143
             feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
 
+          # I can't even begin to describe how much grief has msvc x86 compiler given me!
+          # 32bit v143 compiler support is very neglected and produces a lot of constexpr related ICEs, 
+          # wrong code generation, and ridiculously long compile-times (we're talking about HOURS)
+          # I've been suffering for years before I finally gave up and excluded it.
+          # Sorry, but only the noSIMD version is supported.
+          # see https://github.com/Langulus/SIMD/issues/22 for more info and updates on the situation
+          - arch: x86
+            cxx: v143
+            feature: [SSE2, 16, '-msse2', '/arch:SSE2']
           - arch: x86
             cxx: v143
             feature: [SSE3, 16, '-msse3', '<not available on msvc>']
@@ -93,6 +102,12 @@ jobs:
           - arch: x86
             cxx: v143
             feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+          - arch: x86
+            cxx: v143
+            feature: [AVX, 32, '-mavx', '/arch:AVX']
+          - arch: x86
+            cxx: v143
+            feature: [AVX2, 32, '-mavx2', '/arch:AVX2']
 
           # Seems the cloud at github doesn't have the avx512 extensions
           - feature: [AVX512, 64, '-mavx512f', '/arch:AVX512']

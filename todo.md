@@ -3,8 +3,13 @@
 - ~~`Block::Emplace` doesn't return a handle if sparse!~~ Same applies for mutable iterators!!! ~~same applies for `operator[]`!!!~~
 - Implement external reflections, by allowing all CT concepts be defined by an external template specialization
 - Persistent performance testing and benchmarking integrated with test utilty to keep track of performance regresses
+- Unsigned saturated multiplication is wrong i think, needs more test cases with overlfows/underflows in SIMD library
+- `Clamp` and possibly other math functions don't work with tags for some reason. Add Vector tests for these as well.
 
 ## TODO:
+- Test `NameOf` with member pointers (both functions and variables)
+- `Block::ForEach` should return more than just `Count`. How about the `LoopControl` code that was used for the final iteration? Can be used to integrate with more complex visitor patterns
+- Allow vectors/ranges/whatever to be made of `OptionalNumber`, that will act as undefined the first time it is operated only, copying the rhs. Useful when embracing ranges, where the first embrace is against an undefined range
 - Latest `BlockMap::Rehash` and widening while insertin needs to be carried over to `BlockSet`
 - Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
 - `BlockMap` speed optimizations: dynamic `AllowedMisses` based on table size; Anticipate oversaturation while swapping
@@ -14,7 +19,6 @@
 - Implement ordered maps and sets using an ordering array of indices after the `mInfo` array - that way we can directly transfer maps between ordered/unordered variations without any trouble
 - Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array
 - Add multiplication operators to meta types to multiply by their size
-- In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)
 - Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case
 - Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized
 - Test if vector/point/normal/sampler/etc. constructors make sense and play well with semantics, when inside containers
@@ -41,19 +45,19 @@
 - Drop `CT::Complete` in various `CT::Destroyable` and other similar checks to avoid silencing incomplete types
 - Generate coverage on clang CI https://releases.llvm.org/19.1.0/tools/clang/docs/SourceBasedCodeCoverage.html
 - `Block::Compare` comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
-- Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
 - When stringifying text containers, make sure the text literal operator isn't found in the string itself - use ` if there's a " and vice versa, use escapes if both
 - When `deducing this` is implemented for `clang-cl`, use it to reduce a plethora of const/mutable function equivalents, and use `if consteval`
 - ### Add `emcc` to the CI and pass tests
 - Map and set iterations tend to iterate to the end of `mInfo`, despite having gone past the inserted `mCount`
 - Test all containers with aggregates
 - Should we somehow allow `LANGULUS_VERBS(Verbs::Multiply)` without a `void Multiply(Verb&)` member if operators are already defined?
-- `Clamp` and possibly other math functions don't work with tags for some reason. Add Vector tests for these as well.
 - Do SIMD functions work with `volatile` arguments?
 - Can we insert `volatile` stuff into containers?
 - `constexpr memcpy` and `memmove` utilizing `if consteval`? Mainly for `TVector` constructors
 
 ## Done:
+- Missing vector components should be defaulted static constexpr instead? Yes.
+- Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
 - Create a common test utility library to reduce boilerplate in tests
 - Improve color addition, currently overflows/underflows, needs saturation
 - Improve color subtraction, currently overflows/underflows, needs saturation
@@ -94,3 +98,4 @@
 ## Abandoned:
 - Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
 - Since `Couple` is now invoked by the user's whim, `mOwners` is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor! No, the non-aux functions are still used on Refersh routines.
+- In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)

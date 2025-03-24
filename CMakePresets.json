@@ -146,7 +146,10 @@
       "description": "A debug build",
       "inherits": "base",
       "hidden": true,
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_SAFE_MODE": "ON"
+      }
     },
     {
       "name": "release",
@@ -154,6 +157,13 @@
       "inherits": "base",
       "hidden": true,
       "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
+    },
+    {
+      "name": "safe",
+      "description": "A safe build",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_SAFE_MODE": "ON" }
     },
 
     //                                                                        
@@ -289,50 +299,50 @@
       "name": "windows-v143-x64-release-safe-noSIMD",
       "displayName": "v143 x64 Release Safe NoSIMD",
       "description": "Target Windows with the 64bit v143 compiler (release, safe, no SIMD)",
-      "inherits": [ "windows", "cl-v143", "x64", "release", "NoSIMD" ]
+      "inherits": [ "windows", "cl-v143", "x64", "release", "NoSIMD", "safe" ]
     },
     {
       "name": "windows-v143-x64-release-safe-SSE2",
       "displayName": "v143 x64 Release Safe SSE2",
       "description": "Target Windows with the 64bit v143 compiler (release, safe, SSE2)",
-      "inherits": [ "windows", "cl-v143", "x64", "release", "SSE2" ]
+      "inherits": [ "windows", "cl-v143", "x64", "release", "SSE2", "safe" ]
     },
     {
       "name": "windows-v143-x64-release-safe-AVX",
       "displayName": "v143 x64 Release Safe AVX",
       "description": "Target Windows with the 64bit v143 compiler (release, safe, AVX)",
-      "inherits": [ "windows", "cl-v143", "x64", "release", "AVX" ]
+      "inherits": [ "windows", "cl-v143", "x64", "release", "AVX", "safe" ]
     },
     {
       "name": "windows-v143-x64-release-safe-AVX2",
       "displayName": "v143 x64 Release Safe AVX2",
       "description": "Target Windows with the 64bit v143 compiler (release, safe, AVX2)",
-      "inherits": [ "windows", "cl-v143", "x64", "release", "AVX2" ]
+      "inherits": [ "windows", "cl-v143", "x64", "release", "AVX2", "safe" ]
     },
 
     {
       "name": "windows-v143-x86-release-safe-noSIMD",
       "displayName": "v143 x86 Release Safe NoSIMD",
       "description": "Target Windows with the 32bit v143 compiler (release, safe, no SIMD)",
-      "inherits": [ "windows", "cl-v143", "x86", "release", "NoSIMD" ]
+      "inherits": [ "windows", "cl-v143", "x86", "release", "NoSIMD", "safe" ]
     },
     {
       "name": "windows-v143-x86-release-safe-SSE2",
       "displayName": "v143 x86 Release Safe SSE2 (BROKEN)",
       "description": "Target Windows with the 32bit v143 compiler (release, safe, SSE2)",
-      "inherits": [ "windows", "cl-v143", "x86", "release", "SSE2" ]
+      "inherits": [ "windows", "cl-v143", "x86", "release", "SSE2", "safe" ]
     },
     {
       "name": "windows-v143-x86-release-safe-AVX",
       "displayName": "v143 x86 Release Safe AVX (BROKEN)",
       "description": "Target Windows with the 32bit v143 compiler (release, safe, AVX)",
-      "inherits": [ "windows", "cl-v143", "x86", "release", "AVX" ]
+      "inherits": [ "windows", "cl-v143", "x86", "release", "AVX", "safe" ]
     },
     {
       "name": "windows-v143-x86-release-safe-AVX2",
       "displayName": "v143 x86 Release Safe AVX2 (BROKEN)",
       "description": "Target Windows with the 32bit v143 compiler (release, safe, AVX2)",
-      "inherits": [ "windows", "cl-v143", "x86", "release", "AVX2" ]
+      "inherits": [ "windows", "cl-v143", "x86", "release", "AVX2", "safe" ]
     },
 
     // Windows clang-cl debug...
@@ -390,50 +400,50 @@
       "name": "windows-clang-cl-x64-release-safe-noSIMD",
       "displayName": "clang-cl x64 Release Safe NoSIMD",
       "description": "Target Windows with the 64bit Clang-Cl compiler (release, safe, no SIMD)",
-      "inherits": [ "windows", "clang-cl-19", "x64", "release", "NoSIMD" ]
+      "inherits": [ "windows", "clang-cl-19", "x64", "release", "NoSIMD", "safe" ]
     },
     {
       "name": "windows-clang-cl-x64-release-safe-SSE2",
       "displayName": "clang-cl x64 Release Safe SSE2",
       "description": "Target Windows with the 64bit Clang-Cl compiler (release, safe, SSE2)",
-      "inherits": [ "windows", "clang-cl-19", "x64", "release", "SSE2" ]
+      "inherits": [ "windows", "clang-cl-19", "x64", "release", "SSE2", "safe" ]
     },
     {
       "name": "windows-clang-cl-x64-release-safe-AVX",
       "displayName": "clang-cl x64 Release Safe AVX",
       "description": "Target Windows with the 64bit Clang-Cl compiler (release, safe, AVX)",
-      "inherits": [ "windows", "clang-cl-19", "x64", "release", "AVX" ]
+      "inherits": [ "windows", "clang-cl-19", "x64", "release", "AVX", "safe" ]
     },
     {
       "name": "windows-clang-cl-x64-release-safe-AVX2",
       "displayName": "clang-cl x64 Release Safe AVX2",
       "description": "Target Windows with the 64bit Clang-Cl compiler (release, safe, AVX2)",
-      "inherits": [ "windows", "clang-cl-19", "x64", "release", "AVX2" ]
+      "inherits": [ "windows", "clang-cl-19", "x64", "release", "AVX2", "safe" ]
     },
 
     {
       "name": "windows-clang-cl-x86-release-safe-noSIMD",
       "displayName": "clang-cl x86 Release Safe NoSIMD",
       "description": "Target Windows with the 32bit Clang-Cl compiler (release, safe, no SIMD)",
-      "inherits": [ "windows", "clang-cl-19", "x86", "release", "NoSIMD" ]
+      "inherits": [ "windows", "clang-cl-19", "x86", "release", "NoSIMD", "safe" ]
     },
     {
       "name": "windows-clang-cl-x86-release-safe-SSE2",
       "displayName": "clang-cl x86 Release Safe SSE2",
       "description": "Target Windows with the 32bit Clang-Cl compiler (release, safe, SSE2)",
-      "inherits": [ "windows", "clang-cl-19", "x86", "release", "SSE2" ]
+      "inherits": [ "windows", "clang-cl-19", "x86", "release", "SSE2", "safe" ]
     },
     {
       "name": "windows-clang-cl-x86-release-safe-AVX",
       "displayName": "clang-cl x86 Release Safe AVX",
       "description": "Target Windows with the 32bit Clang-Cl compiler (release, safe, AVX)",
-      "inherits": [ "windows", "clang-cl-19", "x86", "release", "AVX" ]
+      "inherits": [ "windows", "clang-cl-19", "x86", "release", "AVX", "safe" ]
     },
     {
       "name": "windows-clang-cl-x86-release-safe-AVX2",
       "displayName": "clang-cl x86 Release Safe AVX2",
       "description": "Target Windows with the 32bit Clang-Cl compiler (release, safe, AVX2)",
-      "inherits": [ "windows", "clang-cl-19", "x86", "release", "AVX2" ]
+      "inherits": [ "windows", "clang-cl-19", "x86", "release", "AVX2", "safe" ]
     }
   ]
 }

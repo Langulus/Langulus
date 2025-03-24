@@ -6,6 +6,7 @@
 /// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
 #include <Langulus/Entity/Thing.hpp>
+#include <Langulus/Economy.hpp>
 
 using namespace Langulus;
 
@@ -27,6 +28,9 @@ extern "C"
    // Main functionality                                                
    LANGULUS_EXPORT() void* LangulusInit();
    LANGULUS_EXPORT() void* LangulusRoot();
+   LANGULUS_EXPORT() void* LangulusEconomy();
+   LANGULUS_EXPORT() void* LangulusResource(void*, const void*, int);
+   LANGULUS_EXPORT() void* LangulusConverter(void*, const void*, int);
    LANGULUS_EXPORT() bool  LangulusUpdate(void*, int, int);
    LANGULUS_EXPORT() void  LangulusExit();
    LANGULUS_EXPORT() void* LangulusLoadMod(void*, const void*, int, const void* = nullptr, int = 0);
@@ -34,20 +38,37 @@ extern "C"
    LANGULUS_EXPORT() void* LangulusCreateUnit(void*, const void*, int, const void* = nullptr, int = 0);
 
    // Logging                                                           
-   LANGULUS_EXPORT() void LangulusLog(int, const void*, int);
-   LANGULUS_EXPORT() void LangulusLogTab(int, const void*, int);
-   LANGULUS_EXPORT() void LangulusLogTabEnd();
+   LANGULUS_EXPORT() void  LangulusLog(int, const void*, int);
+   LANGULUS_EXPORT() void  LangulusLogTab(int, const void*, int);
+   LANGULUS_EXPORT() void  LangulusLogTabEnd();
+                           
+   LANGULUS_EXPORT() void  LangulusLogLine(const void*, int);
+   LANGULUS_EXPORT() void  LangulusLogAppend(const void*, int);
+   LANGULUS_EXPORT() void  LangulusDumpHierarchy();
 
-   LANGULUS_EXPORT() void LangulusLogLine(const void*, int);
-   LANGULUS_EXPORT() void LangulusLogAppend(const void*, int);
-   LANGULUS_EXPORT() void LangulusDumpHierarchy();
+   LANGULUS_EXPORT() int32_t LangulusResourceQuantity(void*);
+   LANGULUS_EXPORT() int   LangulusResourceQuantityLocal(void*, float x, float y, float r);
+                           
+   LANGULUS_EXPORT() int   LangulusResourceInstanceCount(void*);
+   LANGULUS_EXPORT() int   LangulusResourceInstanceCountLocal(void*, float x, float y, float r);
+
+   LANGULUS_EXPORT() float LangulusResourceSupply(void*);
+   LANGULUS_EXPORT() float LangulusResourceSupplyLocal(void*, float x, float y, float r);
+
+   LANGULUS_EXPORT() float LangulusResourceDemand(void*);
+   LANGULUS_EXPORT() float LangulusResourceDemandLocal(void*, float x, float y, float r);
+
+   LANGULUS_EXPORT() float LangulusResourceConsumption(void*);
+   LANGULUS_EXPORT() float LangulusResourceConsumptionLocal(void*, float x, float y, float r);
+
+   LANGULUS_EXPORT() void*  LangulusResourceInstance(void*, float x, float y);
+   LANGULUS_EXPORT() void** LangulusResourceInstancesLocalBegin(void*, float x, float y, float r);
+   LANGULUS_EXPORT() void   LangulusResourceInstancesLocalEnd(void**);
+
+   LANGULUS_EXPORT() void*  LangulusConverterInstance(void*, float x, float y);
+   LANGULUS_EXPORT() void** LangulusConverterInstancesLocalBegin(void*, float x, float y, float r);
+   LANGULUS_EXPORT() void   LangulusConverterInstancesLocalEnd(void**);
 }
-
-
-
-
-
-
 
 
 ///                                                                           
@@ -81,10 +102,131 @@ void* LangulusRoot() {
    }
 #endif
 
-   // Suppress any logging messages, so that we don't interfere with    
-   // the ASCII renderer in the console. Instead, redirect all logging  
-   // to an external HTML file.                                         
    return root;
+}
+
+/// Get the framework's economy component inside root                         
+///   @return a handle to the economy module                                  
+void* LangulusEconomy() {
+#if LANGULUS(SAFE)
+   if (not initialized) {
+      Logger::Fatal("Langulus wasn't initialized - call LangulusInit() prior to LangulusRoot()");
+      return nullptr;
+   }
+#endif
+
+   auto& economies = root->GetRuntime()->GetModules<A::Economy>();
+   LANGULUS_ASSERT(economies, Module, "Can't retrieve economy - no economy module available");
+   return economies.template As<A::Economy*>();
+}
+
+/// Get a resource definition                                                 
+///   @param economy - the economy module                                     
+///   @param name - resource name                                             
+///   @param name_size - the number of characters in provided 'name'          
+///   @return the resource unit handle                                        
+void* LangulusResource(void* economy, const void* name, int name_size) {
+   Logger::Network("LangulusResource...");
+
+#if LANGULUS(SAFE)
+   if (not initialized) {
+      Logger::Fatal("Langulus wasn't initialized - call LangulusInit() prior to LangulusResource()");
+      return nullptr;
+   }
+#endif
+
+   if (not economy)
+      economy = LangulusEconomy();
+
+#if LANGULUS(SAFE)
+   if (not name) {
+      Logger::Error("Invalid resource name pointer on LangulusResource");
+      return nullptr;
+   }
+
+   if (name_size < 1) {
+      Logger::Error("Empty resource name on LangulusResource");
+      return nullptr;
+   }
+#endif
+
+   Token token {
+      static_cast<const char*>(name),
+      static_cast<std::size_t>(name_size)
+   };
+   auto typed = reinterpret_cast<A::Economy*>(economy);
+
+#if LANGULUS(SAFE)
+   if (name_size > 4096) {
+      Logger::Error("Resource name on LangulusResource is too long: ", token);
+      return nullptr;
+   }
+#endif
+   Logger::Network("Getting resource: ", token);
+
+   auto resource = typed->GetResource(token);
+
+#if LANGULUS(SAFE)
+   if (not resource) {
+      Logger::Error("No such resources on LangulusResource: ", token);
+      return 0;
+   }
+#endif
+
+   return const_cast<A::Resource*>(resource);
+}
+
+/// Get a converter definition                                                
+///   @param economy - the economy module                                     
+///   @param name - converter name                                            
+///   @param name_size - the number of characters in provided 'name'          
+///   @return the converter unit handle                                       
+void* LangulusConverter(void* economy, const void* name, int name_size) {
+#if LANGULUS(SAFE)
+   if (not initialized) {
+      Logger::Fatal("Langulus wasn't initialized - call LangulusInit() prior to LangulusConverter()");
+      return nullptr;
+   }
+#endif
+
+   if (not economy)
+      economy = LangulusEconomy();
+
+#if LANGULUS(SAFE)
+   if (not name) {
+      Logger::Error("Invalid converter name pointer on LangulusConverter");
+      return nullptr;
+   }
+
+   if (name_size < 1) {
+      Logger::Error("Empty converter name on LangulusConverter");
+      return nullptr;
+   }
+#endif
+
+   Token token {
+      static_cast<const char*>(name),
+      static_cast<std::size_t>(name_size)
+   };
+   auto typed = reinterpret_cast<A::Economy*>(economy);
+
+#if LANGULUS(SAFE)
+   if (name_size > 4096) {
+      Logger::Error("Converter name on LangulusConverter is too long: ", token);
+      return nullptr;
+   }
+#endif
+
+   auto converter = typed->GetConverter(token);
+
+#if LANGULUS(SAFE)
+   if (not converter) {
+      Logger::Error("No such converters on LangulusConverter: ", token);
+      return 0;
+   }
+#endif
+
+   return const_cast<A::Converter*>(converter);
 }
 
 /// Update the hierarchy, starting with the provided Thing                    
@@ -377,4 +519,218 @@ void LangulusLogAppend(const void* text, int text_size) {
 /// Logs the Thing hierarchy, starting from the root                          
 void LangulusDumpHierarchy() {
    root->DumpHierarchy();
+}
+
+/// Get the quantity of a resource                                            
+///   @param res - the resource definition                                    
+///   @return the quantity                                                    
+int32_t LangulusResourceQuantity(void* res) {
+   Logger::Network("Taking quantity of resource: ", res);
+
+   #if LANGULUS(SAFE)
+      if (not res) {
+         Logger::Error("Bad resource handle in LangulusResourceQuantity");
+         return 0;
+      }
+   #endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetQuantity();
+}
+
+/// Get the quantity of a resource in a given area                            
+///   @param res - the resource definition                                    
+///   @param x, y - position on the map                                       
+///   @param r - radius around the position                                   
+///   @return the quantity                                                    
+int LangulusResourceQuantityLocal(void* res, float x, float y, float r) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceQuantityLocal");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetQuantityLocal(A::Resource::Place {x, y}, r);
+}
+
+/// Get the instance count of a resource                                      
+///   @param res - the resource definition                                    
+///   @return the number of instances                                         
+int LangulusResourceInstanceCount(void* res) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceInstanceCount");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetQuantity();
+}
+
+/// Get the instance count of a resource in a given area                      
+///   @param res - the resource definition                                    
+///   @param x, y - position on the map                                       
+///   @param r - radius around the position                                   
+///   @return the number of instances                                         
+int LangulusResourceInstanceCountLocal(void* res, float x, float y, float r) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceInstanceCountLocal");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetQuantityLocal(A::Resource::Place {x, y}, r);
+}
+
+/// Get the supply of a resource                                              
+///   @param res - the resource definition                                    
+///   @return the supply (per tick)                                           
+float LangulusResourceSupply(void* res) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceSupply");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetSupply();
+}
+
+/// Get the supply of a resource in a given area                              
+///   @param res - the resource definition                                    
+///   @param x, y - position on the map                                       
+///   @param r - radius around the position                                   
+///   @return the supply (per tick)                                           
+float LangulusResourceSupplyLocal(void* res, float x, float y, float r) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceSupplyLocal");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetSupplyLocal(A::Resource::Place {x, y}, r);
+}
+
+/// Get the demand of a resource                                              
+///   @param res - the resource definition                                    
+///   @return the supply (per tick)                                           
+float LangulusResourceDemand(void* res) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceDemand");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetDemand();
+}
+
+/// Get the demand of a resource in a given area                              
+///   @param res - the resource definition                                    
+///   @param x, y - position on the map                                       
+///   @param r - radius around the position                                   
+///   @return the supply (per tick)                                           
+float LangulusResourceDemandLocal(void* res, float x, float y, float r) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceDemandLocal");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetDemandLocal(A::Resource::Place {x, y}, r);
+}
+
+/// Get the consumption of a resource                                         
+///   @param res - the resource definition                                    
+///   @return the supply (per tick)                                           
+float LangulusResourceConsumption(void* res) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceConsumption");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetConsumption();
+}
+
+/// Get the consumption of a resource in a given area                         
+///   @param res - the resource definition                                    
+///   @param x, y - position on the map                                       
+///   @param r - radius around the position                                   
+///   @return the supply (per tick)                                           
+float LangulusResourceConsumptionLocal(void* res, float x, float y, float r) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceConsumptionLocal");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return resource->GetConsumptionLocal(A::Resource::Place {x, y}, r);
+}
+
+/// Get resource instance at a position                                       
+///   @param resource - the resource definition                               
+///   @param x, y - position on the map                                       
+///   @return the instance, if any                                            
+void* LangulusResourceInstance(void* res, float x, float y) {
+#if LANGULUS(SAFE)
+   if (not res) {
+      Logger::Error("Bad resource handle in LangulusResourceInstance");
+      return 0;
+   }
+#endif
+   auto resource = static_cast<A::Resource*>(res);
+   return const_cast<A::ResourceInstance*>(resource->At(A::Resource::Place {x, y}));
+}
+
+/// Get all resource instances at a position                                  
+///   @attention the list has to be destroyed with a call to                  
+///      LangulusResourceInstancesLocalEnd                                    
+///   @param res - the resource definition                                    
+///   @param x, y - position on the map                                       
+///   @param r - radius around the position                                   
+///   @return the instance, if any                                            
+void** LangulusResourceInstancesLocalBegin(void* res, float x, float y, float r) {
+   TODO();
+   return nullptr;
+}
+
+void LangulusResourceInstancesLocalEnd(void** handle) {
+   TODO();
+}
+
+/// Get converter instance at a position                                      
+///   @param conv - the converter definition                                  
+///   @param x, y - position on the map                                       
+///   @return the instance, if any                                            
+void* LangulusConverterInstance(void* conv, float x, float y) {
+#if LANGULUS(SAFE)
+   if (not conv) {
+      Logger::Error("Bad converter handle in LangulusConverterInstance");
+      return 0;
+   }
+#endif
+   auto converter = static_cast<A::Converter*>(conv);
+   return const_cast<A::ConverterInstance*>(converter->At(A::Converter::Place {x, y}));
+}
+
+/// Get all converter instances at a position                                 
+///   @attention the list has to be destroyed with a call to                  
+///      LangulusConverterInstancesLocalEnd                                   
+///   @param conv - the converter definition                                  
+///   @param x, y - position on the map                                       
+///   @param r - radius around the position                                   
+///   @return the instance, if any                                            
+void** LangulusConverterInstancesLocalBegin(void* conv, float x, float y, float r) {
+   TODO();
+   return nullptr;
+}
+
+void LangulusConverterInstancesLocalEnd(void** handle) {
+   TODO();
 }

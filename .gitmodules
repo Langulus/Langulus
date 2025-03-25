@@ -76,3 +76,6 @@
 [submodule "framework/Testing"]
 	path = framework/Testing
 	url = https://github.com/Langulus/Testing.git
+[submodule "framework/Profiler"]
+	path = framework/Profiler
+	url = https://github.com/Langulus/Profiler.git

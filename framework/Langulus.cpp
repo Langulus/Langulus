@@ -46,7 +46,7 @@ extern "C"
    LANGULUS_EXPORT() void  LangulusLogAppend(const void*, int);
    LANGULUS_EXPORT() void  LangulusDumpHierarchy();
 
-   LANGULUS_EXPORT() int32_t LangulusResourceQuantity(void*);
+   LANGULUS_EXPORT() int   LangulusResourceQuantity(void*);
    LANGULUS_EXPORT() int   LangulusResourceQuantityLocal(void*, float x, float y, float r);
                            
    LANGULUS_EXPORT() int   LangulusResourceInstanceCount(void*);
@@ -524,7 +524,7 @@ void LangulusDumpHierarchy() {
 /// Get the quantity of a resource                                            
 ///   @param res - the resource definition                                    
 ///   @return the quantity                                                    
-int32_t LangulusResourceQuantity(void* res) {
+int LangulusResourceQuantity(void* res) {
    Logger::Network("Taking quantity of resource: ", res);
 
    #if LANGULUS(SAFE)

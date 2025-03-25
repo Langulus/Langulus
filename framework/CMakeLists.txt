@@ -15,6 +15,11 @@ endif()
 langulus_init_git_submodule(Logger)
 add_subdirectory(Logger)
 
+if(LANGULUS_FEATURE_PROFILING)
+	langulus_init_git_submodule(Profiler)
+	add_subdirectory(Profiler)
+endif()
+
 langulus_init_git_submodule(RTTI)
 add_subdirectory(RTTI)
 
@@ -43,6 +48,7 @@ add_langulus_library(Langulus
 	$<TARGET_OBJECTS:LangulusLogger>
 	$<TARGET_OBJECTS:LangulusRTTI>
 	$<$<BOOL:${LANGULUS_FEATURE_MANAGED_MEMORY}>:$<TARGET_OBJECTS:LangulusFractalloc>>
+	$<$<BOOL:${LANGULUS_FEATURE_PROFILING}>:$<TARGET_OBJECTS:LangulusProfiler>>
 	$<TARGET_OBJECTS:LangulusAnyness>
 	$<TARGET_OBJECTS:LangulusFlow>
 	$<TARGET_OBJECTS:LangulusMath>
@@ -54,6 +60,7 @@ target_include_directories(Langulus
 	PUBLIC		$<TARGET_PROPERTY:LangulusLogger,INTERFACE_INCLUDE_DIRECTORIES>
 				$<TARGET_PROPERTY:LangulusRTTI,INTERFACE_INCLUDE_DIRECTORIES>
 				$<$<BOOL:${LANGULUS_FEATURE_MANAGED_MEMORY}>:$<TARGET_PROPERTY:LangulusFractalloc,INTERFACE_INCLUDE_DIRECTORIES>>
+				$<$<BOOL:${LANGULUS_FEATURE_PROFILING}>:$<TARGET_PROPERTY:LangulusProfiler,INTERFACE_INCLUDE_DIRECTORIES>>
 				$<TARGET_PROPERTY:LangulusAnyness,INTERFACE_INCLUDE_DIRECTORIES>
 				$<TARGET_PROPERTY:LangulusFlow,INTERFACE_INCLUDE_DIRECTORIES>
 				$<TARGET_PROPERTY:LangulusMath,INTERFACE_INCLUDE_DIRECTORIES>

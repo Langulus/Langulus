@@ -12,7 +12,10 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": { "LANGULUS_TESTING": "ON" }
+      "cacheVariables": {
+        "LANGULUS_TESTING": "ON",
+        "LANGULUS_FEATURE_PROFILING" : "ON"
+      }
     },
 
     //                                                                        

@@ -126,8 +126,6 @@ void* LangulusEconomy() {
 ///   @param name_size - the number of characters in provided 'name'          
 ///   @return the resource unit handle                                        
 void* LangulusResource(void* economy, const void* name, int name_size) {
-   Logger::Network("LangulusResource...");
-
 #if LANGULUS(SAFE)
    if (not initialized) {
       Logger::Fatal("Langulus wasn't initialized - call LangulusInit() prior to LangulusResource()");
@@ -162,7 +160,6 @@ void* LangulusResource(void* economy, const void* name, int name_size) {
       return nullptr;
    }
 #endif
-   Logger::Network("Getting resource: ", token);
 
    auto resource = typed->GetResource(token);
 
@@ -525,8 +522,6 @@ void LangulusDumpHierarchy() {
 ///   @param res - the resource definition                                    
 ///   @return the quantity                                                    
 int LangulusResourceQuantity(void* res) {
-   Logger::Network("Taking quantity of resource: ", res);
-
    #if LANGULUS(SAFE)
       if (not res) {
          Logger::Error("Bad resource handle in LangulusResourceQuantity");

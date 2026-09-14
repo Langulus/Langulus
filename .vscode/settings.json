@@ -1,0 +1,214 @@
+{
+   "chat.agent.enabled": false,
+   "chat.disableAIFeatures": true,
+   "cmake.showConfigureWithDebuggerNotification": false,
+   "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
+   "C_Cpp.intelliSenseEngine": "disabled",
+   "workbench.colorCustomizations": {
+      "editor.selectionBackground":"#20354b",
+      "tab.activeBorder": "#00FFFF",     // line at the bottom
+      "tab.activeBorderTop": "#bb4602",  // line at the top
+      "tab.activeBackground": "#ff7707", // background for active tab
+      "tab.activeForeground": "#180404"  // text color
+   },
+   "workbench.editor.enablePreview": false,
+   "clangd.fallbackFlags": [
+      "-std=c++23"
+   ],
+   "terminal.integrated.env.windows": {
+      "TERM": "xterm-256color"
+   },
+   "editor.tabSize": 3,
+   "editor.detectIndentation": true,
+   "clangd.arguments": [
+      "--enable-config"
+   ],
+   "editor.fontSize": 10,
+   "editor.fontLigatures": true,
+   "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
+   "editor.inlayHints.enabled": "offUnlessPressed",
+   "editor.semanticTokenColorCustomizations": {
+      "rules": {
+         "type": "#aedd7d",
+         "class": "#dfffbb",
+         "typeParameter": "#d279e4",
+         "concept": "#c1ebff",
+         "operator": "#569CD6",
+         "parameter": "#b9b9b9"
+      }
+   },
+   "editor.tokenColorCustomizations": {
+      "textMateRules": [
+      {
+        "scope": "comment.line",
+        "settings": {
+          "foreground": "#ffffff"
+        }
+      },
+      {
+        "scope": "storage.type.class.doxygen.cpp",
+        "settings": {
+          "foreground": "#FFA657"
+        }
+      },
+      {
+        "scope": "string",
+        "settings": {
+          "foreground": "#ff6e6e"
+        }
+      },
+      {
+        "scope": "storage.type",
+        "settings": {
+          "foreground": "#569CD6"
+        }
+      },
+      {
+        "scope": "variable.other.property",
+        "settings": {
+          "foreground": "#d1d1d1"
+        }
+      },
+      {
+        "scope": "variable.other.constant",
+        "settings": {
+          "foreground": "#ffffff"
+        }
+      },
+      {
+        "scope": "variable.other.readwrite",
+        "settings": {
+          "foreground": "#a09f9f"
+        }
+      },
+      {
+        "scope": "entity.name.function.preprocessor",
+        "settings": {
+          "foreground": "#d279e4"
+        }
+      },
+      {
+        "scope": "entity.name.function",
+        "settings": {
+          "foreground": "#f4f5ad"
+        }
+      },
+      {
+        "scope": "entity.name.type.template.cpp",
+        "settings": {
+          "foreground": "#d279e4"
+        }
+      },
+      {
+        "scope": "keyword.other.using.directive.cpp",
+        "settings": {
+          "foreground": "#569CD6"
+        }
+      },
+      {
+        "scope": "keyword.control",
+        "settings": {
+          "foreground": "#569CD6"
+        }
+      },
+      {
+        "scope": "variable.other.object.access.cpp",
+        "settings": {
+          "foreground": "#569CD6"
+        }
+      },
+      {
+        "scope": "keyword.other",
+        "settings": {
+          "foreground": "#569CD6"
+        }
+      },
+      {
+        "scope": "keyword.operator",
+        "settings": {
+          "foreground": "#569CD6"
+        }
+      },
+      {
+        "scope": "entity.name.operator",
+        "settings": {
+          "foreground": "#569CD6"
+        }
+      },
+      {
+        "scope": "entity.other.attribute",
+        "settings": {
+          "foreground": "#f8fa8b"
+        }
+      },
+      {
+        "scope": "entity.name.namespace",
+        "settings": {
+          "foreground": "#ffffff"
+        }
+      }
+   ]},
+   "highlight.regexes": {
+      "(/{2}(?!TODO).*)": [{
+         "filterLanguageRegex": "c",
+         "backgroundColor": "#88ff8840"
+      }],
+      "(/{3}(?!TODO).*)": [{
+         "filterLanguageRegex": "c",
+         "backgroundColor": "#b0ffb060"
+      }],
+      "(/{2}TODO.*)": [{
+        "filterLanguageRegex": "c",
+        "backgroundColor": "orange",
+        "color": "black"
+      }],
+      "(/{2}WORKAROUND.*)": [{
+        "filterLanguageRegex": "c",
+        "backgroundColor": "cyan",
+        "color": "black"
+      }],
+      "(/[*]([^*]|([*][^/]))*[*]+/)": [{
+        "filterLanguageRegex": "c",
+        "backgroundColor": "#88ff8820"
+      }]
+   },
+   "workbench.editor.wrapTabs": true,
+   "editor.hover.delay": 1250,
+   "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    ".vs": true,
+    ".cache": true,
+    "compile_commands.json": true,
+    "out": true
+  },
+  "workbench.colorTheme": "Dark 2026",
+  "debug.console.fontSize": 10,
+  "terminal.integrated.fontSize": 10,
+  "diffEditor.renderGutterMenu": true,
+  "scm.diffDecorations": "minimap",
+  "debug.console.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
+  "editor.autoIndentOnPaste": true,
+  "cmake.configureOnEdit": false,
+  "cmake.configureOnOpen": false,
+  "cmake.automaticReconfigure": false,
+  "editor.inlineSuggest.enabled": false,
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.minimap.scale": 1,
+  "editor.minimap.maxColumn": 120,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.sectionHeaderFontSize": 10,
+  "coverage-gutters.coverageBaseDir": "out/build/windows-clang-x64-debug-safe-AVX-managed-coverage/bin",
+  "coverage-gutters.showLineCoverage": true,
+  "coverage-gutters.showGutterCoverage": false,
+  "coverage-gutters.coverageFileNames": [
+    "lcov.info"
+  ],
+  "coverage-gutters.customizable.context-menu": false,
+  "editor.autoClosingComments": "never",
+  "workbench.editor.decorations.colors": false,
+  "hide-files.files": []
+}

@@ -1,8 +1,12 @@
 /out
 /build
 /.vs
+/.cache
 /external
+/percist
 /Testing
 *.user
 *.bak
 *.hint
+*.TMP
+compile_commands.json

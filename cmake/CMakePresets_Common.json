@@ -1,0 +1,292 @@
+﻿{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": { "LANGULUS_OPTION_TESTING": "ON" }
+    },
+
+    {
+      "name": "linux",
+      "description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system",
+      "inherits": "base",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "vendor": { "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": { "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}" } }
+    },
+    {
+      "name": "windows",
+      "description": "Target Windows",
+      "inherits": "base",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "macos",
+      "description": "Target a remote macOS system",
+      "inherits": "base",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      },
+      "vendor": { "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": { "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}" } }
+    },
+
+    {
+      "name": "g++-14",
+      "description": "Target the GNU compiler (has to be at least 14)",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc-14",
+        "CMAKE_CXX_COMPILER": "g++-14",
+        "CMAKE_C_FLAGS": "-Wall -Wextra $env{BUILDTYPE_FLAGS} $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS} -ftime-trace=\"compilation_time.json\" -fproc-stat-report=consumption.txt",
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra $env{BUILDTYPE_FLAGS} $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS} -ftime-trace=\"compilation_time.json\" -fproc-stat-report=consumption.txt"
+      }
+    },
+    {
+      "name": "clang++-19",
+      "description": "Target Clang 19 compiler",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-19",
+        "CMAKE_CXX_COMPILER": "clang++-19",
+        "CMAKE_C_FLAGS": "-Wall -Wextra $env{BUILDTYPE_FLAGS} $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS} -ftime-trace=\"compilation_time.json\" -fproc-stat-report=consumption.txt",
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra $env{BUILDTYPE_FLAGS} $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS} -ftime-trace=\"compilation_time.json\" -fproc-stat-report=consumption.txt -ftemplate-backtrace-limit=0"
+      }
+    },
+    {
+      "name": "clang",
+      "description": "Target latest Clang compiler",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang.exe",
+        "CMAKE_CXX_COMPILER": "clang++.exe",
+        "CMAKE_C_FLAGS": "-Wall -Wextra $env{BUILDTYPE_FLAGS} $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS} -ftime-trace=\"compilation_time.json\" -fproc-stat-report=consumption.txt",
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra $env{BUILDTYPE_FLAGS} $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS} -ftime-trace=\"compilation_time.json\"  -fproc-stat-report=consumption.txt -ftemplate-backtrace-limit=0"
+      }
+    },
+    {
+      "name": "cl",
+      "description": "Target Visual C++ compiler",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        "CMAKE_C_FLAGS": "/utf-8 /W3 /bigobj /EHsc $env{BUILDTYPE_FLAGS_MSVC} $env{ARCHITECTURE_FLAGS_MSVC} $env{SIMD_FLAGS_MSVC}",
+        "CMAKE_CXX_FLAGS": "/utf-8 /W3 /bigobj /EHsc $env{BUILDTYPE_FLAGS_MSVC} $env{ARCHITECTURE_FLAGS_MSVC} $env{SIMD_FLAGS_MSVC}"
+      }
+    },
+    {
+      "name": "clang-cl",
+      "description": "Target Clang-Cl",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-cl.exe",
+        "CMAKE_CXX_COMPILER": "clang-cl.exe",
+        "CMAKE_C_FLAGS": "/utf-8 /W3 /bigobj /EHsc $env{BUILDTYPE_FLAGS_MSVC} $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS_MSVC} -ftime-trace=\"${sourceDir}/out/build/${presetName}/compilation_time.json\"",
+        "CMAKE_CXX_FLAGS": "/utf-8 /W3 /bigobj /EHsc $env{BUILDTYPE_FLAGS_MSVC} $env{ARCHITECTURE_FLAGS} $env{SIMD_FLAGS_MSVC} -ftime-trace=\"${sourceDir}/out/build/${presetName}/compilation_time.json\""
+      }
+    },
+
+    {
+      "name": "coverage",
+      "description": "Enables coverage",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "LANGULUS_COVERAGE_COMPILER_FLAGS": "-fprofile-instr-generate -fcoverage-mapping",
+        "LANGULUS_COVERAGE_LINKER_FLAGS": "-fprofile-instr-generate",
+        "LANGULUS_COVERAGE_COMPILER_FLAGS_MSVC": "/Od --coverage",
+        "LANGULUS_COVERAGE_LINKER_FLAGS_MSVC": "--coverage clang_rt.profile-x86_64.lib"
+      }
+    },
+    
+    {
+      "name": "sanitize-undefined",
+      "description": "Not used, but here as an example how to enable -fsanitize=undefined",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "LANGULUS_SANITIZE_COMPILER_FLAGS": "-fsanitize=undefined -fno-sanitize=vptr",
+        "LANGULUS_SANITIZE_LINKER_FLAGS": "",
+        "LANGULUS_SANITIZE_COMPILER_FLAGS_MSVC": "TODO",
+        "LANGULUS_SANITIZE_LINKER_FLAGS_MSVC": "TODO"
+      }
+    },
+    {
+      "name": "sanitize-memory",
+      "description": "Not used, but here as an example how to enable -fsanitize=memory",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "LANGULUS_SANITIZE_COMPILER_FLAGS": "-fsanitize=memory",
+        "LANGULUS_SANITIZE_LINKER_FLAGS": "",
+        "LANGULUS_SANITIZE_COMPILER_FLAGS_MSVC": "TODO",
+        "LANGULUS_SANITIZE_LINKER_FLAGS_MSVC": "TODO"
+      }
+    },
+    {
+      "name": "sanitize-leak",
+      "description": "Not used, but here as an example how to enable -fsanitize=leak",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "LANGULUS_SANITIZE_COMPILER_FLAGS": "-fsanitize=leak",
+        "LANGULUS_SANITIZE_LINKER_FLAGS": "",
+        "LANGULUS_SANITIZE_COMPILER_FLAGS_MSVC": "TODO",
+        "LANGULUS_SANITIZE_LINKER_FLAGS_MSVC": "TODO"
+      }
+    },
+    {
+      "name": "sanitize-address",
+      "description": "Not used, but here as an example how to enable -fsanitize=address",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "LANGULUS_SANITIZE_COMPILER_FLAGS": "-fsanitize=address",
+        "LANGULUS_SANITIZE_LINKER_FLAGS": "",
+        "LANGULUS_SANITIZE_COMPILER_FLAGS_MSVC": "/fsanitize=address /Zi -D_DISABLE_VECTOR_ANNOTATION -D_DISABLE_STRING_ANNOTATION",
+        "LANGULUS_SANITIZE_LINKER_FLAGS_MSVC": "clang_rt.asan_dynamic-x86_64.lib clang_rt.asan_dynamic_runtime_thunk-x86_64.lib"
+      }
+    },
+    
+    {
+      "name": "x64",
+      "description": "Target x64 architecture",
+      "inherits": "base",
+      "hidden": true,
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "environment": {
+        "ARCHITECTURE_FLAGS": "-m64",
+        "ARCHITECTURE_FLAGS_MSVC": ""
+      }
+    },
+    {
+      "name": "x86",
+      "description": "Target x86 architecture",
+      "inherits": "base",
+      "hidden": true,
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "environment": {
+        "ARCHITECTURE_FLAGS": "-m32",
+        "ARCHITECTURE_FLAGS_MSVC": ""
+      }
+    },
+
+    {
+      "name": "debug",
+      "description": "A debug build",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "LANGULUS_OPTION_SAFE_MODE": "ON",
+        "LANGULUS_OPTION_DEBUGGING": "ON",
+        "LANGULUS_OPTION_MEMORY_STATISTICS": "ON",
+        "LANGULUS_OPTION_STACKTRACE": "ON"
+      },
+      "environment": {
+        "BUILDTYPE_FLAGS": "",
+        "BUILDTYPE_FLAGS_MSVC": ""
+      }
+    },
+    {
+      "name": "release",
+      "description": "A release build",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "LANGULUS_OPTION_SAFE_MODE": "ON",
+        "LANGULUS_OPTION_BENCHMARK": "OFF",
+        "LANGULUS_OPTION_PROFILING": "ON",
+        "LANGULUS_OPTION_STACKTRACE": "OFF",
+        "LANGULUS_LOGGER_DISABLE_VERBOSE": "ON",
+        "LANGULUS_LOGGER_DISABLE_SPECIALS": "ON",
+        "LANGULUS_LOGGER_DISABLE_FLOWS": "ON",
+        "LANGULUS_LOGGER_DISABLE_INPUTS": "ON",
+        "LANGULUS_LOGGER_DISABLE_NETWORKS": "ON",
+        "LANGULUS_LOGGER_DISABLE_OS": "ON"
+      },
+      "environment": {
+        "BUILDTYPE_FLAGS": "-O2",
+        "BUILDTYPE_FLAGS_MSVC": "/O2"
+      }
+    },
+
+    {
+      "name": "NoSIMD",
+      "description": "Build without SIMD",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_ALIGNMENT": "16" },
+      "environment": {
+        "SIMD_FLAGS": "",
+        "SIMD_FLAGS_MSVC": "/arch:IA32"
+      }
+    },
+    {
+      "name": "SSE2",
+      "description": "Build with SSE2",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_ALIGNMENT": "16" },
+      "environment": {
+        "SIMD_FLAGS": "-msse2",
+        "SIMD_FLAGS_MSVC": "/arch:SSE2"
+      }
+    },
+    {
+      "name": "AVX",
+      "description": "Build with AVX",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_ALIGNMENT": "32" },
+      "environment": {
+        "SIMD_FLAGS": "-mavx",
+        "SIMD_FLAGS_MSVC": "/arch:AVX"
+      }
+    },
+    {
+      "name": "AVX2",
+      "description": "Build with AVX2",
+      "inherits": "base",
+      "hidden": true,
+      "cacheVariables": { "LANGULUS_ALIGNMENT": "32" },
+      "environment": {
+        "SIMD_FLAGS": "-mavx2",
+        "SIMD_FLAGS_MSVC": "/arch:AVX2"
+      }
+    }
+  ]
+}

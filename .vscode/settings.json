@@ -210,5 +210,6 @@
   "coverage-gutters.customizable.context-menu": false,
   "editor.autoClosingComments": "never",
   "workbench.editor.decorations.colors": false,
-  "hide-files.files": []
+  "hide-files.files": [],
+  "git.detectSubmodulesLimit": 100
 }

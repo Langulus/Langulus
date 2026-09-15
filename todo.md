@@ -58,7 +58,7 @@
 - Implement external reflections, by allowing all CT concepts be defined by an external template specialization
 - ~~`Block::Emplace` doesn't return a handle if sparse!~~ Same applies for mutable iterators!!! ~~same applies for `operator[]`!!!~~
 - Missing vector components should be defaulted static constexpr instead? Yes.
-- Anyness tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
+- Annies tests are very sensitive to states left from other tests - more strict measures were implemented in TestHashing, but it still remains to spread them to other tests
 - Create a common test utility library to reduce boilerplate in tests
 - Improve color addition, currently overflows/underflows, needs saturation
 - Improve color subtraction, currently overflows/underflows, needs saturation
@@ -98,7 +98,7 @@
 
 ## Abandoned:
 - `BlockMap` speed optimizations: dynamic `AllowedMisses` based on table size; Anticipate oversaturation while swapping
-- Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array. No need for it after Anyness rewrite.
+- Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array. No need for it after Annies rewrite.
 - Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
 - Since `Couple` is now invoked by the user's whim, `mOwners` is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor! No, the non-aux functions are still used on Refersh routines.
 - In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)

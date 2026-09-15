@@ -24,82 +24,82 @@
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Common",
+         "name": "LangulusAnniesTest-Common",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Common.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Common.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Logger",
+         "name": "LangulusAnniesTest-Logger",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Logger.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Logger.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Memory",
+         "name": "LangulusAnniesTest-Memory",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Memory.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Memory.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Text",
+         "name": "LangulusAnniesTest-Text",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Text.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Text.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Bytes",
+         "name": "LangulusAnniesTest-Bytes",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Bytes.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Bytes.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-TRef-TOwn",
+         "name": "LangulusAnniesTest-TRef-TOwn",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-TRef-TOwn.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-TRef-TOwn.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Any",
+         "name": "LangulusAnniesTest-Any",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Any.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Any.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Many",
+         "name": "LangulusAnniesTest-Many",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Many.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Many.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Set",
+         "name": "LangulusAnniesTest-Set",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Set.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Set.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnynessTest-Map",
+         "name": "LangulusAnniesTest-Map",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnynessTest-Map.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Map.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       }

@@ -74,3 +74,7 @@ add_subdirectory(framework)
 
 # Add plugins																	
 add_subdirectory(mods)
+
+if(LANGULUS_OPTION_TESTING)
+   add_subdirectory(tests)
+endif()

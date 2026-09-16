@@ -12,7 +12,7 @@ langulus_init_git_submodule(Mod-Network)
 langulus_init_git_submodule(Mod-Storyteller)
 langulus_init_git_submodule(Mod-UMS)
 
-if (${LANGULUS_TOASTER_MODE})
+if (LANGULUS_TOASTER_MODE)
 	message(STATUS "[LANGULUS] Toaster mode enabled - all graphics modules disabled")
 else()
 	langulus_init_git_submodule(Mod-GLFW)

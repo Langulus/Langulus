@@ -11,7 +11,7 @@ jobs:
       matrix:
         os: [ubuntu-26.04, windows-2022] # windows-latest uses vs2026, which uses clangcl 22, which is full of regressions in concept compilation
         build: [release]
-        cxx: [g++-14, g++, clang++-21, clangcl, emcc] # v143/v145 suppport has been dropped indefinitely due to too many compiler bugs and bad C++23 support. tested on v145, too - not there yet. just use clangcl, please.
+        cxx: [g++-14, g++-15, clang++-21, clangcl, emcc] # v143/v145 suppport has been dropped indefinitely due to too many compiler bugs and bad C++23 support. tested on v145, too - not there yet. just use clangcl, please.
         arch: [x86, x64]
         feature: [
           [NoSIMD, 16, ' ',         '/arch:IA32'],
@@ -37,7 +37,7 @@ jobs:
           - os: windows-2022
             cxx: g++-14
           - os: windows-2022
-            cxx: g++
+            cxx: g++-15
           - os: windows-2022
             cxx: clang++-21
 
@@ -154,8 +154,8 @@ jobs:
             c: emcc
           - cxx: g++-14
             c: gcc-14
-          - cxx: g++
-            c: gcc
+          - cxx: g++-15
+            c: gcc-15
           - cxx: clang++-21
             c: clang-21
           - os: ubuntu-26.04
@@ -177,17 +177,17 @@ jobs:
       - name: Clone
         uses: actions/checkout@v6
 
-      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'g++-14'  && matrix.arch == 'x86' && matrix.cxx != 'emcc'
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'g++-14' && matrix.arch == 'x86' && matrix.cxx != 'emcc'
         name: Prepare for cross-compilation (Linux with GCC 14)
         run: |
           sudo apt update
           sudo apt install g++-14-multilib
 
-      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'g++'  && matrix.arch == 'x86' && matrix.cxx != 'emcc'
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'g++-15' && matrix.arch == 'x86' && matrix.cxx != 'emcc'
         name: Prepare for cross-compilation (Linux with GCC 16)
         run: |
           sudo apt update
-          sudo apt install g++-16-multilib
+          sudo apt install g++-15-multilib
 
       - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'emcc'
         name: Prepate environment (Linux with emscripten)

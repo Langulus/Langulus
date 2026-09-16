@@ -1,4 +1,5 @@
 langulus_init_git_submodule(Core)
+langulus_init_git_submodule(CT)
 
 if(LANGULUS_OPTION_TESTING)
    langulus_init_git_submodule(Testing)
@@ -36,7 +37,9 @@ add_langulus_library(Langulus
 )
 
 target_include_directories(Langulus
-   PUBLIC 	$<$<BOOL:${LANGULUS_OPTION_LOGGING}>:$<TARGET_PROPERTY:LangulusLogger,INTERFACE_INCLUDE_DIRECTORIES>>
+   PUBLIC   #$<TARGET_PROPERTY:LangulusCore,INTERFACE_INCLUDE_DIRECTORIES>
+            #$<TARGET_PROPERTY:LangulusCT,INTERFACE_INCLUDE_DIRECTORIES>
+            $<$<BOOL:${LANGULUS_OPTION_LOGGING}>:$<TARGET_PROPERTY:LangulusLogger,INTERFACE_INCLUDE_DIRECTORIES>>
             $<TARGET_PROPERTY:LangulusRTTI,INTERFACE_INCLUDE_DIRECTORIES>
             $<$<BOOL:${LANGULUS_OPTION_MANAGED_MEMORY}>:$<TARGET_PROPERTY:LangulusFractalloc,INTERFACE_INCLUDE_DIRECTORIES>>
             $<$<BOOL:${LANGULUS_OPTION_PROFILING}>:$<TARGET_PROPERTY:LangulusPercist,INTERFACE_INCLUDE_DIRECTORIES>>
@@ -48,6 +51,7 @@ target_include_directories(Langulus
 
 target_link_libraries(Langulus
    PUBLIC   LangulusCore
+            LangulusCT
             $<$<BOOL:${LANGULUS_OPTION_LOGGING}>:fmt>
    #PRIVATE $<$<NOT:$<BOOL:${MSVC}>>:dl>
 )

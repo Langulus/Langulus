@@ -1,6 +1,9 @@
 [submodule "framework/Core"]
 	path = framework/Core
 	url = https://github.com/Langulus/Core.git
+[submodule "framework/CT"]
+	path = framework/CT
+	url = https://github.com/Langulus/CT.git
 [submodule "framework/Logger"]
 	path = framework/Logger
 	url = https://github.com/Langulus/Logger.git

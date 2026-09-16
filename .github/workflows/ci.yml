@@ -9,9 +9,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-2022] # windows-latest uses vs2026, which uses clangcl 22, which is full of regressions in concept compilation
+        os: [ubuntu-26.04, windows-2022] # windows-latest uses vs2026, which uses clangcl 22, which is full of regressions in concept compilation
         build: [release]
-        cxx: [g++-14, clang++-21, clangcl, emcc] # v143/v145 suppport has been dropped indefinitely due to too many compiler bugs and bad C++23 support. tested on v145, too - not there yet. just use clangcl, please.
+        cxx: [g++-14, g++-16, clang++-21, clangcl, emcc] # v143/v145 suppport has been dropped indefinitely due to too many compiler bugs and bad C++23 support. tested on v145, too - not there yet. just use clangcl, please.
         arch: [x86, x64]
         feature: [
           [NoSIMD, 16, ' ',         '/arch:IA32'],
@@ -28,12 +28,16 @@ jobs:
         exclude:
           - cxx: emcc
             arch: x64
-          - os: ubuntu-24.04
+          - os: ubuntu-26.04
             cxx: v143
-          - os: ubuntu-24.04
+          - os: ubuntu-26.04
+            cxx: v145
+          - os: ubuntu-26.04
             cxx: clangcl
           - os: windows-2022
             cxx: g++-14
+          - os: windows-2022
+            cxx: g++-16
           - os: windows-2022
             cxx: clang++-21
 
@@ -82,12 +86,22 @@ jobs:
             cxx: v143
             feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
 
-          # I can't even begin to describe how much grief has msvc x86 compiler given me!
-          # 32bit v143 compiler support is very neglected and produces a lot of constexpr related ICEs, 
-          # wrong code generation, and ridiculously long compile-times (we're talking about HOURS)
-          # I've been suffering for years before I finally gave up and excluded it.
-          # Sorry, but only the noSIMD version is supported.
-          # see https://github.com/Langulus/SIMD/issues/22 for more info and updates on the situation
+          - arch: x64
+            cxx: v145
+            feature: [SSE2, 16, '-msse2', '/arch:SSE2']
+          - arch: x64
+            cxx: v145
+            feature: [SSE3, 16, '-msse3', '<not available on msvc>']
+          - arch: x64
+            cxx: v145
+            feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
+          - arch: x64
+            cxx: v145
+            feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
+          - arch: x64
+            cxx: v145
+            feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+
           - arch: x86
             cxx: v143
             feature: [SSE2, 16, '-msse2', '/arch:SSE2']
@@ -110,6 +124,28 @@ jobs:
             cxx: v143
             feature: [AVX2, 32, '-mavx2', '/arch:AVX2']
 
+          - arch: x86
+            cxx: v145
+            feature: [SSE2, 16, '-msse2', '/arch:SSE2']
+          - arch: x86
+            cxx: v145
+            feature: [SSE3, 16, '-msse3', '<not available on msvc>']
+          - arch: x86
+            cxx: v145
+            feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
+          - arch: x86
+            cxx: v145
+            feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
+          - arch: x86
+            cxx: v145
+            feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+          - arch: x86
+            cxx: v145
+            feature: [AVX, 32, '-mavx', '/arch:AVX']
+          - arch: x86
+            cxx: v145
+            feature: [AVX2, 32, '-mavx2', '/arch:AVX2']
+
           # Seems the cloud at github doesn't have the avx512 extensions
           - feature: [AVX512, 64, '-mavx512f', '/arch:AVX512']
 
@@ -118,12 +154,14 @@ jobs:
             c: emcc
           - cxx: g++-14
             c: gcc-14
+          - cxx: g++-16
+            c: gcc-16
           - cxx: clang++-21
             c: clang-21
-          - os: ubuntu-24.04
+          - os: ubuntu-26.04
             arch: x86
             cmake_args: "-DCMAKE_CXX_FLAGS=-m32"
-          - os: ubuntu-24.04
+          - os: ubuntu-26.04
             arch: x64
             cmake_args: "-DCMAKE_CXX_FLAGS=-m64"
           - os: windows-2022
@@ -139,13 +177,19 @@ jobs:
       - name: Clone
         uses: actions/checkout@v6
 
-      - if: matrix.os == 'ubuntu-24.04' && matrix.arch == 'x86' && matrix.cxx != 'emcc'
-        name: Prepare for cross-compilation (Linux)
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'g++-14'  && matrix.arch == 'x86' && matrix.cxx != 'emcc'
+        name: Prepare for cross-compilation (Linux with GCC 14)
         run: |
           sudo apt update
           sudo apt install g++-14-multilib
 
-      - if: matrix.os == 'ubuntu-24.04' && matrix.cxx == 'emcc'
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'g++-16'  && matrix.arch == 'x86' && matrix.cxx != 'emcc'
+        name: Prepare for cross-compilation (Linux with GCC 16)
+        run: |
+          sudo apt update
+          sudo apt install g++-16-multilib
+
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'emcc'
         name: Prepate environment (Linux with emscripten)
         run: |
           git clone https://github.com/emscripten-core/emsdk.git
@@ -154,21 +198,13 @@ jobs:
           ./emsdk install latest
           ./emsdk activate latest
 
-      - if: matrix.cxx == 'clang++-21'
-        name: Installing Clang 21 (Linux)
+      - if: matrix.os == 'ubuntu-26.04'
+        name: Install dependencies on Linux (X11)
         run: |
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-          sudo apt-add-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-21 main"
           sudo apt update
-          sudo apt install clang-21
+          sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
 
-      #- if: matrix.os == 'ubuntu-24.04'
-      #  name: Install dependencies on Linux
-      #  run: |
-      #    sudo apt update
-      #    sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
-
-      - if: matrix.os == 'ubuntu-24.04' && matrix.cxx != 'emcc'
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx != 'emcc'
         name: Configure (Linux)
         run: >
           mkdir build && cd build && cmake ..
@@ -182,7 +218,7 @@ jobs:
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
           -DLANGULUS_OPTION_TESTING=ON
 
-      - if: matrix.os == 'ubuntu-24.04' && matrix.cxx == 'emcc'
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'emcc'
         name: Configure (Linux with emscripten)
         run: >
           source "/home/runner/work/Langulus/Langulus/emsdk/emsdk_env.sh" && mkdir build && cd build && emcmake cmake ..

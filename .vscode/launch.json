@@ -1,0 +1,107 @@
+{
+   // Use IntelliSense to learn about possible attributes.
+   // Hover to view descriptions of existing attributes.
+   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+   "version": "0.2.0",
+   "inputs": [
+      {
+         "id": "percist_folder",
+         "type": "command",
+         "command": "cmake.cacheVariable",
+         "args": {"name": "LANGULUS_PERCIST_DIRECTORY"}
+      }
+   ],
+   "configurations": [
+      {
+         "name": "LangulusPercist",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusPercist.exe",
+         "args": [
+            "-f", "./consumption.txt",
+            "-c", "${input:percist_folder}/consumption.canon"
+         ],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Common",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Common.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Logger",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Logger.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Memory",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Memory.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Text",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Text.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Bytes",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Bytes.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-TRef-TOwn",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-TRef-TOwn.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Any",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Any.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Many",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Many.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Set",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Set.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusAnniesTest-Map",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Map.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      }
+   ]
+}

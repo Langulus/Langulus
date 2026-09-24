@@ -59,3 +59,5 @@ target_link_libraries(Langulus
 target_compile_definitions(Langulus
    PRIVATE  LANGULUS_EXPORT_ALL
 )
+
+target_compile_options(Langulus PRIVATE -flto=full)

@@ -12,6 +12,7 @@
       "tab.activeForeground": "#180404"  // text color
    },
    "workbench.editor.enablePreview": false,
+   "workbench.experimental.modernUI": false,
    "clangd.fallbackFlags": [
       "-std=c++23"
    ],

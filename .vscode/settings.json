@@ -22,8 +22,9 @@
    "editor.tabSize": 3,
    "editor.detectIndentation": true,
    "clangd.arguments": [
-      "--enable-config"
-   ],
+    "--enable-config",
+    "-header-insertion=never"
+  ],
    "editor.fontSize": 10,
    "editor.fontLigatures": true,
    "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
@@ -193,7 +194,7 @@
   "diffEditor.renderGutterMenu": true,
   "scm.diffDecorations": "minimap",
   "debug.console.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
-  "editor.autoIndentOnPaste": true,
+  "editor.autoIndentOnPaste": false,
   "cmake.configureOnEdit": false,
   "cmake.configureOnOpen": false,
   "cmake.automaticReconfigure": false,
@@ -217,5 +218,6 @@
   "editor.autoClosingQuotes": "never",
   "editor.autoClosingBrackets": "never",
   "editor.autoClosingDelete": "never",
-  "editor.autoClosingOvertype": "never"
+  "editor.autoClosingOvertype": "never",
+  "onboarding.enabled": false
 }

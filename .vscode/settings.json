@@ -179,6 +179,7 @@
     "**/.git": true,
     "**/.svn": true,
     "**/.hg": true,
+    "**/.jj": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     ".vs": true,
@@ -212,5 +213,9 @@
   "editor.autoClosingComments": "never",
   "workbench.editor.decorations.colors": false,
   "hide-files.files": [],
-  "git.detectSubmodulesLimit": 100
+  "git.detectSubmodulesLimit": 100,
+  "editor.autoClosingQuotes": "never",
+  "editor.autoClosingBrackets": "never",
+  "editor.autoClosingDelete": "never",
+  "editor.autoClosingOvertype": "never"
 }

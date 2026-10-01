@@ -400,11 +400,11 @@ void* LangulusCreateThing(void* thing, const void* desc, int desc_size) {
    }
 }
 
-/// Create a Unit in the context of a Thing                                   
+/// Create a Part in the context of a Thing                                   
 ///   @param thing - create in this context (will use root if nullptr)        
 ///   @param name - the name of the unit                                      
 ///   @param name_size - the number of characters in provided 'name'          
-///   @param desc - the descriptor for the new Unit                           
+///   @param desc - the descriptor for the new Part                           
 ///   @param desc_size - the number of characters in provided 'desc'          
 ///   @return a handle to the new unit                                        
 void* LangulusCreateUnit(void* thing, const void* name, int name_size, const void* desc, int desc_size) {
@@ -438,7 +438,7 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
 
 #if LANGULUS(SAFE)
    if (name_size > 4096) {
-      Logger::Error("Unit name on LangulusCreateUnit is too long: ", token);
+      Logger::Error("Part name on LangulusCreateUnit is too long: ", token);
       return nullptr;
    }
 #endif
@@ -450,10 +450,10 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
             static_cast<const char*>(desc),
             static_cast<std::size_t>(desc_size)
          };
-         return typed->CreateUnitToken(token, Code(code).Parse()).As<A::Unit*>();
+         return typed->CreateUnitToken(token, Code(code).Parse()).As<Part*>();
       }
 
-      return typed->CreateUnitToken(token).As<A::Unit*>();
+      return typed->CreateUnitToken(token).As<Part*>();
    }
    catch (...) {
       Logger::Error("Exception while creating unit: ", token);

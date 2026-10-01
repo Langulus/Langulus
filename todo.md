@@ -15,6 +15,7 @@
 - Test containers with function pointers, make them executable
 
 ## TODO:
+- Try unity builds by including cpp files in a single one
 - Allow vectors/ranges/whatever to be made of `OptionalNumber`, that will act as undefined the first time it is operated only, copying the rhs. Useful when embracing ranges, where the first embrace is against an undefined range
 - Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
 - Add multiplication operators to meta types to multiply by their size

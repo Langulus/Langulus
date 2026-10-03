@@ -194,7 +194,7 @@
   "diffEditor.renderGutterMenu": true,
   "scm.diffDecorations": "minimap",
   "debug.console.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
-  "editor.autoIndentOnPaste": false,
+  "editor.autoIndentOnPaste": true,
   "cmake.configureOnEdit": false,
   "cmake.configureOnOpen": false,
   "cmake.automaticReconfigure": false,
@@ -219,5 +219,8 @@
   "editor.autoClosingBrackets": "never",
   "editor.autoClosingDelete": "never",
   "editor.autoClosingOvertype": "never",
-  "onboarding.enabled": false
+  "onboarding.enabled": false,
+  "editor.autoIndent": "brackets",
+  "cmake.modifyLists.addNewSourceFiles": "no",
+  "cmake.modifyLists.removeDeletedSourceFiles": "no"
 }

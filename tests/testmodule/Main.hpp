@@ -11,8 +11,8 @@
 using namespace Langulus;
 
 
-class TestModule final : public A::Module {
-   LANGULUS(ABSTRACT) false;
+class TestModule final : public Things::Module {
+   using CTTI_Abstract = No;
    LANGULUS_BASES(Module);
 
    TestModule(Runtime* runtime, Many const&) noexcept

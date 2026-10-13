@@ -16,7 +16,7 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
          Thing root;
-         root.AddTrait(Traits::Name {"ROOT"});
+         root.AddTag(Traits::Name {"ROOT"});
 
          // Create runtime at the root                                  
          auto runtime = root.CreateRuntime();

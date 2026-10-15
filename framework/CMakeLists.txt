@@ -6,11 +6,7 @@ if(LANGULUS_OPTION_TESTING)
 endif()
 
 langulus_init_git_submodule(Logger)
-
-if(LANGULUS_OPTION_PROFILING)
-   langulus_init_git_submodule(Percist)
-endif()
-
+langulus_init_git_submodule(Percist)
 langulus_init_git_submodule(RTTI)
 
 if(LANGULUS_OPTION_MANAGED_MEMORY)
@@ -28,7 +24,7 @@ add_langulus_library(Langulus
    SOURCES  $<TARGET_OBJECTS:LangulusLogger>
             $<TARGET_OBJECTS:LangulusRTTI>
             $<$<BOOL:${LANGULUS_OPTION_MANAGED_MEMORY}>:$<TARGET_OBJECTS:LangulusFractalloc>>
-            $<$<BOOL:${LANGULUS_OPTION_PROFILING}>:$<TARGET_OBJECTS:LangulusPercist>>
+            $<TARGET_OBJECTS:LangulusPercist>
             $<TARGET_OBJECTS:LangulusAnnies>
             $<TARGET_OBJECTS:LangulusFlow>
             $<TARGET_OBJECTS:LangulusMath>
@@ -42,7 +38,7 @@ target_include_directories(Langulus
             $<TARGET_PROPERTY:LangulusLogger,INTERFACE_INCLUDE_DIRECTORIES>
             $<TARGET_PROPERTY:LangulusRTTI,INTERFACE_INCLUDE_DIRECTORIES>
             $<$<BOOL:${LANGULUS_OPTION_MANAGED_MEMORY}>:$<TARGET_PROPERTY:LangulusFractalloc,INTERFACE_INCLUDE_DIRECTORIES>>#TODO nah, always link against fractalloc, but check if managed memory is enabled in it, and fallback to defualt behavior in the library itself
-            $<$<BOOL:${LANGULUS_OPTION_PROFILING}>:$<TARGET_PROPERTY:LangulusPercist,INTERFACE_INCLUDE_DIRECTORIES>>
+            $<TARGET_PROPERTY:LangulusPercist,INTERFACE_INCLUDE_DIRECTORIES>
             $<TARGET_PROPERTY:LangulusAnnies,INTERFACE_INCLUDE_DIRECTORIES>
             $<TARGET_PROPERTY:LangulusFlow,INTERFACE_INCLUDE_DIRECTORIES>
             $<TARGET_PROPERTY:LangulusMath,INTERFACE_INCLUDE_DIRECTORIES>

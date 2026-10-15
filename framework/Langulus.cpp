@@ -10,7 +10,7 @@
 #include <Langulus/Logger/HTML.hpp>
 
 using namespace Langulus;
-
+using Things::Thing;
 
 namespace
 {
@@ -116,8 +116,8 @@ void* LangulusEconomy() {
    }
 #endif
 
-   auto& economies = root->GetRuntime()->GetModules<A::Economy>();
-   LANGULUS_ASSERT(economies, Module, "Can't retrieve economy - no economy module available");
+   auto& economies = root->GetRuntime()->GetModules<Things::Economy>();
+   LglsAssert(economies, "Can't retrieve economy - no economy module available");
    return economies.template As<A::Economy*>();
 }
 
@@ -153,7 +153,7 @@ void* LangulusResource(void* economy, const void* name, int name_size) {
       static_cast<const char*>(name),
       static_cast<std::size_t>(name_size)
    };
-   auto typed = reinterpret_cast<A::Economy*>(economy);
+   auto typed = reinterpret_cast<Things::Economy*>(economy);
 
 #if LANGULUS(SAFE)
    if (name_size > 4096) {
@@ -171,7 +171,7 @@ void* LangulusResource(void* economy, const void* name, int name_size) {
    }
 #endif
 
-   return const_cast<A::Resource*>(resource);
+   return const_cast<Things::Resource*>(resource);
 }
 
 /// Get a converter definition                                                
@@ -206,7 +206,7 @@ void* LangulusConverter(void* economy, const void* name, int name_size) {
       static_cast<const char*>(name),
       static_cast<std::size_t>(name_size)
    };
-   auto typed = reinterpret_cast<A::Economy*>(economy);
+   auto typed = reinterpret_cast<Things::Economy*>(economy);
 
 #if LANGULUS(SAFE)
    if (name_size > 4096) {
@@ -224,7 +224,7 @@ void* LangulusConverter(void* economy, const void* name, int name_size) {
    }
 #endif
 
-   return const_cast<A::Converter*>(converter);
+   return const_cast<Things::Converter*>(converter);
 }
 
 /// Update the hierarchy, starting with the provided Thing                    
@@ -389,7 +389,7 @@ void* LangulusCreateThing(void* thing, const void* desc, int desc_size) {
             static_cast<const char*>(desc),
             static_cast<std::size_t>(desc_size)
          };
-         return typed->CreateChild(Code(code).Parse()).Get();
+         return typed->CreateChild(Flow::Code(code).Parse()).Get();
       }
 
       return typed->CreateChild().Get();
@@ -450,10 +450,10 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
             static_cast<const char*>(desc),
             static_cast<std::size_t>(desc_size)
          };
-         return typed->CreateUnitToken(token, Code(code).Parse()).As<Part*>();
+         return typed->CreatePartToken(token, Code(code).Parse()).As<Part*>();
       }
 
-      return typed->CreateUnitToken(token).As<Part*>();
+      return typed->CreatePartToken(token).As<Part*>();
    }
    catch (...) {
       Logger::Error("Exception while creating unit: ", token);
@@ -471,12 +471,12 @@ void LangulusLog(int type, const void* text, int text_size) {
    if (not text or text_size < 1 or type < 0 or t >= Logger::Intent::Ignore)
       return;
 
-   Logger::Instance << t;
-   Logger::Instance.NewLine();
-   Logger::Instance << Token {
+   Logger::State::Write(t);
+   Logger::State::NewLine();
+   Logger::State::Write(Token {
       static_cast<const char*>(text),
       static_cast<std::size_t>(text_size)
-   };
+   });
 }
 
 /// Log a message with specific formatting on a new line, and indent all      
@@ -486,12 +486,12 @@ void LangulusLog(int type, const void* text, int text_size) {
 ///   @param text_size - the number of bytes in 'text'                        
 void LangulusLogTab(int type, const void* text, int text_size) {
    LangulusLog(type, text, text_size);
-   Logger::Instance << Logger::Tab;
+   Logger::State::Write(Logger::Tab);
 }
 
 /// Untab all next messages                                                   
 void LangulusLogTabEnd() {
-   Logger::Instance << Logger::Untab;
+   Logger::State::Write(Logger::Untab);
 }
 
 /// Just write a new line, with whatever formatting was set prior             
@@ -529,7 +529,7 @@ int LangulusResourceQuantity(void* res) {
          return 0;
       }
    #endif
-   auto resource = static_cast<A::Resource*>(res);
+   auto resource = static_cast<Things::Resource*>(res);
    return resource->GetQuantity();
 }
 
@@ -545,8 +545,8 @@ int LangulusResourceQuantityLocal(void* res, float x, float y, float r) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
-   return resource->GetQuantityLocal(A::Resource::Place {x, y}, r);
+   auto resource = static_cast<Things::Resource*>(res);
+   return resource->GetQuantityLocal(Things::Resource::Place {x, y}, r);
 }
 
 /// Get the instance count of a resource                                      
@@ -559,7 +559,7 @@ int LangulusResourceInstanceCount(void* res) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
+   auto resource = static_cast<Things::Resource*>(res);
    return resource->GetQuantity();
 }
 
@@ -575,8 +575,8 @@ int LangulusResourceInstanceCountLocal(void* res, float x, float y, float r) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
-   return resource->GetQuantityLocal(A::Resource::Place {x, y}, r);
+   auto resource = static_cast<Things::Resource*>(res);
+   return resource->GetQuantityLocal(Things::Resource::Place {x, y}, r);
 }
 
 /// Get the supply of a resource                                              
@@ -589,7 +589,7 @@ float LangulusResourceSupply(void* res) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
+   auto resource = static_cast<Things::Resource*>(res);
    return resource->GetSupply();
 }
 
@@ -605,8 +605,8 @@ float LangulusResourceSupplyLocal(void* res, float x, float y, float r) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
-   return resource->GetSupplyLocal(A::Resource::Place {x, y}, r);
+   auto resource = static_cast<Things::Resource*>(res);
+   return resource->GetSupplyLocal(Things::Resource::Place {x, y}, r);
 }
 
 /// Get the demand of a resource                                              
@@ -619,7 +619,7 @@ float LangulusResourceDemand(void* res) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
+   auto resource = static_cast<Things::Resource*>(res);
    return resource->GetDemand();
 }
 
@@ -635,8 +635,8 @@ float LangulusResourceDemandLocal(void* res, float x, float y, float r) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
-   return resource->GetDemandLocal(A::Resource::Place {x, y}, r);
+   auto resource = static_cast<Things::Resource*>(res);
+   return resource->GetDemandLocal(Things::Resource::Place {x, y}, r);
 }
 
 /// Get the consumption of a resource                                         
@@ -649,7 +649,7 @@ float LangulusResourceConsumption(void* res) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
+   auto resource = static_cast<Things::Resource*>(res);
    return resource->GetConsumption();
 }
 
@@ -665,8 +665,8 @@ float LangulusResourceConsumptionLocal(void* res, float x, float y, float r) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
-   return resource->GetConsumptionLocal(A::Resource::Place {x, y}, r);
+   auto resource = static_cast<Things::Resource*>(res);
+   return resource->GetConsumptionLocal(Things::Resource::Place {x, y}, r);
 }
 
 /// Get resource instance at a position                                       
@@ -680,8 +680,8 @@ void* LangulusResourceInstance(void* res, float x, float y) {
       return 0;
    }
 #endif
-   auto resource = static_cast<A::Resource*>(res);
-   return const_cast<A::ResourceInstance*>(resource->At(A::Resource::Place {x, y}));
+   auto resource = static_cast<Things::Resource*>(res);
+   return const_cast<A::ResourceInstance*>(resource->At(Things::Resource::Place {x, y}));
 }
 
 /// Get all resource instances at a position                                  
@@ -711,8 +711,8 @@ void* LangulusConverterInstance(void* conv, float x, float y) {
       return 0;
    }
 #endif
-   auto converter = static_cast<A::Converter*>(conv);
-   return const_cast<A::ConverterInstance*>(converter->At(A::Converter::Place {x, y}));
+   auto converter = static_cast<Things::Converter*>(conv);
+   return const_cast<A::ConverterInstance*>(converter->At(Things::Converter::Place {x, y}));
 }
 
 /// Get all converter instances at a position                                 

@@ -1,0 +1,61 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+shift+s",
+        "command": "saveAll"
+    },
+    {
+        "key": "ctrl+k s",
+        "command": "-saveAll"
+    },
+    {
+        "key": "ctrl+shift+s",
+        "command": "-workbench.action.files.saveAs"
+    },
+    {
+        "key": "ctrl+shift+s",
+        "command": "-workbench.action.files.saveLocalFile",
+        "when": "remoteFileDialogVisible"
+    },
+    {
+        "key": "ctrl+k ctrl+shift+s",
+        "command": "-workbench.action.files.saveWithoutFormatting"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "cmake.projectStatus.build"
+    },
+    {
+        "key": "ctrl+shift+b",
+        "command": "-workbench.action.tasks.build",
+        "when": "taskCommandsRegistered"
+    },
+    {
+        "key": "ctrl+shift+b",
+        "command": "cmake.outline.cleanRebuildAll"
+   },
+   {
+      "key": "ctrl+d",
+      "command": "-editor.action.addSelectionToNextFindMatch",
+      "when": "editorFocus"
+   },
+   {
+      "key": "ctrl+d",
+      "command": "-notebook.addFindMatchToSelection",
+      "when": "config.notebook.multiCursor.enabled && notebookCellEditorFocused && activeEditor == 'workbench.editor.notebook'"
+   },
+   {
+      "key": "ctrl+d",
+      "command": "editor.action.copyLinesDownAction",
+      "when": "editorTextFocus && !editorReadonly"
+   },
+   {
+      "key": "shift+alt+down",
+      "command": "-editor.action.copyLinesDownAction",
+      "when": "editorTextFocus && !editorReadonly"
+   }
+]

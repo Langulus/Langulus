@@ -1,27 +1,37 @@
-[submodule "Core"]
+[submodule "framework/Core"]
 	path = framework/Core
 	url = https://github.com/Langulus/Core.git
-[submodule "RTTI"]
-	path = framework/RTTI
-	url = https://github.com/Langulus/RTTI.git
-[submodule "Logger"]
+[submodule "framework/CT"]
+	path = framework/CT
+	url = https://github.com/Langulus/CT.git
+[submodule "framework/Logger"]
 	path = framework/Logger
 	url = https://github.com/Langulus/Logger.git
-[submodule "SIMD"]
+[submodule "framework/Testing"]
+	path = framework/Testing
+	url = https://github.com/Langulus/Testing.git
+[submodule "framework/Percist"]
+	path = framework/Percist
+	url = https://github.com/Langulus/Percist.git
+[submodule "framework/RTTI"]
+	path = framework/RTTI
+	url = https://github.com/Langulus/RTTI.git
+[submodule "framework/SIMD"]
 	path = framework/SIMD
 	url = https://github.com/Langulus/SIMD.git
-[submodule "Anyness"]
-	path = framework/Anyness
-	url = https://github.com/Langulus/Anyness.git
-[submodule "Flow"]
+[submodule "framework/Annies"]
+	path = framework/Annies
+	url = https://github.com/Langulus/Annies.git
+[submodule "framework/Flow"]
 	path = framework/Flow
 	url = https://github.com/Langulus/Flow.git
-[submodule "Entity"]
-	path = framework/Entity
-	url = https://github.com/Langulus/Entity.git
-[submodule "Math"]
+[submodule "framework/Math"]
 	path = framework/Math
 	url = https://github.com/Langulus/Math.git
+[submodule "framework/Things"]
+	path = framework/Things
+	url = https://github.com/Langulus/Things.git
+
 [submodule "mods/Mod-GLFW"]
 	path = mods/Mod-GLFW
 	url = https://github.com/Langulus/Mod-GLFW.git

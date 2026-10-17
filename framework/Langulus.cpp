@@ -118,7 +118,7 @@ void* LangulusEconomy() {
 
    auto& economies = root->GetRuntime()->GetModules<Things::Economy>();
    LglsAssert(economies, "Can't retrieve economy - no economy module available");
-   return economies.template As<A::Economy*>();
+   return economies.template As<Things::Economy*>();
 }
 
 /// Get a resource definition                                                 
@@ -681,7 +681,7 @@ void* LangulusResourceInstance(void* res, float x, float y) {
    }
 #endif
    auto resource = static_cast<Things::Resource*>(res);
-   return const_cast<A::ResourceInstance*>(resource->At(Things::Resource::Place {x, y}));
+   return const_cast<Things::ResourceInstance*>(resource->At(Things::Resource::Place {x, y}));
 }
 
 /// Get all resource instances at a position                                  
@@ -712,7 +712,7 @@ void* LangulusConverterInstance(void* conv, float x, float y) {
    }
 #endif
    auto converter = static_cast<Things::Converter*>(conv);
-   return const_cast<A::ConverterInstance*>(converter->At(Things::Converter::Place {x, y}));
+   return const_cast<Things::ConverterInstance*>(converter->At(Things::Converter::Place {x, y}));
 }
 
 /// Get all converter instances at a position                                 

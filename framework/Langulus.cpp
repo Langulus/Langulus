@@ -122,9 +122,9 @@ void* LangulusEconomy() {
 }
 
 /// Get a resource definition                                                 
-///   @param economy - the economy module                                     
-///   @param name - resource name                                             
-///   @param name_size - the number of characters in provided 'name'          
+///   @param economy the economy module                                       
+///   @param name resource name                                               
+///   @param name_size the number of characters in provided 'name'            
 ///   @return the resource unit handle                                        
 void* LangulusResource(void* economy, const void* name, int name_size) {
 #if LANGULUS(SAFE)
@@ -175,9 +175,9 @@ void* LangulusResource(void* economy, const void* name, int name_size) {
 }
 
 /// Get a converter definition                                                
-///   @param economy - the economy module                                     
-///   @param name - converter name                                            
-///   @param name_size - the number of characters in provided 'name'          
+///   @param economy the economy module                                       
+///   @param name converter name                                              
+///   @param name_size the number of characters in provided 'name'            
 ///   @return the converter unit handle                                       
 void* LangulusConverter(void* economy, const void* name, int name_size) {
 #if LANGULUS(SAFE)
@@ -228,9 +228,9 @@ void* LangulusConverter(void* economy, const void* name, int name_size) {
 }
 
 /// Update the hierarchy, starting with the provided Thing                    
-///   @param thing - the Thing to start updating from - uses root if nullptr  
-///   @param deltaTime - amount of time units, depends on timeScale           
-///   @param timeLevel - the level of time passed                             
+///   @param thing the Thing to start updating from - uses root if nullptr    
+///   @param deltaTime amount of time units, depends on timeScale             
+///   @param timeLevel the level of time passed                               
 ///   @note time is calculated like so: deltaTime*10^(timeScale*3) seconds    
 ///      you would usually send time as LangulusUpdate(nullptr, 16, -1)       
 ///      which means 0.016 seconds (aka 60 frames per second)                 
@@ -298,12 +298,12 @@ void LangulusExit() {
 }
 
 /// Load a langulus plug-in                                                   
-///   @param thing - load plug-in in this Thing's context                     
+///   @param thing load plug-in in this Thing's context                       
 ///      will use root if nullptr                                             
-///   @param name - the name of the plug-in                                   
-///   @param name_size - the number of characters in provided 'name'          
-///   @param desc - the plug-in descriptor (optional)                         
-///   @param desc_size - the number of characters in provided 'desc'          
+///   @param name the name of the plug-in                                     
+///   @param name_size the number of characters in provided 'name'            
+///   @param desc the plug-in descriptor (optional)                           
+///   @param desc_size the number of characters in provided 'desc'            
 ///   @return a handle to the loaded module                                   
 void* LangulusLoadMod(void* thing, const void* name, int name_size, const void* desc, int desc_size) {
    Logger::Info("Loading mod ", Token {
@@ -365,9 +365,9 @@ void* LangulusLoadMod(void* thing, const void* name, int name_size, const void* 
 }
 
 /// Create a child Thing in the context of a Thing                            
-///   @param thing - create in this context (will use root if nullptr)        
-///   @param desc - the descriptor for the new Thing                          
-///   @param size - the number of characters in provided 'desc'               
+///   @param thing create in this context (will use root if nullptr)          
+///   @param desc the descriptor for the new Thing                            
+///   @param size the number of characters in provided 'desc'                 
 ///   @return a handle to the new thing                                       
 void* LangulusCreateThing(void* thing, const void* desc, int desc_size) {
 #if LANGULUS(SAFE)
@@ -401,11 +401,11 @@ void* LangulusCreateThing(void* thing, const void* desc, int desc_size) {
 }
 
 /// Create a Part in the context of a Thing                                   
-///   @param thing - create in this context (will use root if nullptr)        
-///   @param name - the name of the unit                                      
-///   @param name_size - the number of characters in provided 'name'          
-///   @param desc - the descriptor for the new Part                           
-///   @param desc_size - the number of characters in provided 'desc'          
+///   @param thing create in this context (will use root if nullptr)          
+///   @param name the name of the unit                                        
+///   @param name_size the number of characters in provided 'name'            
+///   @param desc the descriptor for the new Part                             
+///   @param desc_size the number of characters in provided 'desc'            
 ///   @return a handle to the new unit                                        
 void* LangulusCreateUnit(void* thing, const void* name, int name_size, const void* desc, int desc_size) {
 #if LANGULUS(SAFE)
@@ -463,17 +463,17 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
 
 
 /// Log a message with specific formatting on a new line                      
-///   @param type - type of the message, see Logger::Intent for definitions   
-///   @param text - the start of the text memory to log                       
-///   @param text_size - the number of bytes in 'text'                        
+///   @param type type of the message, see Logger::Intent for definitions     
+///   @param text the start of the text memory to log                         
+///   @param text_size the number of bytes in 'text'                          
 void LangulusLog(int type, const void* text, int text_size) {
    const auto t = static_cast<Logger::Intent>(type);
    if (not text or text_size < 1 or type < 0 or t >= Logger::Intent::Ignore)
       return;
 
-   Logger::State::Write(t);
-   Logger::State::NewLine();
-   Logger::State::Write(Token {
+   Logger::GlobalState.Write(t);
+   Logger::GlobalState.NewLine();
+   Logger::GlobalState.Write(Token {
       static_cast<const char*>(text),
       static_cast<std::size_t>(text_size)
    });
@@ -481,22 +481,22 @@ void LangulusLog(int type, const void* text, int text_size) {
 
 /// Log a message with specific formatting on a new line, and indent all      
 /// the next lines until LangulusLogTabEnd is called                          
-///   @param type - type of the message, see Logger::Intent for definitions   
-///   @param text - the start of the text memory to log                       
-///   @param text_size - the number of bytes in 'text'                        
+///   @param type type of the message, see Logger::Intent for definitions     
+///   @param text the start of the text memory to log                         
+///   @param text_size the number of bytes in 'text'                          
 void LangulusLogTab(int type, const void* text, int text_size) {
    LangulusLog(type, text, text_size);
-   Logger::State::Write(Logger::Tab);
+   Logger::GlobalState.Write(Logger::Tab);
 }
 
 /// Untab all next messages                                                   
 void LangulusLogTabEnd() {
-   Logger::State::Write(Logger::Untab);
+   Logger::GlobalState.Write(Logger::Untab);
 }
 
 /// Just write a new line, with whatever formatting was set prior             
-///   @param text - the start of the text memory to log                       
-///   @param text_size - the number of bytes in 'text'                        
+///   @param text the start of the text memory to log                         
+///   @param text_size the number of bytes in 'text'                          
 void LangulusLogLine(const void* text, int text_size) {
    Logger::Line(Token {
       static_cast<const char*>(text),
@@ -505,8 +505,8 @@ void LangulusLogLine(const void* text, int text_size) {
 }
 
 /// Just write on the same line, with whatever formatting was set prior       
-///   @param text - the start of the text memory to log                       
-///   @param text_size - the number of bytes in 'text'                        
+///   @param text the start of the text memory to log                         
+///   @param text_size the number of bytes in 'text'                          
 void LangulusLogAppend(const void* text, int text_size) {
    Logger::Append(Token {
       static_cast<const char*>(text),
@@ -520,7 +520,7 @@ void LangulusDumpHierarchy() {
 }
 
 /// Get the quantity of a resource                                            
-///   @param res - the resource definition                                    
+///   @param res the resource definition                                      
 ///   @return the quantity                                                    
 int LangulusResourceQuantity(void* res) {
    #if LANGULUS(SAFE)
@@ -534,9 +534,9 @@ int LangulusResourceQuantity(void* res) {
 }
 
 /// Get the quantity of a resource in a given area                            
-///   @param res - the resource definition                                    
-///   @param x, y - position on the map                                       
-///   @param r - radius around the position                                   
+///   @param res the resource definition                                      
+///   @param x, y position on the map                                         
+///   @param r radius around the position                                     
 ///   @return the quantity                                                    
 int LangulusResourceQuantityLocal(void* res, float x, float y, float r) {
 #if LANGULUS(SAFE)
@@ -550,7 +550,7 @@ int LangulusResourceQuantityLocal(void* res, float x, float y, float r) {
 }
 
 /// Get the instance count of a resource                                      
-///   @param res - the resource definition                                    
+///   @param res the resource definition                                      
 ///   @return the number of instances                                         
 int LangulusResourceInstanceCount(void* res) {
 #if LANGULUS(SAFE)
@@ -564,9 +564,9 @@ int LangulusResourceInstanceCount(void* res) {
 }
 
 /// Get the instance count of a resource in a given area                      
-///   @param res - the resource definition                                    
-///   @param x, y - position on the map                                       
-///   @param r - radius around the position                                   
+///   @param res the resource definition                                      
+///   @param x, y position on the map                                         
+///   @param r radius around the position                                     
 ///   @return the number of instances                                         
 int LangulusResourceInstanceCountLocal(void* res, float x, float y, float r) {
 #if LANGULUS(SAFE)
@@ -580,7 +580,7 @@ int LangulusResourceInstanceCountLocal(void* res, float x, float y, float r) {
 }
 
 /// Get the supply of a resource                                              
-///   @param res - the resource definition                                    
+///   @param res the resource definition                                      
 ///   @return the supply (per tick)                                           
 float LangulusResourceSupply(void* res) {
 #if LANGULUS(SAFE)
@@ -594,9 +594,9 @@ float LangulusResourceSupply(void* res) {
 }
 
 /// Get the supply of a resource in a given area                              
-///   @param res - the resource definition                                    
-///   @param x, y - position on the map                                       
-///   @param r - radius around the position                                   
+///   @param res the resource definition                                      
+///   @param x, y position on the map                                         
+///   @param r radius around the position                                     
 ///   @return the supply (per tick)                                           
 float LangulusResourceSupplyLocal(void* res, float x, float y, float r) {
 #if LANGULUS(SAFE)
@@ -610,7 +610,7 @@ float LangulusResourceSupplyLocal(void* res, float x, float y, float r) {
 }
 
 /// Get the demand of a resource                                              
-///   @param res - the resource definition                                    
+///   @param res the resource definition                                      
 ///   @return the supply (per tick)                                           
 float LangulusResourceDemand(void* res) {
 #if LANGULUS(SAFE)
@@ -624,9 +624,9 @@ float LangulusResourceDemand(void* res) {
 }
 
 /// Get the demand of a resource in a given area                              
-///   @param res - the resource definition                                    
-///   @param x, y - position on the map                                       
-///   @param r - radius around the position                                   
+///   @param res the resource definition                                      
+///   @param x, y position on the map                                         
+///   @param r radius around the position                                     
 ///   @return the supply (per tick)                                           
 float LangulusResourceDemandLocal(void* res, float x, float y, float r) {
 #if LANGULUS(SAFE)
@@ -640,7 +640,7 @@ float LangulusResourceDemandLocal(void* res, float x, float y, float r) {
 }
 
 /// Get the consumption of a resource                                         
-///   @param res - the resource definition                                    
+///   @param res the resource definition                                      
 ///   @return the supply (per tick)                                           
 float LangulusResourceConsumption(void* res) {
 #if LANGULUS(SAFE)
@@ -654,9 +654,9 @@ float LangulusResourceConsumption(void* res) {
 }
 
 /// Get the consumption of a resource in a given area                         
-///   @param res - the resource definition                                    
-///   @param x, y - position on the map                                       
-///   @param r - radius around the position                                   
+///   @param res the resource definition                                      
+///   @param x, y position on the map                                         
+///   @param r radius around the position                                     
 ///   @return the supply (per tick)                                           
 float LangulusResourceConsumptionLocal(void* res, float x, float y, float r) {
 #if LANGULUS(SAFE)
@@ -670,8 +670,8 @@ float LangulusResourceConsumptionLocal(void* res, float x, float y, float r) {
 }
 
 /// Get resource instance at a position                                       
-///   @param resource - the resource definition                               
-///   @param x, y - position on the map                                       
+///   @param resource the resource definition                                 
+///   @param x, y position on the map                                         
 ///   @return the instance, if any                                            
 void* LangulusResourceInstance(void* res, float x, float y) {
 #if LANGULUS(SAFE)
@@ -687,9 +687,9 @@ void* LangulusResourceInstance(void* res, float x, float y) {
 /// Get all resource instances at a position                                  
 ///   @attention the list has to be destroyed with a call to                  
 ///      LangulusResourceInstancesLocalEnd                                    
-///   @param res - the resource definition                                    
-///   @param x, y - position on the map                                       
-///   @param r - radius around the position                                   
+///   @param res the resource definition                                      
+///   @param x, y position on the map                                         
+///   @param r radius around the position                                     
 ///   @return the instance, if any                                            
 void** LangulusResourceInstancesLocalBegin(void* res, float x, float y, float r) {
    TODO();
@@ -701,8 +701,8 @@ void LangulusResourceInstancesLocalEnd(void** handle) {
 }
 
 /// Get converter instance at a position                                      
-///   @param conv - the converter definition                                  
-///   @param x, y - position on the map                                       
+///   @param conv the converter definition                                    
+///   @param x, y position on the map                                         
 ///   @return the instance, if any                                            
 void* LangulusConverterInstance(void* conv, float x, float y) {
 #if LANGULUS(SAFE)
@@ -718,9 +718,9 @@ void* LangulusConverterInstance(void* conv, float x, float y) {
 /// Get all converter instances at a position                                 
 ///   @attention the list has to be destroyed with a call to                  
 ///      LangulusConverterInstancesLocalEnd                                   
-///   @param conv - the converter definition                                  
-///   @param x, y - position on the map                                       
-///   @param r - radius around the position                                   
+///   @param conv the converter definition                                    
+///   @param x, y position on the map                                         
+///   @param r radius around the position                                     
 ///   @return the instance, if any                                            
 void** LangulusConverterInstancesLocalBegin(void* conv, float x, float y, float r) {
    TODO();

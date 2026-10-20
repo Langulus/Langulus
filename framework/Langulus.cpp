@@ -11,6 +11,7 @@
 
 using namespace Langulus;
 using Things::Thing;
+using Things::Part;
 
 namespace
 {
@@ -353,7 +354,7 @@ void* LangulusLoadMod(void* thing, const void* name, int name_size, const void* 
             static_cast<const char*>(desc),
             static_cast<std::size_t>(desc_size)
          };
-         return typed->LoadModPath(token, Code(code).Parse());
+         return typed->LoadModPath(token, Flow::Code(code).Parse());
       }
 
       return typed->LoadModPath(token);
@@ -450,7 +451,7 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
             static_cast<const char*>(desc),
             static_cast<std::size_t>(desc_size)
          };
-         return typed->CreatePartToken(token, Code(code).Parse()).As<Part*>();
+         return typed->CreatePartToken(token, Flow::Code(code).Parse()).As<Part*>();
       }
 
       return typed->CreatePartToken(token).As<Part*>();

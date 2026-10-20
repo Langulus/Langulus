@@ -15,6 +15,7 @@
 - Test containers with function pointers, make them executable
 
 ## TODO:
+- GetVal() and GetKey() don't feel very consistent, and should probably be simplified to avoid mistakes. Maybe allow GetVal() only if statically-typed handle, and always return ref to val. Error out with a message to use GetValHandle() instead, whcih always returns a handle, etc.
 - Experiment with using templated lambdas to extract info from reflected definitions - can potentially generalize everything
 - Try unity builds by including cpp files in a single one
 - Allow vectors/ranges/whatever to be made of `OptionalNumber`, that will act as undefined the first time it is operated only, copying the rhs. Useful when embracing ranges, where the first embrace is against an undefined range

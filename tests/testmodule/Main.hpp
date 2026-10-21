@@ -16,7 +16,7 @@ class TestModule final : public Things::Module {
    LANGULUS_BASES(Module);
 
    TestModule(Runtime* runtime, Many const&) noexcept
-      : Resolvable {this}
+      : Downcastable {this}
       , Module     {runtime} {}
 
    void Teardown() {}

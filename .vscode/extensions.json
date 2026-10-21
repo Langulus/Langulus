@@ -5,8 +5,7 @@
       "cheshirekow.cmake-format",
       "ms-vscode.cmake-tools",
       "vadimcn.vscode-lldb",
-      "roonie007.hide-files",
-      "ryanluker.vscode-coverage-gutters",
-      "jozefchmelar.compare"
+      "jozefchmelar.compare",
+      "ms-vscode.hexeditor"
    ]
 }

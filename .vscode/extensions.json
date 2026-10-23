@@ -1,0 +1,11 @@
+{
+   "recommendations": [
+      "llvm-vs-code-extensions.vscode-clangd",
+      "fabiospampinato.vscode-highlight",
+      "cheshirekow.cmake-format",
+      "ms-vscode.cmake-tools",
+      "vadimcn.vscode-lldb",
+      "jozefchmelar.compare",
+      "ms-vscode.hexeditor"
+   ]
+}

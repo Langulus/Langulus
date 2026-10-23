@@ -1,0 +1,66 @@
+﻿{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "include": [
+    "CMakePresets_Common.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "windows-v145-x64-debug-safe-SSE2",
+      "displayName": "v145 x64 Debug Safe SSE2 (unsupported)",
+      "inherits": [ "windows", "cl", "x64", "debug", "SSE2" ]
+    },
+    {
+      "name": "windows-v145-x64-debug-safe-AVX",
+      "displayName": "v145 x64 Debug Safe AVX (unsupported)",
+      "inherits": [ "windows", "cl", "x64", "debug", "AVX" ]
+    },
+    {
+      "name": "windows-v145-x64-debug-safe-AVX2",
+      "displayName": "v145 x64 Debug Safe AVX2 (unsupported)",
+      "inherits": [ "windows", "cl", "x64", "debug", "AVX2" ]
+    },
+
+    {
+      "name": "windows-v145-x86-debug-safe-noSIMD",
+      "displayName": "v145 x86 Debug Safe NoSIMD (unsupported)",
+      "inherits": [ "windows", "cl", "x86", "debug", "NoSIMD" ]
+    },
+    {
+      "name": "windows-v145-x86-debug-safe-SSE2",
+      "displayName": "v145 x86 Debug Safe SSE2 (unsupported)",
+      "inherits": [ "windows", "cl", "x86", "debug", "SSE2" ]
+    },
+
+    {
+      "name": "windows-v145-x64-release-safe-SSE2",
+      "displayName": "v145 x64 Release Safe SSE2 (unsupported)",
+      "inherits": [ "windows", "cl", "x64", "release", "SSE2" ]
+    },
+    {
+      "name": "windows-v145-x64-release-safe-AVX",
+      "displayName": "v145 x64 Release Safe AVX (unsupported)",
+      "inherits": [ "windows", "cl", "x64", "release", "AVX" ]
+    },
+    {
+      "name": "windows-v145-x64-release-safe-AVX2",
+      "displayName": "v145 x64 Release Safe AVX2 (unsupported)",
+      "inherits": [ "windows", "cl", "x64", "release", "AVX2" ]
+    },
+
+    {
+      "name": "windows-v145-x86-release-safe-noSIMD",
+      "displayName": "v145 x86 Release Safe NoSIMD (unsupported)",
+      "inherits": [ "windows", "cl", "x86", "release", "NoSIMD" ]
+    },
+    {
+      "name": "windows-v145-x86-release-safe-SSE2",
+      "displayName": "v145 x86 Release Safe SSE2 (unsupported)",
+      "inherits": [ "windows", "cl", "x86", "release", "SSE2" ]
+    }
+  ]
+}

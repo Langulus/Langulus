@@ -1,14 +1,12 @@
 ///                                                                           
-/// Langulus::Framework                                                       
-/// Copyright(C) 2016 Dimo Markov <langulusteam@gmail.com>                    
+/// Langulus                                                                  
+/// Copyright (c) 2016 Dimo Markov <team@langulus.com>                        
+/// Part of the Langulus framework, see https://langulus.com                  
 ///                                                                           
-/// Distributed under GNU General Public License v3+                          
-/// See LICENSE file, or https://www.gnu.org/licenses                         
+/// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
-#include "Main.hpp"
-#include <catch2/catch.hpp>
-
-LANGULUS_EXCEPTION_HANDLER
+#include <Langulus/Thing.hpp>
+#include <Langulus/Testing.hpp>
 
 
 SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
@@ -18,7 +16,7 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
       GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
          // Create root entity                                          
          Thing root;
-         root.AddTrait(Traits::Name {"ROOT"});
+         root.AddTag(Traits::Name {"ROOT"});
 
          // Create runtime at the root                                  
          auto runtime = root.CreateRuntime();

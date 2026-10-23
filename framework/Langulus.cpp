@@ -119,7 +119,7 @@ void* LangulusEconomy() {
 
    auto& economies = root->GetRuntime()->GetModules<Things::Economy>();
    LglsAssert(economies, "Can't retrieve economy - no economy module available");
-   return economies.template As<Things::Economy*>();
+   return const_cast<Things::Economy*>(economies.template As<Things::Economy*>());
 }
 
 /// Get a resource definition                                                 
@@ -692,12 +692,12 @@ void* LangulusResourceInstance(void* res, float x, float y) {
 ///   @param x, y position on the map                                         
 ///   @param r radius around the position                                     
 ///   @return the instance, if any                                            
-void** LangulusResourceInstancesLocalBegin(void* res, float x, float y, float r) {
+void** LangulusResourceInstancesLocalBegin(void*, float, float, float) {
    TODO();
    return nullptr;
 }
 
-void LangulusResourceInstancesLocalEnd(void** handle) {
+void LangulusResourceInstancesLocalEnd(void**) {
    TODO();
 }
 
@@ -723,11 +723,11 @@ void* LangulusConverterInstance(void* conv, float x, float y) {
 ///   @param x, y position on the map                                         
 ///   @param r radius around the position                                     
 ///   @return the instance, if any                                            
-void** LangulusConverterInstancesLocalBegin(void* conv, float x, float y, float r) {
+void** LangulusConverterInstancesLocalBegin(void*, float, float, float) {
    TODO();
    return nullptr;
 }
 
-void LangulusConverterInstancesLocalEnd(void** handle) {
+void LangulusConverterInstancesLocalEnd(void**) {
    TODO();
 }

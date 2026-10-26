@@ -1,23 +1,22 @@
 ///                                                                           
-/// Langulus::Module::TestModule                                              
+/// Langulus test module                                                      
 /// Copyright (c) 2016 Dimo Markov <team@langulus.com>                        
 /// Part of the Langulus framework, see https://langulus.com                  
 ///                                                                           
-/// Distributed under GNU General Public License v3+                          
-/// See LICENSE file, or https://www.gnu.org/licenses                         
+/// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
 #pragma once
-#include <Langulus.hpp>
+#include <Langulus/Thing.hpp>
 
 using namespace Langulus;
 
 
-class TestModule final : public A::Module {
-   LANGULUS(ABSTRACT) false;
+class TestModule final : public Things::Module {
+   using CTTI_Abstract = No;
    LANGULUS_BASES(Module);
 
-   TestModule(Runtime* runtime, const Many&) noexcept
-      : Resolvable {this}
+   TestModule(Runtime* runtime, Many const&) noexcept
+      : Downcastable {this}
       , Module     {runtime} {}
 
    void Teardown() {}

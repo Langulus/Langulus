@@ -12,12 +12,12 @@ using namespace Langulus;
 
 
 class TestModule final : public Things::Module {
-   using CTTI_Abstract = No;
-   LANGULUS_BASES(Module);
+   using CTTI_Abstract  = No;
+   using CTTI_Bases     = Things::Module;
 
    TestModule(Runtime* runtime, Many const&) noexcept
       : Downcastable {this}
-      , Module     {runtime} {}
+      , Module       {runtime} {}
 
    void Teardown() {}
 };

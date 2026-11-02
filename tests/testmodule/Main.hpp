@@ -15,7 +15,7 @@ class TestModule final : public Things::Module {
    using CTTI_Abstract  = No;
    using CTTI_Bases     = Things::Module;
 
-   TestModule(Runtime* runtime, Many const&) noexcept
+   TestModule(Runtime* runtime, Neat const&) noexcept
       : Downcastable {this}
       , Module       {runtime} {}
 

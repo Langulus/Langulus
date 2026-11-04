@@ -9,60 +9,65 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-latest]
-        build: [Release]
+        os: [ubuntu-26.04, windows-2022] # windows-latest uses vs2026, which uses clangcl 22, which is full of regressions in concept compilation
+        build: [release]
+        cxx: [g++-14, g++-15, clang++-21, clangcl, emcc] # v143/v145 suppport has been dropped indefinitely due to too many compiler bugs and bad C++23 support. tested on v145, too - not there yet. just use clangcl, please.
         arch: [x86, x64]
-        testing: [ON]
-        cxx: [g++-14, clang++-19, ClangCl, v143]
         feature: [
-          [NoSIMD, 16, ' ', ' '],
-          [SSE2, 16, '-msse2', '/arch:SSE2'],
-          [SSE3, 16, '-msse3', '<not available on msvc>'],
-          [SSSE3, 16, '-mssse3', '<not available on msvc>'],
-          [SSE4.1, 16, '-msse4.1', '<not available on msvc>'],
-          [SSE4.2, 16, '-msse4.2', '<not available on msvc>'],
-          [AVX, 32, '-mavx', '/arch:AVX'],
-          [AVX2, 32, '-mavx2', '/arch:AVX2'],
+          [NoSIMD, 16, ' ',         '/arch:IA32'],
+          [SSE2,   16, '-msse2',    '/arch:SSE2'],
+          [SSE3,   16, '-msse3',    '<not available on msvc>'],
+          [SSSE3,  16, '-mssse3',   '<not available on msvc>'],
+          [SSE4.1, 16, '-msse4.1',  '<not available on msvc>'],
+          [SSE4.2, 16, '-msse4.2',  '<not available on msvc>'],
+          [AVX,    32, '-mavx',     '/arch:AVX'],
+          [AVX2,   32, '-mavx2',    '/arch:AVX2'],
           [AVX512, 64, '-mavx512f', '/arch:AVX512']
         ]
 
         exclude:
-          - os: ubuntu-24.04
+          - cxx: emcc
+            arch: x64
+          - os: ubuntu-26.04
             cxx: v143
-          - os: ubuntu-24.04
-            cxx: ClangCl
-          - os: windows-latest
+          - os: ubuntu-26.04
+            cxx: v145
+          - os: ubuntu-26.04
+            cxx: clangcl
+          - os: windows-2022
             cxx: g++-14
-          - os: windows-latest
-            cxx: clang++-19
+          - os: windows-2022
+            cxx: g++-15
+          - os: windows-2022
+            cxx: clang++-21
 
           - arch: x64
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSE2, 16, '-msse2', '/arch:SSE2']
           - arch: x64
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSE3, 16, '-msse3', '<not available on msvc>']
           - arch: x64
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
           - arch: x64
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
           - arch: x64
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
 
           - arch: x86
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSE3, 16, '-msse3', '<not available on msvc>']
           - arch: x86
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
           - arch: x86
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
           - arch: x86
-            cxx: ClangCl
+            cxx: clangcl
             feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
 
           - arch: x64
@@ -81,6 +86,25 @@ jobs:
             cxx: v143
             feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
 
+          - arch: x64
+            cxx: v145
+            feature: [SSE2, 16, '-msse2', '/arch:SSE2']
+          - arch: x64
+            cxx: v145
+            feature: [SSE3, 16, '-msse3', '<not available on msvc>']
+          - arch: x64
+            cxx: v145
+            feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
+          - arch: x64
+            cxx: v145
+            feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
+          - arch: x64
+            cxx: v145
+            feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+
+          - arch: x86
+            cxx: v143
+            feature: [SSE2, 16, '-msse2', '/arch:SSE2']
           - arch: x86
             cxx: v143
             feature: [SSE3, 16, '-msse3', '<not available on msvc>']
@@ -93,126 +117,165 @@ jobs:
           - arch: x86
             cxx: v143
             feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+          - arch: x86
+            cxx: v143
+            feature: [AVX, 32, '-mavx', '/arch:AVX']
+          - arch: x86
+            cxx: v143
+            feature: [AVX2, 32, '-mavx2', '/arch:AVX2']
+
+          - arch: x86
+            cxx: v145
+            feature: [SSE2, 16, '-msse2', '/arch:SSE2']
+          - arch: x86
+            cxx: v145
+            feature: [SSE3, 16, '-msse3', '<not available on msvc>']
+          - arch: x86
+            cxx: v145
+            feature: [SSSE3, 16, '-mssse3', '<not available on msvc>']
+          - arch: x86
+            cxx: v145
+            feature: [SSE4.1, 16, '-msse4.1', '<not available on msvc>']
+          - arch: x86
+            cxx: v145
+            feature: [SSE4.2, 16, '-msse4.2', '<not available on msvc>']
+          - arch: x86
+            cxx: v145
+            feature: [AVX, 32, '-mavx', '/arch:AVX']
+          - arch: x86
+            cxx: v145
+            feature: [AVX2, 32, '-mavx2', '/arch:AVX2']
 
           # Seems the cloud at github doesn't have the avx512 extensions
           - feature: [AVX512, 64, '-mavx512f', '/arch:AVX512']
 
         include:
+          - cxx: emcc
+            c: emcc
           - cxx: g++-14
             c: gcc-14
-          - cxx: clang++-19
-            c: clang-19
-          - os: ubuntu-24.04
+          - cxx: g++-15
+            c: gcc-15
+          - cxx: clang++-21
+            c: clang-21
+          - os: ubuntu-26.04
             arch: x86
             cmake_args: "-DCMAKE_CXX_FLAGS=-m32"
-          - os: ubuntu-24.04
+          - os: ubuntu-26.04
             arch: x64
             cmake_args: "-DCMAKE_CXX_FLAGS=-m64"
-          - os: windows-latest
+          - os: windows-2022
             arch: x86
             cmake_args: "-G \"Visual Studio 17 2022\" -A Win32"
-          - os: windows-latest
+          - os: windows-2022
             arch: x64
             cmake_args: "-G \"Visual Studio 17 2022\" -A x64"
 
-    name: "${{matrix.os}}-${{matrix.cxx}}-${{matrix.arch}}-${{matrix.feature[0]}}-testing${{matrix.testing}}"
+    name: "${{matrix.os}}-${{matrix.cxx}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}"
     runs-on: ${{matrix.os}}
     steps:
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - if: matrix.os == 'ubuntu-24.04' && matrix.arch == 'x86'
-        name: Prepare Linux for cross-compilation
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'g++-14' && matrix.arch == 'x86' && matrix.cxx != 'emcc'
+        name: Prepare for cross-compilation (Linux with GCC 14)
         run: |
           sudo apt update
           sudo apt install g++-14-multilib
 
-      - if: matrix.cxx == 'g++-14'
-        name: Installing G++ 14
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'g++-15' && matrix.arch == 'x86' && matrix.cxx != 'emcc'
+        name: Prepare for cross-compilation (Linux with GCC 16)
         run: |
           sudo apt update
-          sudo apt install gcc-14 g++-14
+          sudo apt install g++-15-multilib
 
-      - if: matrix.cxx == 'clang++-19'
-        name: Installing Clang 19
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'emcc'
+        name: Prepate environment (Linux with emscripten)
         run: |
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-          sudo apt-add-repository "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main"
+          git clone https://github.com/emscripten-core/emsdk.git
+          cd emsdk
+          git pull
+          ./emsdk install latest
+          ./emsdk activate latest
+
+      - if: matrix.os == 'ubuntu-26.04'
+        name: Install dependencies on Linux (X11)
+        run: |
           sudo apt update
-          sudo apt install gcc-14 g++-14 # clang-19 needs stdc++14.2 see https://github.com/llvm/llvm-project/issues/102336
-          sudo apt install clang-19
+          sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev libxtst-dev
 
-      #- if: matrix.os == 'ubuntu-24.04'
-      #  name: Install dependencies on Linux
-      #  run: |
-      #    sudo apt update
-      #    sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
-
-      - if: matrix.os == 'ubuntu-24.04'
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx != 'emcc'
         name: Configure (Linux)
         run: >
           mkdir build && cd build && cmake ..
           -DCMAKE_C_COMPILER=${{matrix.c}}
           -DCMAKE_CXX_COMPILER=${{matrix.cxx}}
-          ${{matrix.cmake_args}} 
+          ${{matrix.cmake_args}}
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DLANGULUS_BUILD_ID=\"${{matrix.os}}-${{matrix.cxx}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}-${{github.ref_name}}-${{github.sha}}\"
           -DCMAKE_C_FLAGS="${{matrix.feature[2]}}"
           -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_TESTING=${{matrix.testing}}
+          -DLANGULUS_OPTION_TESTING=ON
 
-      - if: matrix.os == 'windows-latest' && matrix.cxx == 'v143'
-        name: Configure (Windows, MSVC)
+      - if: matrix.os == 'ubuntu-26.04' && matrix.cxx == 'emcc'
+        name: Configure (Linux with emscripten)
+        run: >
+          source "/home/runner/work/Langulus/Langulus/emsdk/emsdk_env.sh" && mkdir build && cd build && emcmake cmake ..
+          -DCMAKE_C_COMPILER=${{matrix.c}}
+          -DCMAKE_CXX_COMPILER=${{matrix.cxx}}
+          ${{matrix.cmake_args}}
+          -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DLANGULUS_BUILD_ID=\"${{matrix.os}}-${{matrix.cxx}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}-${{github.ref_name}}-${{github.sha}}\"
+          -DCMAKE_C_FLAGS="${{matrix.feature[2]}}"
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[2]}}"
+          -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
+          -DLANGULUS_OPTION_TESTING=ON
+
+      - if: matrix.os == 'windows-2022' && matrix.cxx == 'emcc'
+        name: Prepate environment (Windows with emscripten)
+        run: |
+          git clone https://github.com/emscripten-core/emsdk.git
+          cd emsdk
+          git pull
+          ./emsdk.bat install latest
+          ./emsdk.bat activate latest --permanent
+
+      - if: matrix.os == 'windows-2022' && matrix.cxx != 'emcc'
+        name: Configure (Windows with VS2022)
         run: >
           mkdir build && cd build && cmake ..
           ${{matrix.cmake_args}} -T "${{matrix.cxx}}"
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
+          -DLANGULUS_BUILD_ID=\"${{matrix.os}}-${{matrix.cxx}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}-${{github.ref_name}}-${{github.sha}}\"
           -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_TESTING=${{matrix.testing}}
+          -DLANGULUS_OPTION_TESTING=ON
 
-      - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl' && matrix.arch == 'x86'
-        name: Configure (Windows, ClangCl, x86)
+      - if: matrix.os == 'windows-2022' && matrix.cxx == 'emcc'
+        name: Configure (Windows with emscripten)
         run: >
-          choco install --no-progress ninja &&
-          cmd /c "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/Tools/VsDevCmd.bat" -arch=x86 &&
-          mkdir build && cd build && cmake ..
-          -G "Ninja"
-          -DCMAKE_C_COMPILER=clang-cl
-          -DCMAKE_CXX_COMPILER=clang-cl
-          -DCMAKE_MT="C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x86/mt.exe"
+          mkdir build && cd build && python D:\a\Langulus\Langulus\emsdk\upstream\emscripten\emcmake.py cmake ..
+          ${{matrix.cmake_args}}
           -DCMAKE_BUILD_TYPE=${{matrix.build}}
-          -DCMAKE_C_FLAGS="${{matrix.feature[3]}} /EHsc -m32"
-          -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc -m32"
+          -DLANGULUS_BUILD_ID=\"${{matrix.os}}-${{matrix.cxx}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}-${{github.ref_name}}-${{github.sha}}\"
+          -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc"
           -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_TESTING=${{matrix.testing}}
-
-      - if: matrix.os == 'windows-latest' && matrix.cxx == 'ClangCl' && matrix.arch == 'x64'
-        name: Configure (Windows, ClangCl, x64)
-        run: >
-          choco install --no-progress ninja &&
-          cmd /c "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/Tools/VsDevCmd.bat" -arch=x64 &&
-          mkdir build && cd build && cmake ..
-          -G "Ninja"
-          -DCMAKE_C_COMPILER=clang-cl
-          -DCMAKE_CXX_COMPILER=clang-cl
-          -DCMAKE_MT="C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/mt.exe"
-          -DCMAKE_BUILD_TYPE=${{matrix.build}}
-          -DCMAKE_C_FLAGS="${{matrix.feature[3]}} /EHsc -m64"
-          -DCMAKE_CXX_FLAGS="${{matrix.feature[3]}} /EHsc -m64"
-          -DLANGULUS_ALIGNMENT=${{matrix.feature[1]}}
-          -DLANGULUS_TESTING=${{matrix.testing}}
+          -DLANGULUS_OPTION_TESTING=ON
 
       - name: Build
-        run: cmake --build build -j4 --config ${{matrix.build}}
+        run: cmake --build build -j1 --config ${{matrix.build}}  # minimizing parallelism to save runner RAM
 
       - name: Test
         run: cd build && ctest -V -C ${{matrix.build}}
+        timeout-minutes: 10
         
       - name: 'Upload artifacts'
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: "logfiles-${{matrix.os}}-${{matrix.cxx}}-${{matrix.arch}}-${{matrix.feature[0]}}-testing${{matrix.testing}}.txt"
-          path: build/bin/*-test.txt
-          retention-days: 5
+          name: "artifacts-${{matrix.os}}-${{matrix.cxx}}-${{matrix.build}}-${{matrix.arch}}-${{matrix.feature[0]}}-${{github.ref_name}}-${{github.sha}}"
+          path: |
+            build/bin/*.txt
+            build/bin/*.htm
+          retention-days: 7

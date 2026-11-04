@@ -9,15 +9,13 @@
 - Test all containers with aggregates
 - Can we insert `volatile` stuff into containers?
 - ~~Add `emcc` to the CI~~ and pass tests (tests not passed yet)
-- Extensive `Block::SmartPush` tests are needed - preserving states, like staticness, must be ensured.
+- Extensive `Block::SmartPush` tests are needed - preserving states, like staticness, must be ensured. Note: `SmartPush` is now called `Compose`
 - Test all containers with `void*/const void*`
 - ~~Test all containers with double pointers~~, including for `void**/const void* const*`
 - Test containers with function pointers, make them executable
 
 ## TODO:
 - use start_lifetime_as instead of reinterpret_cast
-- GetVal() and GetKey() don't feel very consistent, and should probably be simplified to avoid mistakes. Maybe allow GetVal() only if statically-typed handle, and always return ref to val. Error out with a message to use GetValHandle() instead, whcih always returns a handle, etc.
-- Experiment with using templated lambdas to extract info from reflected definitions - can potentially generalize everything
 - Try unity builds by including cpp files in a single one
 - Allow vectors/ranges/whatever to be made of `OptionalNumber`, that will act as undefined the first time it is operated only, copying the rhs. Useful when embracing ranges, where the first embrace is against an undefined range
 - Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
@@ -32,17 +30,18 @@
 - Open/Closed range support in `Code` parser
 - Handle escapes in Code's string/char parser - symbols like `∞` screw with attached operators, because op can't be isolated around them
 - `;` operator for parsing order-independent lists (`Neat`)
-- `->` mapping operator for assembling pairs? also could be useful for `if` statements
+- `->` mapping operator for assembling pairs? also could be useful for `if` statements. changed to `:` operator?
 - `|` operator for assembling sets?
 - Add font size to `Logger` using ASCII art
 - Generate coverage on clang CI https://releases.llvm.org/19.1.0/tools/clang/docs/SourceBasedCodeCoverage.html
 - `Block::Compare` comparisons of non-similar pointer types to the same virtual objects are sketchily implemented
 - When stringifying text containers, make sure the text literal operator isn't found in the string itself - use ` if there's a " and vice versa, use escapes if both
-- Should we somehow allow `LANGULUS_VERBS(Verbs::Multiply)` without a `void Multiply(Verb&)` member if operators are already defined?
 - Do SIMD functions work with `volatile` arguments?
 - `constexpr memcpy` and `memmove` utilizing `if consteval`? Mainly for `TVector` constructors
 
 ## Done:
+- Should we somehow allow `LANGULUS_VERBS(Verbs::Multiply)` without a `void Multiply(Verb&)` member if operators are already defined? Solved: the new verb declaration now allows for it, and much more.
+- GetVal() and GetKey() don't feel very consistent, and should probably be simplified to avoid mistakes. Maybe allow GetVal() only if statically-typed handle, and always return ref to val. Error out with a message to use GetValHandle() instead, whcih always returns a handle, etc.
 - Hash tables (both maps and sets) can now resize without any rehashing
 - Logger unicode support via simdutf
 - Tracking build time and RAM usage anomalies using percist
@@ -101,6 +100,7 @@
 - Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards. Fixed by just allowing LANGULUS(NAME) to be std::array
 
 ## Abandoned:
+- Experiment with using templated lambdas to extract info from reflected definitions - can potentially generalize everything (not possible)
 - `BlockMap` speed optimizations: dynamic `AllowedMisses` based on table size; Anticipate oversaturation while swapping
 - Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array. No need for it after Annies rewrite.
 - Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.

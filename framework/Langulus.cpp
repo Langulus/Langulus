@@ -37,7 +37,7 @@ extern "C"
    LANGULUS_EXPORT() void  LangulusExit();
    LANGULUS_EXPORT() void* LangulusLoadMod(void*, const void*, int, const void* = nullptr, int = 0);
    LANGULUS_EXPORT() void* LangulusCreateThing(void*, const void* = nullptr, int = 0);
-   LANGULUS_EXPORT() void* LangulusCreateUnit(void*, const void*, int, const void* = nullptr, int = 0);
+   LANGULUS_EXPORT() void* LangulusCreatePart(void*, const void*, int, const void* = nullptr, int = 0);
 
    // Logging                                                           
    LANGULUS_EXPORT() void  LangulusLog(int, const void*, int);
@@ -408,10 +408,10 @@ void* LangulusCreateThing(void* thing, const void* desc, int desc_size) {
 ///   @param desc the descriptor for the new Part                             
 ///   @param desc_size the number of characters in provided 'desc'            
 ///   @return a handle to the new unit                                        
-void* LangulusCreateUnit(void* thing, const void* name, int name_size, const void* desc, int desc_size) {
+void* LangulusCreatePart(void* thing, const void* name, int name_size, const void* desc, int desc_size) {
 #if LANGULUS(SAFE)
    if (not initialized) {
-      Logger::Fatal("Langulus wasn't initialized - call LangulusInit() prior to LangulusCreateUnit()");
+      Logger::Fatal("Langulus wasn't initialized - call LangulusInit() prior to LangulusCreatePart()");
       return nullptr;
    }
 #endif
@@ -421,12 +421,12 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
 
 #if LANGULUS(SAFE)
    if (not name) {
-      Logger::Error("Invalid unit name pointer on LangulusCreateUnit");
+      Logger::Error("Invalid unit name pointer on LangulusCreatePart");
       return nullptr;
    }
 
    if (name_size < 1) {
-      Logger::Error("Empty unit name on LangulusCreateUnit");
+      Logger::Error("Empty unit name on LangulusCreatePart");
       return nullptr;
    }
 #endif
@@ -439,7 +439,7 @@ void* LangulusCreateUnit(void* thing, const void* name, int name_size, const voi
 
 #if LANGULUS(SAFE)
    if (name_size > 4096) {
-      Logger::Error("Part name on LangulusCreateUnit is too long: ", token);
+      Logger::Error("Part name on LangulusCreatePart is too long: ", token);
       return nullptr;
    }
 #endif

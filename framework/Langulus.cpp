@@ -354,7 +354,8 @@ void* LangulusLoadMod(void* thing, const void* name, int name_size, const void* 
             static_cast<const char*>(desc),
             static_cast<std::size_t>(desc_size)
          };
-         return typed->LoadModPath(token, Flow::Code(code).Parse());
+         const Neat tidy {Flow::Code(code).Parse()};
+         return typed->LoadModPath(token, tidy);
       }
 
       return typed->LoadModPath(token);

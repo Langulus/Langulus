@@ -32,10 +32,18 @@
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
-         "name": "LangulusAnniesTest-Logger",
+         "name": "LangulusLoggerTest",
          "type": "lldb",
          "request": "launch",
-         "program": "${command:cmake.launchTargetDirectory}/LangulusAnniesTest-Logger.exe",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusLoggerTest.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
+         "name": "LangulusCTTest",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusCTTest.exe",
          "args": [],
          "cwd": "${command:cmake.buildDirectory}/bin"
       },

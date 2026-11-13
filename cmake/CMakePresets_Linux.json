@@ -1,0 +1,87 @@
+﻿{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "include": [
+    "CMakePresets_Common.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "linux-g++-x64-debug-safe-SSE2",
+      "displayName": "Linux x64 G++ Debug Safe SSE2",
+      "inherits": [ "linux", "g++-14", "x64", "debug", "SSE2" ]
+    },
+    {
+      "name": "linux-g++-x64-debug-safe-AVX",
+      "displayName": "Linux x64 G++ Debug Safe AVX",
+      "inherits": [ "linux", "g++-14", "x64", "debug", "AVX" ]
+    },
+    {
+      "name": "linux-g++-x64-debug-safe-AVX2",
+      "displayName": "Linux x64 G++ Debug Safe AVX2",
+      "inherits": [ "linux", "g++-14", "x64", "debug", "AVX2" ]
+    },
+
+    {
+      "name": "linux-g++-x64-release-safe-SSE2",
+      "displayName": "Linux x64 G++ Release Safe SSE2",
+      "inherits": [ "linux", "g++-14", "x64", "release", "SSE2" ]
+    },
+    {
+      "name": "linux-g++-x64-release-safe-AVX",
+      "displayName": "Linux x64 G++ Release Safe AVX",
+      "inherits": [ "linux", "g++-14", "x64", "release", "AVX" ]
+    },
+    {
+      "name": "linux-g++-x64-release-safe-AVX2",
+      "displayName": "Linux x64 G++ Release Safe AVX2",
+      "inherits": [ "linux", "g++-14", "x64", "release", "AVX2" ]
+    },
+
+    {
+      "name": "linux-clang-x64-debug-safe-SSE2",
+      "displayName": "clang x64 Debug Safe SSE2",
+      "inherits": [ "linux", "clang++-19", "x64", "debug", "SSE2" ]
+    },
+    {
+      "name": "linux-clang-x64-debug-safe-AVX",
+      "displayName": "clang x64 Debug Safe AVX",
+      "inherits": [ "linux", "clang++-19", "x64", "debug", "AVX" ]
+    },
+    {
+      "name": "linux-clang-x64-debug-safe-AVX2",
+      "displayName": "clang x64 Debug Safe AVX2",
+      "inherits": [ "linux", "clang++-19", "x64", "debug", "AVX2" ]
+    },
+    
+    {
+      "name": "linux-clang-x64-release-safe-SSE2",
+      "displayName": "clang x64 Release Safe SSE2",
+      "inherits": [ "linux", "clang++-19", "x64", "release", "SSE2" ]
+    },
+    {
+      "name": "linux-clang-x64-release-safe-AVX",
+      "displayName": "clang x64 Release Safe AVX",
+      "inherits": [ "linux", "clang++-19", "x64", "release", "AVX" ]
+    },
+    {
+      "name": "linux-clang-x64-release-safe-AVX2",
+      "displayName": "clang x64 Release Safe AVX2",
+      "inherits": [ "linux", "clang++-19", "x64", "release", "AVX2" ]
+    },
+    
+    {
+      "name": "linux-clang-x64-debug-safe-AVX-coverage",
+      "displayName": "clang x64 Debug Safe AVX Coverage",
+      "inherits": [ "linux", "clang++-19", "x64", "debug", "AVX", "coverage" ]
+    },
+    {
+      "name": "linux-clang-x64-release-safe-AVX-sanitize",
+      "displayName": "clang x64 Release Safe AVX SanitizeAddress",
+      "inherits": [ "linux", "clang++-19", "x64", "release", "AVX", "sanitize-address" ]
+    }
+  ]
+}

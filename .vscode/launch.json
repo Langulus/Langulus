@@ -48,6 +48,14 @@
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
+         "name": "LangulusRTTITest",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusRTTITest.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
          "name": "LangulusAnniesTest-Memory",
          "type": "lldb",
          "request": "launch",

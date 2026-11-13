@@ -11,7 +11,7 @@
 using namespace Langulus;
 
 
-class TestModule final : public Things::Module {
+struct TestModule final : Things::Module {
    using CTTI_Abstract  = No;
    using CTTI_Bases     = Things::Module;
 

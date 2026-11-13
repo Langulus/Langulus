@@ -7,13 +7,17 @@
 ///                                                                           
 #include <Langulus/Thing.hpp>
 #include <Langulus/Testing.hpp>
+#include <Langulus/Allocator.hpp>
+
+using namespace Langulus;
+using Things::Thing;
 
 
-SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
-   static Allocator::State memoryState;
+SCENARIO("Framework initialization and shutdown, 10 times") {
+   static MemoryState memoryState;
 
-   for (int repeat = 0; repeat != 100; ++repeat) {
-      GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
+   GIVEN("Init and shutdown cycles") {
+      for (int repeat = 0; repeat != 100; ++repeat) {
          // Create root entity                                          
          Thing root;
          root.AddTag(Tags::Name {"ROOT"});
@@ -52,8 +56,8 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
             root.DumpHierarchy();
          }
 
-         // Check for memory leaks after each cycle                     
          REQUIRE(memoryState.Assert());
+         REQUIRE_FALSE(Allocator::CollectGarbage());
       }
    }
 }

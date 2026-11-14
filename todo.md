@@ -15,6 +15,7 @@
 - Test containers with function pointers, make them executable
 
 ## TODO:
+- CTTI_Ability no longer relevant - we can autodetect types with verb methods at reflection-time. remove it eventually if it doesn't backfire.
 - use start_lifetime_as instead of reinterpret_cast
 - Try unity builds by including cpp files in a single one
 - Allow vectors/ranges/whatever to be made of `OptionalNumber`, that will act as undefined the first time it is operated only, copying the rhs. Useful when embracing ranges, where the first embrace is against an undefined range

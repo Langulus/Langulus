@@ -32,22 +32,12 @@ add_langulus_library(Langulus
             Langulus.cpp
 )
 
-target_include_directories(Langulus
-   PUBLIC   #$<TARGET_PROPERTY:LangulusCore,INTERFACE_INCLUDE_DIRECTORIES>
-            #$<TARGET_PROPERTY:LangulusCT,INTERFACE_INCLUDE_DIRECTORIES>
-            $<TARGET_PROPERTY:LangulusLogger,INTERFACE_INCLUDE_DIRECTORIES>
-            $<TARGET_PROPERTY:LangulusRTTI,INTERFACE_INCLUDE_DIRECTORIES>
-            $<TARGET_PROPERTY:LangulusFractalloc,INTERFACE_INCLUDE_DIRECTORIES>
-            $<TARGET_PROPERTY:LangulusPercist,INTERFACE_INCLUDE_DIRECTORIES>
-            $<TARGET_PROPERTY:LangulusAnnies,INTERFACE_INCLUDE_DIRECTORIES>
-            $<TARGET_PROPERTY:LangulusFlow,INTERFACE_INCLUDE_DIRECTORIES>
-            $<TARGET_PROPERTY:LangulusMath,INTERFACE_INCLUDE_DIRECTORIES>
-            $<TARGET_PROPERTY:LangulusThings,INTERFACE_INCLUDE_DIRECTORIES>
-)
+#target_include_directories(Langulus
+#   PUBLIC   $<TARGET_PROPERTY:LangulusThings,INTERFACE_INCLUDE_DIRECTORIES>
+#)
 
 target_link_libraries(Langulus
-   PUBLIC   $<TARGET_PROPERTY:LangulusLogger,INTERFACE_LINK_LIBRARIES>
-   #PRIVATE $<$<NOT:$<BOOL:${MSVC}>>:dl>
+   PUBLIC   LangulusThings
 )
 
 target_compile_definitions(Langulus

@@ -6,6 +6,7 @@
       "ms-vscode.cmake-tools",
       "vadimcn.vscode-lldb",
       "jozefchmelar.compare",
-      "ms-vscode.hexeditor"
+      "ms-vscode.hexeditor",
+      "fanaticpythoner.better-todo-tree"
    ]
 }

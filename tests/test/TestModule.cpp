@@ -1,24 +1,26 @@
 ///                                                                           
-/// Langulus::Framework                                                       
-/// Copyright(C) 2016 Dimo Markov <langulusteam@gmail.com>                    
+/// Langulus                                                                  
+/// Copyright (c) 2016 Dimo Markov <team@langulus.com>                        
+/// Part of the Langulus framework, see https://langulus.com                  
 ///                                                                           
-/// Distributed under GNU General Public License v3+                          
-/// See LICENSE file, or https://www.gnu.org/licenses                         
+/// SPDX-License-Identifier: GPL-3.0-or-later                                 
 ///                                                                           
-#include "Main.hpp"
-#include <catch2/catch.hpp>
+#include <Langulus/Thing.hpp>
+#include <Langulus/Testing.hpp>
+#include <Langulus/Allocator.hpp>
 
-LANGULUS_EXCEPTION_HANDLER
+using namespace Langulus;
+using Things::Thing;
 
 
-SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
-   static Allocator::State memoryState;
+SCENARIO("Framework initialization and shutdown, 10 times") {
+   static MemoryState memoryState;
 
-   for (int repeat = 0; repeat != 100; ++repeat) {
-      GIVEN(std::string("Init and shutdown cycle #") + std::to_string(repeat)) {
+   GIVEN("Init and shutdown cycles") {
+      for (int repeat = 0; repeat != 100; ++repeat) {
          // Create root entity                                          
          Thing root;
-         root.AddTrait(Traits::Name {"ROOT"});
+         root.AddTag(Tags::Name {"ROOT"});
 
          // Create runtime at the root                                  
          auto runtime = root.CreateRuntime();
@@ -54,8 +56,8 @@ SCENARIO("Framework initialization and shutdown, 10 times", "[framework]") {
             root.DumpHierarchy();
          }
 
-         // Check for memory leaks after each cycle                     
          REQUIRE(memoryState.Assert());
+         REQUIRE_FALSE(Allocator::CollectGarbage());
       }
    }
 }

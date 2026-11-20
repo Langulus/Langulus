@@ -222,5 +222,7 @@
   "onboarding.enabled": false,
   "editor.autoIndent": "brackets",
   "cmake.modifyLists.addNewSourceFiles": "no",
-  "cmake.modifyLists.removeDeletedSourceFiles": "no"
+  "cmake.modifyLists.removeDeletedSourceFiles": "no",
+  "better-todo-tree.highlights.enabled": false,
+  "better-todo-tree.tree.showCountsInTree": true
 }

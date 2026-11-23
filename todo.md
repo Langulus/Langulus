@@ -3,20 +3,22 @@
 - Persistent performance testing and benchmarking integrated with test utilty to keep track of performance regresses
 - Unsigned saturated multiplication is wrong i think, needs more test cases with overlfows/underflows in SIMD library
 - `Clamp` and possibly other math functions don't work with tags for some reason. Add Vector tests for these as well.
-- Test `NameOf` with member pointers (both functions and variables)
-- Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized
+- Test `NameOf` with member pointers (both functions and ~~variables~~). Tested with variables - works flawlessly.
+- Partially successful block transfers that get interrupted by an exception should unallocate the items that were successfully initialized. Implemented in most places after the rewrite, but could use a revision.
 - Test a block that contains multiple different interleaved groups of coalesced elements for a pretty nasty bad block destruction corner case
 - Test all containers with aggregates
-- Can we insert `volatile` stuff into containers?
-- ~~Add `emcc` to the CI~~ and pass tests (tests not passed yet)
+- ~~Add `emcc` to the CI~~ and pass tests
 - Extensive `Block::SmartPush` tests are needed - preserving states, like staticness, must be ensured. Note: `SmartPush` is now called `Compose`
 - Test all containers with `void*/const void*`
 - ~~Test all containers with double pointers~~, including for `void**/const void* const*`
 - Test containers with function pointers, make them executable
 
 ## TODO:
+- Use C++20 modules when they have better support
+- Can we insert `volatile` stuff into containers? No - volatiles are a relevant only at compile-time and should be stripped when inserted.
+- test out unique reflection routines that superimpose all reflected types/verbs/tags with every new unique call to reflection, autodetecting type interrelations. make sure it test it an experimental branch
+- research about a memoized type list 
 - CTTI_Ability no longer relevant - we can autodetect types with verb methods at reflection-time. remove it eventually if it doesn't backfire.
-- use start_lifetime_as instead of reinterpret_cast
 - Try unity builds by including cpp files in a single one
 - Allow vectors/ranges/whatever to be made of `OptionalNumber`, that will act as undefined the first time it is operated only, copying the rhs. Useful when embracing ranges, where the first embrace is against an undefined range
 - Saturation can be done either via op, or through conversion. Add saturation to VXXX::Pack routines, because currently fallbacks saturate at different places.
@@ -30,7 +32,7 @@
 - `TestTemporal.cpp` moved to `Entity` library - make it work, and it is going to be a big deal!
 - Open/Closed range support in `Code` parser
 - Handle escapes in Code's string/char parser - symbols like `∞` screw with attached operators, because op can't be isolated around them
-- `;` operator for parsing order-independent lists (`Neat`)
+- `;` operator for parsing order-independent lists (`Neat`, `SetUnsorted`, `MapUnsorted`, etc.)
 - `->` mapping operator for assembling pairs? also could be useful for `if` statements. changed to `:` operator?
 - `|` operator for assembling sets?
 - Add font size to `Logger` using ASCII art
@@ -100,10 +102,7 @@
 - Standalone constants reflection
 - Remove `CustomNameOf` wrappers when constexpr variables can be moved outside scopes in newer standards. Fixed by just allowing LANGULUS(NAME) to be std::array
 
-## Abandoned:
+## Abandoned for now:
+- use start_lifetime_as instead of reinterpret_cast - not well supported yet (21/11/2026)
 - Experiment with using templated lambdas to extract info from reflected definitions - can potentially generalize everything (not possible)
-- `BlockMap` speed optimizations: dynamic `AllowedMisses` based on table size; Anticipate oversaturation while swapping
-- Use redundant map data (`mValues.mCount` and `mValues.mReserved`) for keeping track of ordering array. No need for it after Annies rewrite.
-- Experiment with using `RTTI::SomeTrait;` and detecting those upon reflection instead of using macros; traits can have more advanced options on how a base can propagate to derived classes, etc.
 - Since `Couple` is now invoked by the user's whim, `mOwners` is now invalid in unit constructors. Which means that we can safely discard non Aux versions of hierarchy seek interface - just rely always on the descriptor! No, the non-aux functions are still used on Refersh routines.
-- In future standards, make sure we exclude reflected bases that don't qualify as 'direct'; route imposed bases through a semantic instead (but why??)

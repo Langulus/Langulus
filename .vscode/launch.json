@@ -72,6 +72,14 @@
          "cwd": "${command:cmake.buildDirectory}/bin"
       },
       {
+         "name": "LangulusThingsTest",
+         "type": "lldb",
+         "request": "launch",
+         "program": "${command:cmake.launchTargetDirectory}/LangulusThingsTest.exe",
+         "args": [],
+         "cwd": "${command:cmake.buildDirectory}/bin"
+      },
+      {
          "name": "LangulusAnniesTest-Text",
          "type": "lldb",
          "request": "launch",

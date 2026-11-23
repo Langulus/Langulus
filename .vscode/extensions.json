@@ -7,6 +7,8 @@
       "vadimcn.vscode-lldb",
       "jozefchmelar.compare",
       "ms-vscode.hexeditor",
-      "fanaticpythoner.better-todo-tree"
+      "fanaticpythoner.better-todo-tree",
+      "vizzuhq.code-viz-stat",
+      "uctakeoff.vscode-counter"
    ]
 }
